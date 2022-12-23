@@ -11,4 +11,9 @@ export const GeneralLayoutStyle = styled('div',{
 
 export const MainBoardStyle= styled('div',{
     // 'textAlign':'left'
+    padding:'1rem .8rem',
+    '@bp3':{
+        'width':'80%',
+        'color':'white'
+    }
 })

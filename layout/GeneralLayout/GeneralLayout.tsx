@@ -24,10 +24,9 @@ type Prop  = React.PropsWithChildren<{
         // ':nth-child(1)':{//u can find it in line 50 of Nav.style.tsx
         //   'width':'20%',
         // },
-        ':nth-child(2)':{
-          'width':'80%',
-          'color':'white'
-        },
+        // ':nth-child(2)':{
+
+        // },
        },
       }}>
          <Nav/>
