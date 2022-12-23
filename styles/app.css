@@ -1,0 +1,56 @@
+@font-face{
+    font-family: 'UbuntuRegular';
+    src: url('../styles/font/Ubuntu-Regular.ttf') format('truetype');
+    font-weight:normal;
+    font-style: normal;
+  }
+
+  @font-face{
+    font-family: 'UbuntuMediumItalic';
+    src: url('../styles/font/Ubuntu-MediumItalic.ttf') format('truetype');
+    font-weight:normal;
+    font-style: normal;
+  }
+
+  @font-face{
+    font-family: 'UbuntuMedium';
+    src: url('../styles/font/Ubuntu-Medium.ttf') format('truetype');
+    font-weight:normal;
+    font-style: normal;
+  }
+  @font-face{
+    font-family: 'UbuntuLightItalic';
+    src: url('../styles/font/Ubuntu-LightItalic.ttf') format('truetype');
+    font-weight:normal;
+    font-style: normal;
+  }
+  @font-face{
+    font-family: 'UbuntuLight';
+    src: url('../styles/font/Ubuntu-Light.ttf') format('truetype');
+    font-weight:normal;
+    font-style: normal;
+  }
+  @font-face{
+    font-family: 'UbuntuItalic';
+    src: url('../styles/font/Ubuntu-Italic.ttf') format('truetype');
+    font-weight:normal;
+    font-style: normal;
+  }
+  @font-face{
+    font-family: 'UbuntuBoldItalic';
+    src: url('../styles/font/Ubuntu-BoldItalic.ttf') format('truetype');
+    font-weight:normal;
+    font-style: normal;
+  }
+  @font-face{
+    font-family: 'UbuntuBold';
+    src: url('../styles/font/Ubuntu-Bold.ttf') format('truetype');
+    font-weight:normal;
+    font-style: normal;
+  }
+  *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:'UbuntuRegular','UbuntuLight','UbuntuMediumItalic','UbuntuMedium','UbuntuLightItalic';
+  }
