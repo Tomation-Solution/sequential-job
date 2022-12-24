@@ -30,7 +30,7 @@ const Home:NextPage = ()=>{
               }
           }}>
           {
-            [...new Array(3)].map((data,index)=>(
+            [...new Array(9)].map((data,index)=>(
               <JobCard key={index}/>
             ))
             

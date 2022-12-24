@@ -47,6 +47,8 @@ h2:{
             padding:'1rem 1.3rem',
             'width':'20%',
             'color':'#FFFFFFDE',
+            'maxHeight':'560px',
+            overflowY:'scroll',
             li:{
                 display:'flex',
                 'alignItems':'center',
