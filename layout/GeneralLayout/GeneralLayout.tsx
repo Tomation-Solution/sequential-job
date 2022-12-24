@@ -1,6 +1,7 @@
 import React from "react"
 import Box from "../../shared/Box/Box"
 import Nav from "../../shared/Nav/Nav"
+import TopNav from "../../shared/TopNav/TopNav"
 import { GeneralLayoutStyle, MainBoardStyle } from "./GeneralLayout.style"
 
 
@@ -14,7 +15,7 @@ type Prop  = React.PropsWithChildren<{
   return (
     <GeneralLayoutStyle>
        {/* this is were the top nav will sit */}
-       
+       <TopNav/>
        <Box css={{
        'width':'100%',
         '@bp3':{

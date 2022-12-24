@@ -5,6 +5,7 @@ import GeneralLayout from '../layout/GeneralLayout/GeneralLayout'
 import Box from '../shared/Box/Box'
 import DropdownMenuDemo from '../shared/DropdownMenuDemo/DropdownMenuDemo'
 import JobCard from '../shared/JobCard/JobCard'
+import SearchBar from '../shared/SearchBar/SearchBar'
 import TabsComp from '../shared/Tabs/Tabs'
 
 
@@ -41,6 +42,7 @@ const Home:NextPage = ()=>{
           'template':<h1>Hello worlds from Closed</h1>},
         ]}
       />
+
     </GeneralLayout>
   )
 }

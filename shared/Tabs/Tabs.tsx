@@ -13,7 +13,7 @@ type Prop = {
 
 
 const TabsComp = ({ data }:Prop):React.ReactElement => (
-    <TabsRoot defaultValue="tab1">
+    <TabsRoot defaultValue={data[0].key}>
       <TabsList aria-label="Manage your account">
         {
             data.map((value,index)=>(

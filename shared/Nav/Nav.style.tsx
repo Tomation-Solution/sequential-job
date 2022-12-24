@@ -2,7 +2,7 @@ import { styled } from "../../stitches.config";
 
 
 export const NavContainer = styled('ul',{
-    border:'1px solid red',
+    // border:'1px solid red',
     'position':'fixed',
     'bottom':'0',
     left:'0',
