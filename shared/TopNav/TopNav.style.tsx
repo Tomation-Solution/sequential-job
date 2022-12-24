@@ -16,7 +16,7 @@ export const NavToolBox= styled('div',{
     'display':'flex',
     'alignItems':'center',
     // border:'1px solid red',
-    'width':'15%',
+    'width':'30%',
     'justifyContent':'space-between',
     'svg':{
         display:'block'
@@ -32,9 +32,17 @@ export const NavToolBox= styled('div',{
         'justifyContent':'space-between',
     },
     'div:nth-child(1)':{
-        width:'73%'
+        width:'80%',
+        // 'border':'1px solid red'
     },
     'div:nth-child(2)':{
         width:'20%'
     },
+
+    '@bp3':{
+    'width':'200px',
+    'div:nth-child(1)':{
+        width:'70%',
+    },
+    }
 })

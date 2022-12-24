@@ -7,8 +7,16 @@ import {IoMdNotifications} from 'react-icons/io'
 import {AiTwotoneSetting} from 'react-icons/ai'
 import Logo from '../../asset/logo.svg'
 import UserLogo from '../../asset/user.jpg'
-// 
+import { useMediaQuery } from 'react-responsive'
+import {BiFilter} from 'react-icons/bi'
+
+
 export const TopNav = () => {
+
+  const isTab = useMediaQuery({
+    query: '(min-width: 500px)'
+  })
+  
   return (
     <TopNavContainer>
       <div 
@@ -18,8 +26,14 @@ export const TopNav = () => {
         style={{'height':'100%','width':'100%'}}/>
       </div>
 
+    {
+      isTab?
       <SearchBar/>
+    :<BiFilter/>
+    }
 
+    {
+      isTab?
       <NavToolBox>
       <div>
         <img src={UserLogo.src} alt="" />
@@ -30,7 +44,9 @@ export const TopNav = () => {
       <IoMdNotifications/>
         <AiTwotoneSetting/>
       </div>
-      </NavToolBox>
+      </NavToolBox>:''
+    }
+
     </TopNavContainer>
   )
 }
