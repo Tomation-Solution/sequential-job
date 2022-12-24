@@ -3,10 +3,12 @@ import Head from 'next/head'
 import Image from 'next/image'
 import GeneralLayout from '../layout/GeneralLayout/GeneralLayout'
 import Box from '../shared/Box/Box'
+import Button from '../shared/Button/Button'
 import DropdownMenuDemo from '../shared/DropdownMenuDemo/DropdownMenuDemo'
 import JobCard from '../shared/JobCard/JobCard'
 import SearchBar from '../shared/SearchBar/SearchBar'
 import TabsComp from '../shared/Tabs/Tabs'
+
 
 
 
