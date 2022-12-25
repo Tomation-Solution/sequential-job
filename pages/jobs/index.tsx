@@ -1,11 +1,11 @@
 import { NextPage } from 'next'
 import React from 'react'
-import GeneralLayout from '../layout/GeneralLayout/GeneralLayout'
-import Box from '../shared/Box/Box'
-import Button from '../shared/Button/Button'
-import UploadBox from '../shared/UploadBox/UploadBox'
+import GeneralLayout from '../../layout/GeneralLayout/GeneralLayout'
+import Box from '../../shared/Box/Box'
+import Button from '../../shared/Button/Button'
+import UploadBox from '../../shared/UploadBox/UploadBox'
 import {RiUploadCloudFill} from 'react-icons/ri'
-import JobCard from '../shared/JobCard/JobCard'
+import JobCard from '../../shared/JobCard/JobCard'
 
 
 
