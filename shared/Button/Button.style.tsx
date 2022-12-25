@@ -7,7 +7,12 @@ export const StyledButton = styled('button',{
     padding:'.6rem 1rem',
     fontSize:'1rem',
     'textAlign':'center',
+    cursor:'pointer',
+    display:'block',
 
+    // ':hover':{
+    //     boxShadow:'0 0 0 1 white'
+    // },
     variants:{
         color:{
             'lightBlueBtn':{
