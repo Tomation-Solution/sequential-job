@@ -1,11 +1,13 @@
 import React from "react";
 import * as Select from "@radix-ui/react-select";
+import type * as Stitches from '@stitches/react'
 import {
   CheckIcon,
   ChevronDownIcon,
   ChevronUpIcon
 } from "@radix-ui/react-icons";
 import { SelectIcon, SelectTrigger,SelectContent, StyledItem, StyledItemIndicator, SelectScrollUpButton, SelectViewport, SelectLabel, SelectScrollDownButton } from "./Select.style";
+import Box from "../Box/Box";
 
 
 
@@ -26,11 +28,19 @@ type Prop = {
     options:{
         'name':string,
         'value':string
-    }[]
+    }[],
+    showLabel?:boolean,
+    control_border?:Stitches.CSS
 }
-const SelectComponent = ({label,options}:Prop):React.ReactElement => (
-  <Select.Root>
-    <SelectTrigger aria-label={label}>
+const SelectComponent = ({label,options,showLabel=true,control_border}:Prop):React.ReactElement => (
+  <Box css={showLabel?{'display':'flex','flexDirection':'column'}:{}}>
+    {
+      showLabel?
+      <label htmlFor="" style={{'padding':'.4rem 0'}}>{label}</label>
+    :''
+    }
+    <Select.Root>
+    <SelectTrigger aria-label={label} css={control_border}>
       <Select.Value placeholder={label}/>
       <SelectIcon>
         <ChevronDownIcon />
@@ -57,6 +67,7 @@ const SelectComponent = ({label,options}:Prop):React.ReactElement => (
       </SelectContent>
     </Select.Portal>
   </Select.Root>
+  </Box>
 );
 
 

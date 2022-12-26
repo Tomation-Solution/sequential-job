@@ -19,7 +19,8 @@ export const InputWithLabelContainerStyle = styled('div',{
         color:'$white'
     },
     'label':{
-        padding:'.6rem 0'
+        padding:'.6rem 0',
+        color:'$white'
     }
 })
 
