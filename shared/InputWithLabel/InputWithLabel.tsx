@@ -6,7 +6,7 @@ import type * as Stitches from '@stitches/react';
 
 type Props = {
     label:string;
-    type?:'text'|'password',
+    type?:'text'|'password'|'date'|'time',
     show_label?:boolean;
     css?:Stitches.CSS
 }

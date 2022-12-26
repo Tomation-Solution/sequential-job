@@ -24,8 +24,10 @@ export const StyledButton = styled('button',{
                 color:'$thickBlue'
             }
         }
+    },
+    defaultVariants:{
+        'color':'lightBlueBtn'
     }
-
 })
 
 export type StyledButtonVariants =   Stitches.VariantProps<typeof StyledButton>
