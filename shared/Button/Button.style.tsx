@@ -22,7 +22,12 @@ export const StyledButton = styled('button',{
             'whiteBtn':{
                 'backgroundColor':'$white',
                 color:'$thickBlue'
-            }
+            },
+            'lightBlueOutline':{
+                'backgroundColor':'$thickBlue',
+                'color':'$lightBlue',
+                'border':'1px solid $lightBlue'
+            },
         }
     },
     defaultVariants:{
