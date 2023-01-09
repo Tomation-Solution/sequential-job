@@ -8,12 +8,15 @@ import DropdownMenuDemo from '../shared/DropdownMenuDemo/DropdownMenuDemo'
 import JobCard from '../shared/JobCard/JobCard'
 import SearchBar from '../shared/SearchBar/SearchBar'
 import TabsComp from '../shared/Tabs/Tabs'
+import { useEffect } from 'react'
 
 
 
+const Home:NextPage = ()=>{ 
 
-const Home:NextPage = ()=>{
 
+  useEffect(()=>{
+  },[])
   return (
     <GeneralLayout>
       <TabsComp

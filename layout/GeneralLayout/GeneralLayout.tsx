@@ -8,14 +8,19 @@ import { GeneralLayoutStyle, MainBoardStyle } from "./GeneralLayout.style"
 
 
 type Prop  = React.PropsWithChildren<{
-
+  remove_nav?:boolean
 }>
 
- const GeneralLayout = ({ children }:Prop):React.ReactElement => {
+ const GeneralLayout = ({ children,remove_nav=false }:Prop):React.ReactElement => {
   return (
     <GeneralLayoutStyle>
        {/* this is were the top nav will sit */}
+       {
+        remove_nav?
+        "":
+
        <TopNav/>
+       }
        <Box css={{
        'width':'100%',
         '@bp3':{
@@ -30,8 +35,12 @@ type Prop  = React.PropsWithChildren<{
         // },
        },
       }}>
-         <Nav/>
-
+         {
+           remove_nav?
+           "":
+           
+           <Nav/>
+       }
          
         <MainBoardStyle>
           {children}
