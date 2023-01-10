@@ -9,14 +9,14 @@ import JobCard from '../shared/JobCard/JobCard'
 import SearchBar from '../shared/SearchBar/SearchBar'
 import TabsComp from '../shared/Tabs/Tabs'
 import { useEffect } from 'react'
-
+/* @ts-ignore */
+import cookieCutter from 'cookie-cutter'
+// console.log({'token stuff':cookieCutter.get('user')})
 
 
 const Home:NextPage = ()=>{ 
 
 
-  useEffect(()=>{
-  },[])
   return (
     <GeneralLayout>
       <TabsComp

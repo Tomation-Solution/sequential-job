@@ -1,9 +1,12 @@
-import React from "react"
+import { useRouter } from "next/router"
+import React, { useEffect } from "react"
 import Box from "../../shared/Box/Box"
 import Nav from "../../shared/Nav/Nav"
 import TopNav from "../../shared/TopNav/TopNav"
 import { GeneralLayoutStyle, MainBoardStyle } from "./GeneralLayout.style"
-
+/* @ts-ignore */
+import cookieCutter from 'cookie-cutter'
+import useToast from "../../hooks/useToastify"
 
 
 
@@ -12,6 +15,22 @@ type Prop  = React.PropsWithChildren<{
 }>
 
  const GeneralLayout = ({ children,remove_nav=false }:Prop):React.ReactElement => {
+  const route = useRouter()
+  const {notify} = useToast()
+  
+  useEffect(()=>{
+    if(route.isReady){
+      if(!route.pathname.includes('/signin') && !route.pathname.includes('/signup')){
+  
+        console.log(console.log(route.pathname),)
+        const user = cookieCutter.get('user')
+        if(!user){
+          route.push('/signin')
+          notify('Please Login','error')
+        }
+      }
+    }
+  },[route.isReady])
   return (
     <GeneralLayoutStyle>
        {/* this is were the top nav will sit */}

@@ -9,17 +9,24 @@ type Props = {
     type?:'text'|'password'|'date'|'time',
     show_label?:boolean;
     css?:Stitches.CSS
+    register?:any;
+    errors?:string|null
 }
 type InputWithLabelType = Props &InputWithLabelStyleType
 
-const InputWithLabel = ({label,type='text',show_label=true,css,...rest}:InputWithLabelType) => {
+const InputWithLabel = ({errors,label,type='text',show_label=true,css,register,...rest}:InputWithLabelType) => {
   return (
     <InputWithLabelContainerStyle css={css}>
     {show_label?
         <label htmlFor={label}>{label}</label>
       :''
       }
-        <input type={type} {...rest} />
+        <input type={type} {...register}  {...rest} />
+        {
+          errors?
+          <p style={{'color':'crimson'}}>{errors}</p>
+        :''
+        }
     </InputWithLabelContainerStyle>
   )
 }
