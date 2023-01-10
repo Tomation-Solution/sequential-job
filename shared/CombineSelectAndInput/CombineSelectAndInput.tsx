@@ -8,31 +8,31 @@ import type * as Stiches from '@stitches/react'
 
 type Prop ={
     css?:Stiches.CSS
+    select_setValue:any;
+    select_options:{name:string,value:string}[]
+    select_name:string;
+    inputRegister:any;
+    inputLabel:string
 }
 
-const CombineSelectAndInput = ({css}:Prop):React.ReactElement => {
+const CombineSelectAndInput = ({css,select_name,select_setValue,inputRegister,select_options,inputLabel}:Prop):React.ReactElement => {
   return (
     <Box
     css={{'display':'flex','alignItems':'center', 'border':'1px solid $white','borderRadius':'5px','overflow':'hidden',...css}}
   >
     {/* <label htmlFor="">Salary</label> */}
-    <InputWithLabel label='Salary' show_label={false} css={{'input':{
+    <InputWithLabel label={inputLabel} show_label={false} css={{'input':{
         'border':'none'
-    }}}/>  
+    }}}
+    register={inputRegister}
+    />  
     <SelectComponent 
             showLabel={false}
+            name={select_name}
+            setVaue = {select_setValue}
             control_border={{'border':'none','borderLeft':'1px solid $white','borderRadius':'0'}}
             label='Currency'
-            options={[
-              {
-                'name':'Naira',
-                'value':'Naira',
-              },
-              {
-                'name':'Dollar',
-                'value':'dollar',
-              }
-            ]}
+            options={select_options}
           />
   </Box>
   )

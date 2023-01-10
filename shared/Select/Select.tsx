@@ -30,16 +30,20 @@ type Prop = {
         'value':string
     }[],
     showLabel?:boolean,
-    control_border?:Stitches.CSS
+    control_border?:Stitches.CSS,
+    setVaue?:any;
+    name?:string;
 }
-const SelectComponent = ({label,options,showLabel=true,control_border}:Prop):React.ReactElement => (
+const SelectComponent = ({name='',setVaue=()=>'',label,options,showLabel=true,control_border}:Prop):React.ReactElement => (
   <Box css={showLabel?{'display':'flex','flexDirection':'column'}:{}}>
     {
       showLabel?
       <label htmlFor="" style={{'padding':'.4rem 0'}}>{label}</label>
     :''
     }
-    <Select.Root>
+    <Select.Root onValueChange={(value:string)=>{
+      setVaue(name,value)
+    }}>
     <SelectTrigger aria-label={label} css={control_border}>
       <Select.Value placeholder={label}/>
       <SelectIcon>

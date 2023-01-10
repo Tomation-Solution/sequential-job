@@ -12,7 +12,10 @@ import {IoMdHelpCircle} from 'react-icons/io'
 import {FaUserLock} from 'react-icons/fa'
 import {AiTwotoneDelete} from 'react-icons/ai'
 import {GiUnlitBomb} from 'react-icons/gi'
+import { useRouter } from 'next/router'
 const Nav = ():React.ReactElement => {
+  
+  const route = useRouter()
   const extra_links = [
   {
     label:'Set Interview',
@@ -46,14 +49,17 @@ const Nav = ():React.ReactElement => {
     icon:<GiUnlitBomb/>
   },
   ]
-
+  
   const isDesktopOrLaptop = useMediaQuery({
     query: '(min-width: 1000px)'
   })
+  const handleRoute = (value:string):void=>{
+    route.push(value)
+  }
   return (
     <NavContainer>
       <h2>Browse Jobs</h2>
-<li >
+            <li  onClick={(e)=> handleRoute('/jobs/add-jobs/')}>
                 <IoBagSharp />
                 <p>Jobs</p>
             </li>
