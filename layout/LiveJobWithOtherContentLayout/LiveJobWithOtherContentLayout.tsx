@@ -38,7 +38,8 @@ type Prop = React.PropsWithChildren<{
             <br />
             {
                 [...new Array(4)].map(((data,index)=>(
-                    <JobCard key={index}/>
+                  <div></div>
+                    // <JobCard key={index}/>
                 )))
             }
         </Box>

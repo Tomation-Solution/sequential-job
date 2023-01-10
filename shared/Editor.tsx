@@ -1,17 +1,23 @@
 import { useCallback, useEffect, useState } from "react";
-import SimpleMDE from "easymde";
-import SimpleMdeReact from "react-simplemde-editor";
+// import SimpleMdeReact from "react-simplemde-editor";
 import type { Editor, Position } from "codemirror";
+import dynamic from "next/dynamic";
 import React from "react";
 import Box from "./Box/Box";
+import SimpleMDE from "easymde";
+
+const SimpleMdeReact  = dynamic(() => import('react-simplemde-editor'), { ssr: false })
 
 type Prop = {
     setInstance:(value:any)=>void
 }
 export const GetInstance = ({setInstance}:Prop) => {
   // simple mde
+  const CodeMirrorEditor = dynamic(import("@nteract/editor"), {
+    ssr: false
+  });
   const [simpleMdeInstance, setMdeInstance] = useState<SimpleMDE | null>(null);
-
+  
   const getMdeInstanceCallback = useCallback((simpleMde: SimpleMDE) => {
     setMdeInstance(simpleMde);
   }, []);
@@ -21,6 +27,7 @@ export const GetInstance = ({setInstance}:Prop) => {
       console.info("Hey I'm editor instance!", simpleMdeInstance);
       setInstance(simpleMdeInstance)
   }, [simpleMdeInstance]);
+
 
   // codemirror
   const [codemirrorInstance, setCodemirrorInstance] = useState<Editor | null>(
@@ -59,12 +66,14 @@ export const GetInstance = ({setInstance}:Prop) => {
         
     }}>
       <h4>Getting instance of Mde and codemirror and line and cursor info</h4>
-      <SimpleMdeReact
-        value="Go to console to see stuff logged"
-        getMdeInstance={getMdeInstanceCallback}
-        getCodemirrorInstance={getCmInstanceCallback}
-        getLineAndCursor={getLineAndCursorCallback}
-      />
+      {
+        <SimpleMdeReact
+          value="Go to console to see stuff logged"
+          getMdeInstance={getMdeInstanceCallback}
+          getCodemirrorInstance={getCmInstanceCallback}
+          getLineAndCursor={getLineAndCursorCallback}
+        />
+      }
     </Box>
   );
 };

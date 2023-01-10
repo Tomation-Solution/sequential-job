@@ -10,13 +10,19 @@ import SearchBar from '../shared/SearchBar/SearchBar'
 import TabsComp from '../shared/Tabs/Tabs'
 
 import api from '../service/axios'
+import { useQuery  } from 'react-query'
+import { get_jobs_api } from '../service/api/job.api'
+import Preloader from '../shared/Preloader/Preloder'
 // console.log({'token stuff':cookieCutter.get('user')})
 
 
 const Home:NextPage = ()=>{ 
- 
-  return (
+ const {status,error,data,isError} = useQuery('jobs',get_jobs_api)
+ console.log(data)
+
+ return (
     <GeneralLayout>
+      <Preloader loading={status=='loading'} />
       <TabsComp
         data={[
 {          'key':'Live',
@@ -33,9 +39,10 @@ const Home:NextPage = ()=>{
               }
           }}>
           {
-            [...new Array(9)].map((data,index)=>(
-              <JobCard key={index}/>
-            ))
+            data?
+          data.map((job,index)=>(
+              <JobCard job={job} key={index}/>
+            )):''
             
           }
           </Box>
@@ -56,12 +63,13 @@ const Home:NextPage = ()=>{
               'gap':'10px'
             }
         }}>
-        {
-          [...new Array(3)].map((data,index)=>(
-            <JobCard key={index}/>
-          ))
-          
-        }
+         {
+            data?
+          data.map((job,index)=>(
+              <JobCard job={job} key={index}/>
+            )):''
+            
+          }
         </Box>
         
       },

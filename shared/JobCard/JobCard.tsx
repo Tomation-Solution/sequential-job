@@ -6,20 +6,24 @@ import { JobCardContainer } from './JobCard.style'
 import {FaMoneyBillWave} from 'react-icons/fa'
 import {IoBagSharp,IoSend} from 'react-icons/io5'
 import {FaUserAlt} from 'react-icons/fa'
+import { JobType } from '../../service/api/job.api'
 
- const JobCard = ():React.ReactElement => {
+type Prop ={
+  job:JobType
+}
+ const JobCard = ({job}:Prop):React.ReactElement => {
 
 
   return (
     <JobCardContainer>
         <Box css={{'display':'flex','justifyContent':'space-between','alignItems':'center'}}>
             <h2>
-            Business Developer
+              {job.job_title}
             </h2>
             <BsHeartFill/>
         </Box>
         <h3><strong>ABC Limited</strong></h3>
-<p>Lagos, Nigeria</p>
+        <p>{job.location}</p>
       <Box css={{'display':'flex','justifyContent':'space-between','alignItems':'center','width':'270px','margin':'.7rem 0'}}>
       <span>
         <IoBagSharp />
@@ -27,7 +31,7 @@ import {FaUserAlt} from 'react-icons/fa'
             Full-Time
         </span>
         <span>
-           <FaMoneyBillWave/>{' '}$97,000/year
+           <FaMoneyBillWave/>{' '}${job.salary}/year
         </span>
       </Box>
         <p><IoSend/>{' '} Apply from your phone</p>

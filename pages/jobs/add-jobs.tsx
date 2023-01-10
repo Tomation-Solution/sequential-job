@@ -44,7 +44,7 @@ const schema = yup.object({
   'description_content':yup.string(),
 })
 const AddJobs = () => {
-
+  const [componentHasMounted,setComponentHasMounted] = useState(false)
   const route = useRouter() 
   const {notify} = useToast();
   const  {isLoading,mutate} = useMutation(create_job_api,{
@@ -81,6 +81,7 @@ const AddJobs = () => {
   console.log({errors})
   useEffect(()=>{
     setValue('description_content','...')
+    setComponentHasMounted(true)
   },[])
   return (
     <LiveJobWithOtherContentLayout
@@ -157,8 +158,14 @@ const AddJobs = () => {
         errors={errors.job_required_document?.message}
         />
         <br />
-        <GetInstance setInstance={setSimpleMdeInstance}
-        />
+        {
+          componentHasMounted?
+          <>
+            <label htmlFor="">Description</label>
+            <GetInstance setInstance={setSimpleMdeInstance}/>
+          </>
+            :''
+        }
 
           <Button color={'lightBlueBtn'} css={{'width':'30%','margin':'15px auto'}}>Submit</Button>
         <br />
