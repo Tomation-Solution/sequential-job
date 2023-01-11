@@ -5,12 +5,14 @@ import Button from "../Button/Button"
 import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
 import { JobType } from "../../service/api/job.api"
+import { useRouter } from "next/router"
 
 type Prop = {
     currentJob:JobType;
 }
 const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
     const data:string= JSON.parse( currentJob.description_content)
+    const route = useRouter()
     return (
         <Box css={{'color':'$white','padding':'0 .5rem','@bp2':{
             'textAlign':'center','maxWidth':'600px','margin':'0 auto'
@@ -75,7 +77,7 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
             <br /><br />
             <br /><br />
 
-            <Button css={{'margin':'0 auto'}}>Add filter job</Button>
+            <Button css={{'margin':'0 auto'}} onClick={(e)=>route.push('/jobs/CvFilteringQuetion/')}>Add filter job</Button>
             <br /><br />
         </Box>
     )

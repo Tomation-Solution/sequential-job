@@ -34,7 +34,7 @@ type Prop = {
     setVaue?:any;
     name?:string;
 }
-const SelectComponent = ({name='',setVaue=()=>'',label,options,showLabel=true,control_border}:Prop):React.ReactElement => (
+const SelectComponent = ({name='',setVaue=null,label,options,showLabel=true,control_border}:Prop):React.ReactElement => (
   <Box css={showLabel?{'display':'flex','flexDirection':'column'}:{}}>
     {
       showLabel?
