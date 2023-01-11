@@ -11,7 +11,7 @@ import TabsComp from '../shared/Tabs/Tabs'
 
 import api from '../service/axios'
 import { useQuery  } from 'react-query'
-import { get_jobs_api } from '../service/api/job.api'
+import { get_jobs_api, JobType } from '../service/api/job.api'
 import Preloader from '../shared/Preloader/Preloder'
 import { useState } from 'react'
 import JobDetail from '../shared/JobDetail/JobDetail'
@@ -21,10 +21,18 @@ import { useMediaQuery } from 'react-responsive'
 
 const Home:NextPage = ()=>{ 
  const {status,error,data,isError} = useQuery('jobs',get_jobs_api)
-  const [currentJob,setCurrentJob] = useState<null|number>(1)
+  const [currentJob,setCurrentJob] = useState<null|JobType>(null)
   const isDesktopOrLaptop = useMediaQuery({
     query: '(min-width: 1250px)'
   })
+  const handleJobDetail = (job:JobType)=>{
+      if(isDesktopOrLaptop){
+        //if it laptop just ffill the currentJob state
+        setCurrentJob(job)
+      }else{
+        //if it is a small device we rediredt to a detail page
+      }
+  }
  return (
     <GeneralLayout>
       <Preloader loading={status=='loading'} />
@@ -45,12 +53,9 @@ const Home:NextPage = ()=>{
               },
               '@bp3':{
                 'display':'grid',
-                'gridTemplateColumns':'repeat(2,360px)',
+                'gridTemplateColumns':'repeat(1,360px)',
                 'padding':'0 1rem',
                 'gap':'10px'
-              },
-              '@bp4':{
-                'gridTemplateColumns':'repeat(2,360px)',
               },
               '@bp5':{
                 'gridTemplateColumns':'repeat(3,360px)',
@@ -59,7 +64,9 @@ const Home:NextPage = ()=>{
           {
             data?
           data.map((job,index)=>(
-              <JobCard job={job} key={index}/>
+              <Box onClick={()=>handleJobDetail(job)}>
+                <JobCard job={job} key={index}/>
+              </Box>
             )):''
             
           }
@@ -97,7 +104,7 @@ const Home:NextPage = ()=>{
       {
         isDesktopOrLaptop?
     <Box>
-      <JobDetail/>
+      {currentJob&&<JobDetail currentJob={currentJob}/>}
     </Box>:''
       }
      </Box>

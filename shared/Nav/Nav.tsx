@@ -59,12 +59,12 @@ const Nav = ():React.ReactElement => {
   return (
     <NavContainer>
       <h2>Browse Jobs</h2>
-            <li  onClick={(e)=> handleRoute('/jobs/add-jobs/')}>
+            <li  onClick={(e)=> handleRoute('/')}>
                 <IoBagSharp />
                 <p>Jobs</p>
             </li>
 
-            <li >
+            <li onClick={(e)=>handleRoute('/jobs/')}>
                 <RiUploadCloudFill/>
                 <p>Upload</p>
             </li>

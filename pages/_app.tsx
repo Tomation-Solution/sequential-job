@@ -5,6 +5,7 @@ import {QueryClient,QueryClientProvider,} from 'react-query'
 
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { ToastContainer } from 'react-toastify';
+import NextNProgress from 'nextjs-progressbar';
 
 
 // Create a client
@@ -16,6 +17,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
         <ToastContainer/>
+        <NextNProgress color='#24CDE2' />
 
       <Component {...pageProps} />
   <ReactQueryDevtools initialIsOpen={false} />

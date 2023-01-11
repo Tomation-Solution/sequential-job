@@ -10,7 +10,7 @@ const JobDetailPage:NextPage =()=>{
 
     return(
         <GeneralLayout>
-            <JobDetail/>
+            {/* <JobDetail/> */}
         </GeneralLayout>
     )
 }

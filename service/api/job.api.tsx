@@ -2,6 +2,7 @@ import { JobCreateForm } from "../../pages/jobs/add-jobs";
 import api from "../axios";
 
 export type JobType = {
+    id:number;
     "job_title": string,
     "is_active": boolean,
     "location": string,
@@ -32,6 +33,10 @@ export const create_job_api = (job:JobCreateForm)=>{
 export const get_jobs_api =async ():Promise<JobType[]>=> {
 
     const resp = await api.get('/jobs/company-job-handler/');
-    console.log({'fgrom api get':resp.data.data})
+    return  resp.data.data
+}
+
+export const get_job_detail = async (id:number)=>{
+    const resp = await api.get(`/jobs/company-job-handler/${id}/`);
     return  resp.data.data
 }
