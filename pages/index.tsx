@@ -13,17 +13,28 @@ import api from '../service/axios'
 import { useQuery  } from 'react-query'
 import { get_jobs_api } from '../service/api/job.api'
 import Preloader from '../shared/Preloader/Preloder'
+import { useState } from 'react'
+import JobDetail from '../shared/JobDetail/JobDetail'
+import { useMediaQuery } from 'react-responsive'
 // console.log({'token stuff':cookieCutter.get('user')})
 
 
 const Home:NextPage = ()=>{ 
  const {status,error,data,isError} = useQuery('jobs',get_jobs_api)
- console.log(data)
-
+  const [currentJob,setCurrentJob] = useState<null|number>(1)
+  const isDesktopOrLaptop = useMediaQuery({
+    query: '(min-width: 1250px)'
+  })
  return (
     <GeneralLayout>
       <Preloader loading={status=='loading'} />
-      <TabsComp
+     
+     <Box css={{'display':'flex','justifyContent':'space-between',
+    'maxWidth':'1600px',
+    // 'border':'1px solid red',
+    'margin':'0 auto'
+    }}>
+     <TabsComp
         data={[
 {          'key':'Live',
           'label':'Live',
@@ -34,8 +45,15 @@ const Home:NextPage = ()=>{
               },
               '@bp3':{
                 'display':'grid',
-                'gridTemplateColumns':'repeat(3,360px)',
+                'gridTemplateColumns':'repeat(2,360px)',
+                'padding':'0 1rem',
                 'gap':'10px'
+              },
+              '@bp4':{
+                'gridTemplateColumns':'repeat(2,360px)',
+              },
+              '@bp5':{
+                'gridTemplateColumns':'repeat(3,360px)',
               }
           }}>
           {
@@ -55,7 +73,8 @@ const Home:NextPage = ()=>{
           <Box css={{
             '@bp1':{
               'display':'flex',
-              'flexWrap':'wrap'
+              'flexWrap':'wrap',
+              'justifyContent':'space-between'
             },
             '@bp3':{
               'display':'grid',
@@ -75,7 +94,13 @@ const Home:NextPage = ()=>{
       },
         ]}
       />
-  
+      {
+        isDesktopOrLaptop?
+    <Box>
+      <JobDetail/>
+    </Box>:''
+      }
+     </Box>
     </GeneralLayout>
   )
 }

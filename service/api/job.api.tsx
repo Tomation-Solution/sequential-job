@@ -25,7 +25,7 @@ export const create_job_api = (job:JobCreateForm)=>{
     form.append('salary',JSON.stringify(job.salary))
     form.append('currency',job.currency)
     form.append('job_required_document',job.job_required_document)
-    form.append('description_content',job.description_content)
+    form.append('description_content',JSON.stringify(job.description_content))
     return  api.post('/jobs/company-job-handler/',form).then(res=>res.data)
 }
 // 

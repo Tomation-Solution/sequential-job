@@ -27,6 +27,8 @@ export const {
       bp1: '(min-width: 400px)',
       bp2: '(min-width: 500px)',
       bp3: '(min-width: 1000px)',
+      bp4: '(min-width: 1300px)',
+      bp5: '(min-width: 1500px)',
     },  
     utils: {
       marginX: (value:any) => ({ marginLeft: value, marginRight: value }),
