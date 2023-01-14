@@ -1,4 +1,5 @@
 import { JobCreateForm } from "../../pages/jobs/add-jobs";
+import { CvFilteringQuetionType } from "../../pages/jobs/CvFilteringQuetion";
 import api from "../axios";
 
 export type JobType = {
@@ -39,4 +40,58 @@ export const get_jobs_api =async ():Promise<JobType[]>=> {
 export const get_job_detail = async (id:number)=>{
     const resp = await api.get(`/jobs/company-job-handler/${id}/`);
     return  resp.data.data
+}
+
+export const create_quetion= async(data:CvFilteringQuetionType)=>{
+    let senddata:any = {...data,'title':'Test Quetion'}
+    const resp = await api.post('/jobs/company-filterquetion-handler/',senddata);
+    return  resp.data.data
+
+}
+type get_all_quetionResponse = {
+    title:string;
+    id:number
+}
+export const get_all_quetion =async ():Promise<get_all_quetionResponse[]> => {
+    const resp = await api.get('/jobs/company-filterquetion-handler/list_qeutions/',);
+    return  resp.data.data
+}
+
+type addQuetionToJobProp  = {
+    "job_id":number,
+    "id":number
+}
+export const add_quetion_to_job = async(data:addQuetionToJobProp)=>{
+    const resp = await api.post('/jobs/company-filterquetion-handler/add_qeution_to_job/',{...data,'title':'..'});
+    return  resp.data.data
+}
+
+type getCutOffForQuetionReponseType ={
+    "id": number,
+    "title": string,
+    "suitable": number,
+    "end_suitable": number,
+    "partially_suitable": number,
+    "end_partially_suitable": number,
+    "not_suitable": number,
+    "end_not_suitable": number,
+    "company": number
+}
+// :Promise<getCutOffForQuetionReponseType>
+export const getCutOffForQuetion =async (id:string):Promise<getCutOffForQuetionReponseType>=> {
+    const resp = await api.get(`/jobs/company-filterquetion-handler/${id}/get_cut_off_for_quetion/`);
+    return  resp.data.data
+}
+type setCutOffForQuetionProp = {
+    "id": number,
+    "suitable": number,
+    "end_suitable": number,
+    "partially_suitable": number,
+    "end_partially_suitable": number,
+    "not_suitable": number,
+    "end_not_suitable": number,
+}
+export const setCutOffForQuetion = async (data:setCutOffForQuetionProp)=>{
+    const resp = await api.post(`/jobs/company-filterquetion-handler/set_cut_off_for_quetion/`,data);
+    return  resp.data
 }

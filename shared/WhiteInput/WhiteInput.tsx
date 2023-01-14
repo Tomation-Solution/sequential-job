@@ -5,10 +5,16 @@ import { WhiteInputStyled } from './WhiteInput.style'
 
 
 
-
-export const WhiteInput = () => {
+type Prop = {
+  regsiter?:any;
+  error?:string
+}
+export const WhiteInput = ({regsiter,error=''}:Prop) => {
   return (
-    <WhiteInputStyled placeholder='/100' />
+    <>
+    <WhiteInputStyled placeholder='/100'  {...regsiter}/>
+    <p style={{'color':'crimson'}}>{error}</p>
+    </>
   )
 }
 

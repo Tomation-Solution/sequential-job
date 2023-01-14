@@ -24,7 +24,7 @@ const Nav = ():React.ReactElement => {
   },
   {
     label:'Set Test',
-    route:'#',
+    route:'/jobs/CvFilteringQuetion/',
     icon:<FaStickyNote/>
 
   },
@@ -93,7 +93,7 @@ const Nav = ():React.ReactElement => {
         }/>: <div style={{'marginTop':'20px'}}>
           {
             extra_links.map((data,index)=>(
-              <li  key={index}>
+              <li  key={index} onClick={()=>route.push(data.route)}>
                 {data.icon}
                 <p>{data.label}</p>
             </li>

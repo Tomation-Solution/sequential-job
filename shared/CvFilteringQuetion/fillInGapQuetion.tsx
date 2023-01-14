@@ -9,7 +9,7 @@ import { CvFilteringQuetionType, ViewType } from "../../pages/jobs/CvFilteringQu
 import { PropForQuetionComonents } from "./OptionQuetion";
 
 
-type fillInGapQuetionType = {
+export type fillInGapQuetionType = {
     "quetion":string,"answer":string,"quetion_mark":number
 }
 const schema = yup.object({
@@ -28,17 +28,18 @@ const FillInGapQuetion = ({state,setState,setView}:PropForQuetionComonents):Reac
         //se the page back to normal
         setView('idle')
       }
+      console.log({errors})
     return (
        <Box>
          <h2>Fill In The Gap Quetion</h2>
 
          <form onSubmit={handleSubmit(onSubmit)}>
-            <InputWithLabel label="Quetion" register={'quetion'} />
+            <InputWithLabel label="Quetion" register={register('quetion')} />
             <br />
              <Box css={{'maxWidth':'400px'}}>
-            <InputWithLabel label="Answer" register={'answer'} />
+            <InputWithLabel label="Answer" register={register('answer')} />
             <br />
-            <InputWithLabel label="Quetion Mark" register={'quetion_mark'} />
+            <InputWithLabel label="Quetion Mark" register={register('quetion_mark')} />
             <br />
 
             </Box>
@@ -46,7 +47,10 @@ const FillInGapQuetion = ({state,setState,setView}:PropForQuetionComonents):Reac
                 <br />
                 <Box css={{'display':'flex','justifyContent':'space-between','alignItems':'center','margin':'0 auto','width':'300px'}}>
                     <Button css={{'width':'30%','margin':'0 auto'}} >Create</Button>
-                    <Button css={{'width':'30%','margin':'0 auto'}} color='whiteBtn' onClick={(e)=>setView('idle')}>Close</Button>
+                    <Button css={{'width':'30%','margin':'0 auto'}} color='whiteBtn' onClick={(e)=>{
+                          e.preventDefault()
+                        setView('idle')
+                    }}>Close</Button>
                 </Box>
                 <br />
          </form>
