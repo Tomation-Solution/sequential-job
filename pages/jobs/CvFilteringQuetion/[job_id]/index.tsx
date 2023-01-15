@@ -2,13 +2,13 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useQuery ,useMutation} from "react-query";
-import useToast from "../../../hooks/useToastify";
-import GeneralLayout from "../../../layout/GeneralLayout/GeneralLayout";
-import { add_quetion_to_job, get_all_quetion } from "../../../service/api/job.api";
-import Box from "../../../shared/Box/Box";
-import Button from "../../../shared/Button/Button";
-import Preloader from "../../../shared/Preloader/Preloder";
-import SelectComponent from "../../../shared/Select/Select";
+import useToast from "../../../../hooks/useToastify";
+import GeneralLayout from "../../../../layout/GeneralLayout/GeneralLayout";
+import { add_quetion_to_job, get_all_quetion } from "../../../../service/api/job.api";
+import Box from "../../../../shared/Box/Box";
+import Button from "../../../../shared/Button/Button";
+import Preloader from "../../../../shared/Preloader/Preloder";
+import SelectComponent from "../../../../shared/Select/Select";
 
 
 

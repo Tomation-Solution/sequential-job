@@ -78,9 +78,20 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
             <br /><br />
             {
                 currentJob.job_filter?
+<Box css={{
+    'display':'flex','justifyContent':'space-between','width':'400px','margin':'0 auto'
+}}>
+
 <Button   css={{'margin':'0 auto'}} color={'lightBlueOutline'} 
                 onClick={(e)=>route.push(`/jobs/CvFilteringQuetion/application-sorting-create/${currentJob.job_filter}/`)}
-                >Update Cut Off Mark</Button>                :
+                >Update Cut Off Mark</Button>
+                <Button color={'whiteBtn'}
+                   onClick={(e)=>route.push(`/jobs/CvFilteringQuetion/${currentJob.id}/view-filter-candidate/`)}
+                > 
+                    View Sorted Candidate
+                </Button>
+</Box> 
+                :
                 <Button css={{'margin':'0 auto'}} onClick={(e)=>route.push(`/jobs/CvFilteringQuetion/${currentJob.id}/`)}>Add filter job</Button>
             }
 

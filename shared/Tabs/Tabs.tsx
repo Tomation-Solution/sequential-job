@@ -9,11 +9,16 @@ type TabData = {
 }
 type Prop = {
     data:TabData[]
+    onChange?:(value:string)=>void
 }
 
 
-const TabsComp = ({ data }:Prop):React.ReactElement => (
-    <TabsRoot defaultValue={data[0].key}>
+const TabsComp = ({ data,onChange }:Prop):React.ReactElement => (
+    <TabsRoot defaultValue={data[0].key} onValueChange={(value)=>{
+      if(onChange){
+        onChange(value)
+      }
+    }}>
       <TabsList aria-label="Manage your account">
         {
             data.map((value,index)=>(

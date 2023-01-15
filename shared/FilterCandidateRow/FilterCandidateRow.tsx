@@ -1,8 +1,15 @@
 import React from 'react'
+import { getSortedJobCandidateResponse } from '../../service/api/candidate_related.api'
 import Box from '../Box/Box'
 import Button from '../Button/Button'
 
-const FilterCandidateRow = () => {
+
+
+type Prop ={
+  applicant:getSortedJobCandidateResponse
+}
+
+const FilterCandidateRow = ({applicant}:Prop) => {
   return (
     <Box
         css={{
@@ -18,9 +25,11 @@ const FilterCandidateRow = () => {
         }}
     >
 
-<p>Tomiwa Ayandele</p>
-        <p>70%</p>
-        <Button css={{'padding':'.4rem 1rem','width':'100px'}}>View Cv</Button>
+<p>{applicant.jobseekers.email}</p>
+        <p>{applicant.filter_quetions_score}</p>
+        <Button css={{'padding':'.4rem 1rem','width':'100px'}} onClick={(e)=>{
+          window.open(applicant.jobseekers.cv_url, '_blank')
+        }}>View Cv</Button>
         <Button color={'lightBlueOutline'} css={{'padding':'.4rem 1rem','width':'100px'}}>Invite</Button>
     </Box>
   )
