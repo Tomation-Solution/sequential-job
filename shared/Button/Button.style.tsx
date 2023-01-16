@@ -28,6 +28,11 @@ export const StyledButton = styled('button',{
                 'color':'$lightBlue',
                 'border':'1px solid $lightBlue'
             },
+            'danger':{
+                'backgroundColor':'$thickBlue',
+                'color':'Crimson',
+                'border':'1px solid  Crimson',
+            }
         }
     },
     defaultVariants:{

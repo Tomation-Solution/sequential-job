@@ -19,7 +19,7 @@ const Nav = ():React.ReactElement => {
   const extra_links = [
   {
     label:'Set Interview',
-    route:'#',
+    route:'/interviews/create-Interview/',
     icon:<FaStickyNote/>
   },
   {
