@@ -29,7 +29,7 @@ type Prop = React.PropsWithChildren<{
         </Box>
 
 
-
+{/* 
         <Box css={{'display':'none','@bp3':{
             'display':'flex','flexDirection':'column',
             'justifyContent':'center','alignItems':'center'
@@ -39,10 +39,10 @@ type Prop = React.PropsWithChildren<{
             {
                 [...new Array(4)].map(((data,index)=>(
                   <div></div>
-                    // <JobCard key={index}/>
+                    <JobCard key={index}/>
                 )))
             }
-        </Box>
+        </Box> */}
     </Box>
 </GeneralLayout>
   )

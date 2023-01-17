@@ -3,6 +3,11 @@ import { getSortedJobCandidateResponse } from '../../service/api/candidate_relat
 import Box from '../Box/Box'
 import Button from '../Button/Button'
 
+/* @ts-ignore */
+import cookieCutter from 'cookie-cutter'
+import jwt_decode from "jwt-decode";
+import { UserType } from '../../service/api/authentication/authentication.api'
+import { useRouter } from 'next/router'
 
 
 type Prop ={
@@ -10,6 +15,9 @@ type Prop ={
 }
 
 const FilterCandidateRow = ({applicant}:Prop) => {
+  const logged_in_user:UserType = jwt_decode(JSON.parse( cookieCutter.get('user')).access)
+  const route = useRouter()
+  const { job_id } = route.query
   return (
     <Box
         css={{
@@ -30,7 +38,16 @@ const FilterCandidateRow = ({applicant}:Prop) => {
         <Button css={{'padding':'.4rem 1rem','width':'100px'}} onClick={(e)=>{
           window.open(applicant.jobseekers.cv_url, '_blank')
         }}>View Cv</Button>
-        <Button color={'lightBlueOutline'} css={{'padding':'.4rem 1rem','width':'100px'}}>Invite</Button>
+        {
+          logged_in_user.user_type=='panelist'?
+          <Button color={'lightBlueOutline'} css={{'padding':'.4rem 1rem','width':'100px'}}
+            onClick={(e)=>{
+              route.push(`/panelist/grade_candidate/${job_id}/${applicant.id}/`)
+            }}
+          >Grade</Button>
+          :
+          <Button color={'lightBlueOutline'} css={{'padding':'.4rem 1rem','width':'100px'}}>Invite</Button>
+        }
     </Box>
   )
 }

@@ -65,12 +65,12 @@ const ApplicationSorting:NextPage = ()=>{
     useEffect(()=>{
         if(status=='success'){
             if(data){
-                setValue('end_not_suitable',data.end_not_suitable)
                 setValue('suitable',data.suitable)
+                setValue('end_suitable',data.end_suitable)
+                setValue('end_not_suitable',data.end_not_suitable)
+                setValue('not_suitable',data.not_suitable)
                 setValue('partially_suitable',data.partially_suitable)
                 setValue('end_partially_suitable',data.end_partially_suitable)
-                setValue('not_suitable',data.not_suitable)
-                setValue('end_suitable',data.end_not_suitable)
             }
         }
     },[status,isLoading])

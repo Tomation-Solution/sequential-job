@@ -11,11 +11,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import Preloader from "../shared/Preloader/Preloder";
 import { useMutation } from "react-query";
-import { signInApi } from "../service/api/authentication/authentication.api";
+import { signInApi, UserType } from "../service/api/authentication/authentication.api";
 import useToast from "../hooks/useToastify";
 import { useRouter } from "next/router";
 /* @ts-ignore */
 import cookieCutter from 'cookie-cutter'
+import jwt_decode from "jwt-decode";
+
 
 const cssStyleForInput = {
     'input':{
@@ -51,14 +53,17 @@ const Signin:NextPage =()=>{
 
       const  {isLoading,mutate} = useMutation(signInApi,{
         'onSuccess':(resp)=>{
-            console.log(resp)
             notify(resp.message,'success')
             // localStorage.setItem('tokens',resp.tokens)
             //delete cookie
             // cookieCutter.set('user','',resp.tokens)
             cookieCutter.set('user',JSON.stringify(resp.data.tokens))
-            
-            route.push('/')
+            const userInfo:UserType =  jwt_decode(resp.data.tokens.access)
+            if(userInfo.user_type ==='panelist'){
+                route.push('/panelist/')
+            }else{
+                route.push('/')
+            }
         },
         'onError':(error:any)=>{
             console.log(error)

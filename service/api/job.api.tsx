@@ -13,7 +13,8 @@ export type JobType = {
     "job_required_document": string,
     "description": null,
     "job_filter": null|number,
-    "description_content":string
+    "description_content":string,
+    interview?:number|null;
 }
 
 

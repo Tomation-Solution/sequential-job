@@ -65,6 +65,9 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
 
             </Box>
             <br />
+            <p style={{'color':'crimson','cursor':'pointer'}} onClick={(e)=>route.push(`/jobs/CvFilteringQuetion/${currentJob.id}/interview/viewInterView`)}>
+                view Interview
+            </p>
             <br />
 
             <h2 style={{'color':'#24CDE2','padding':'1rem 0','fontWeight':'lighter'}}>Job Description</h2>

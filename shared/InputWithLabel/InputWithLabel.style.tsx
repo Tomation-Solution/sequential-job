@@ -10,7 +10,7 @@ export const InputWithLabelContainerStyle = styled('div',{
 'display':'flex',
 'flexDirection':'column',
 
-    input:{
+    'input,textarea':{
         border:'1px solid $white',
         'backgroundColor':'$thickBlue',
         'outline':'none',

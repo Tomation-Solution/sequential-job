@@ -22,3 +22,8 @@ export const InterViewSetUpApi = async (data:InterviewProp)=>{
     const resp = await api.post(`/interview/interview_setup/`,data);
     return  resp.data
 }
+
+export const view_interviewApi =async (job_id:number):Promise<InterviewProp>=>{
+    const resp = await api.get(`/interview/interview_setup/${job_id}/`,);
+    return  resp.data.data
+}

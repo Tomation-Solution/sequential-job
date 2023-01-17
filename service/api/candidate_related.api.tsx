@@ -19,6 +19,7 @@ export const get_sorted_job_candidate = async (data:getSortedJobCandidate):Promi
     const form = new FormData()
     form.append('job_id',data.job_id.toString())
     form.append('status',data.status)
+    // now if it a panelist we need to filter by only invited people
     const resp = await api.post(`/jobs/company-job-handler/get_sorted_job_candidate/`,form);
     return  resp.data.data
 }
