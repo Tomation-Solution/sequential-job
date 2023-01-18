@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useMutation, useQuery } from "react-query";
 import GeneralLayout from "../../../../layout/GeneralLayout/GeneralLayout";
 import LiveJobWithOtherContentLayout from "../../../../layout/LiveJobWithOtherContentLayout/LiveJobWithOtherContentLayout";
-import { get_rating_sheet, rating_job_seekers, rating_job_seekersProp } from "../../../../service/api/panelist.api";
+import { get_interview_aggregate, get_rating_sheet, rating_job_seekers, rating_job_seekersProp } from "../../../../service/api/panelist.api";
 import Box from "../../../../shared/Box/Box";
 import Button from "../../../../shared/Button/Button";
 import TabsComp from "../../../../shared/Tabs/Tabs";
@@ -35,6 +35,9 @@ const schema = yup.object({
 const GradeCandidates:NextPage = ()=>{
     const {notify} =useToast();
 
+
+    const {isLoading:aggregate_isloading,mutate:get_aggregate,data:aggregate_data} = useMutation(get_interview_aggregate,)
+
     const {mutate,isLoading,data:rating_sheet} = useMutation(get_rating_sheet,{
         'onSuccess':(data)=>{
             console.log({'success':data})
@@ -57,7 +60,7 @@ const GradeCandidates:NextPage = ()=>{
     const route = useRouter();
     const {candidate_id,job_id} = route.query
     
-
+    const [currentJobId,setCurrentJobId] = useState<number>(-1)
     const { register,control, handleSubmit, setValue,formState: { errors } } = useForm<rating_job_seekersProp>({
         resolver: yupResolver(schema),
         defaultValues:{
@@ -79,7 +82,7 @@ const GradeCandidates:NextPage = ()=>{
         handleSubmission(data)
       }
 
-
+      console.log({aggregate_data})
     useEffect(()=>{
         if(typeof candidate_id =='string'&& typeof job_id =='string'){
             console.log({candidate_id,job_id})
@@ -112,8 +115,22 @@ const GradeCandidates:NextPage = ()=>{
         <LiveJobWithOtherContentLayout header="Tomiwa Ayandele">
             <br />
             <br />
-            <Preloader loading={isLoading ||submitting}/>
+            <Preloader loading={isLoading ||submitting||aggregate_isloading}/>
             <TabsComp
+            onChange={(value)=>{
+                if(value=='aggregate'){
+                    //this means the person want to see the aggregate we 
+                    // dont want to render evenry time so the code bellow 
+                    // prevent it
+                    if(typeof job_id == 'string'){
+                        if(parseInt(job_id) != currentJobId){
+                            //if this is true update the currentJobId and trigger the mutate
+                            setCurrentJobId(parseInt(job_id))
+                            get_aggregate({'job_id':parseInt(job_id)})
+                        }
+                    }
+                }
+            }}
                 data={
                     [
                     {
@@ -155,7 +172,27 @@ const GradeCandidates:NextPage = ()=>{
                     {
                         'label':'Aggregate Grade',
                         'key':'aggregate',
-                        'template':<></>
+                        'template':
+                        <>
+                        {
+                            aggregate_data?
+                            
+                            aggregate_data.map((data,index)=>(
+                                <Box 
+                                css={{'display':'flex','justifyContent':'space-between','margin':'10px auto'}} key={index}>
+                                    <Button color={'whiteBtn'} css={{'width':'50%'}}>
+                                    {data.value}
+                                    </Button>
+                                   
+                                   <Button color={'whiteBtn'} css={{'width':'40%'}}>
+                                    {data.aggrate_rating}
+                                   </Button>
+                                </Box>
+                            ))
+                            :''
+                        }
+                        </>
+
                     },
                 ]}
             />

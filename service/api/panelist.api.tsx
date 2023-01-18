@@ -50,3 +50,18 @@ export const rating_job_seekers = async (data:rating_job_seekersProp)=>{
     const resp = await api.post(`/interview/panelist_view_jobs/rating_job_seekers/`,data);
     return resp.data.data
 }
+
+
+type IntervierwAggregateResponse  ={
+    "value": string,
+    "aggrate_rating": number,
+    "cut_off": number
+}
+type IntervierwAggregateProps ={
+    job_id:number
+}
+
+export const get_interview_aggregate = async (data:IntervierwAggregateProps):Promise<IntervierwAggregateResponse[]>=>{
+    const resp = await api.post(`/interview/panelist_view_jobs/interview_aggregate/`,data);
+    return resp.data.data
+}
