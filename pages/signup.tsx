@@ -160,8 +160,10 @@ const Signup:NextPage =()=>{
                     <Button css={{'margin':'0 auto'}} >Submit</Button>
                     </Pane>
                     <br />
-                    <Button color={'lightBlueOutline'} css={{'margin':'0 auto'}}>Sign In</Button>
                 </form>
+                    <Button 
+                    onClick={()=>route.push('/signin')}
+                    color={'lightBlueOutline'} css={{'margin':'0 auto'}}>Sign In</Button>
 
               </Box>
         </GeneralLayout>

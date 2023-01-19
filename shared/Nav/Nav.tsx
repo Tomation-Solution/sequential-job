@@ -13,6 +13,12 @@ import {FaUserLock} from 'react-icons/fa'
 import {AiTwotoneDelete} from 'react-icons/ai'
 import {GiUnlitBomb} from 'react-icons/gi'
 import { useRouter } from 'next/router'
+/* @ts-ignore */
+import cookieCutter from 'cookie-cutter'
+
+
+
+
 const Nav = ():React.ReactElement => {
   
   const route = useRouter()
@@ -64,9 +70,9 @@ const Nav = ():React.ReactElement => {
                 <p>Jobs</p>
             </li>
 
-            <li onClick={(e)=>handleRoute('/jobs/')}>
+            <li onClick={(e)=>handleRoute('/jobs/add-jobs/')}>
                 <RiUploadCloudFill/>
-                <p>Upload</p>
+                <p>Create Job</p>
             </li>
 
             <li >
@@ -93,7 +99,15 @@ const Nav = ():React.ReactElement => {
         }/>: <div style={{'marginTop':'20px'}}>
           {
             extra_links.map((data,index)=>(
-              <li  key={index} onClick={()=>route.push(data.route)}>
+              <li  key={index} onClick={()=>{
+                if(data.label==='Logout'){
+                  cookieCutter.set('user',null)
+  
+                  route.push('/signin')
+                }else{
+                  route.push(data.route)
+                }
+              }}>
                 {data.icon}
                 <p>{data.label}</p>
             </li>

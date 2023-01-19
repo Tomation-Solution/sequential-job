@@ -109,8 +109,10 @@ const Signin:NextPage =()=>{
                     </Pane>
 
                     <br />
-                    <Button color={'lightBlueOutline'} css={{'margin':'0 auto'}}>Sign Up</Button>
                 </form>
+                    <Button color={'lightBlueOutline'} 
+                    onClick={()=>route.push('/signup')}
+                    css={{'margin':'0 auto'}}>Sign Up</Button>
 
               </Box>
         </GeneralLayout>

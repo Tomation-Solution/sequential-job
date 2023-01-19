@@ -4,7 +4,8 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { styled,keyframes } from '../../stitches.config';
 import { DropdownMenuArrow, DropdownMenuContent, DropdownMenuItem } from './DropdownMenuDemo.style';
 import { useRouter } from 'next/router';
-
+/* @ts-ignore */
+import cookieCutter from 'cookie-cutter'
 
 
 type Prop = {
@@ -30,8 +31,14 @@ const DropdownMenuDemo = ({trigger_btn,links=[]}:Prop) => {
           {
             links.map((data,index:number)=>(
             <DropdownMenuItem key={index} onClick={()=>{
-              console.log('hello world')
-              route.push(data.route)
+              if(data.label==='Logout'){
+                cookieCutter.set('user',null)
+
+                route.push('/signin')
+              }else{
+                route.push(data.route)
+              }
+              
             }}>
                 {data.label} 
             </DropdownMenuItem>

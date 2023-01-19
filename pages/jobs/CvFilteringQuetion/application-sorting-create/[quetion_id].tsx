@@ -117,11 +117,11 @@ const ApplicationSorting:NextPage = ()=>{
                 <h2>Set Cut Off for:{' '}{data?.title}</h2>
                 <form onSubmit={handleSubmit(onSubmit)}>
                 <Box>
-                        <p> Not Suitabletially</p>
+                        <p> Not Suitable </p>
                         <WhiteInput regsiter={register('not_suitable')}/>
                     </Box>
                     <Box>
-                        <p> Not Suitabletially Max </p>
+                        <p> Not Suitable Max </p>
                         <WhiteInput regsiter={register('end_not_suitable')}/>
                     </Box>
                     <br />

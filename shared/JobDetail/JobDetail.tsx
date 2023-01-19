@@ -95,7 +95,7 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
                 </Button>
 </Box> 
                 :
-                <Button css={{'margin':'0 auto'}} onClick={(e)=>route.push(`/jobs/CvFilteringQuetion/${currentJob.id}/`)}>Add filter job</Button>
+                <Button css={{'margin':'0 auto'}} onClick={(e)=>route.push(`/jobs/CvFilteringQuetion/${currentJob.id}/`)}>Add Cv Filtering</Button>
             }
 
 

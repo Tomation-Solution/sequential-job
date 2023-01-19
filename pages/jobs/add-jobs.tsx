@@ -6,8 +6,7 @@ import Button from '../../shared/Button/Button'
 import CombineSelectAndInput from '../../shared/CombineSelectAndInput/CombineSelectAndInput'
 import InputWithLabel from '../../shared/InputWithLabel/InputWithLabel'
 import SelectComponent from '../../shared/Select/Select'
-
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray, useWatch, Control } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useMutation } from "react-query";
@@ -21,6 +20,9 @@ import GetInstance from '../../shared/Editor'
 import useToast from '../../hooks/useToastify'
 import { create_job_api } from '../../service/api/job.api'
 import Preloader from '../../shared/Preloader/Preloder'
+import listOfNigerianStates  from '../../utils/list_of_states'
+import {AiFillCloseCircle} from 'react-icons/ai'
+
 
 export type JobCreateForm = {
   'job_title':string;
@@ -29,7 +31,7 @@ export type JobCreateForm = {
   'job_type':'on_site'|'hybrid'|'remote';
   'salary':number;
   'currency':'string',
-  'job_required_document':string;
+  'job_required_document':{'name':string}[];
   'description_content':string
 }
 
@@ -40,7 +42,9 @@ const schema = yup.object({
   'job_type':yup.string(),
   'salary':yup.number(),
   'currency':yup.string(),
-  'job_required_document':yup.string(),
+  'job_required_document':yup.array().of(yup.object({
+    'name':yup.string().required(),
+  })),
   'description_content':yup.string(),
 })
 const AddJobs = () => {
@@ -62,16 +66,22 @@ const AddJobs = () => {
   const [simpleMdeInstance,setSimpleMdeInstance] =  useState<SimpleMDE | null>(null);
 
 
-  const { register, setValue,handleSubmit, formState: { errors } } = useForm<JobCreateForm>({
-    resolver: yupResolver(schema)
+  const { register,control,setValue,handleSubmit, formState: { errors } } = useForm<JobCreateForm>({
+    resolver: yupResolver(schema),
+    defaultValues:{
+      'job_required_document':[{'name':''}]
+    },
+    mode: "onBlur"
   });
 
+  const { fields, append, remove} = useFieldArray({
+    'name':'job_required_document',control
+  })
 
   const onSubmit = (job:JobCreateForm)=>{
-    let new_job:JobCreateForm = {...job}
+    let new_job:any = {...job}
     if(simpleMdeInstance){1
       // we get the data and put it in the json so we can send to the backemnd
-      
       new_job['description_content']=simpleMdeInstance.value()
       mutate(new_job)
     }
@@ -99,20 +109,14 @@ const AddJobs = () => {
           label='Location'
           setVaue={setValue}
           name='location'
-          options={[
-            {
-              'name':'Lagos',
-              'value':'Lagos'
-            },
-            {
-              'name':'Abuja',
-              'value':'Abuja'
-            },
-            {
-              'name':'Benin',
-              'value':'Benin'
-            },
-          ]}
+          options={listOfNigerianStates.map((data:string,index:number)=>{
+            return (
+              {
+                'value':data,
+              'name':data
+              }
+            )
+          })}
         />
 
 <br />
@@ -153,10 +157,25 @@ const AddJobs = () => {
 
           />
           <br />
-        <InputWithLabel label='Required Document'
-        register={register('job_required_document')}
-        errors={errors.job_required_document?.message}
-        />
+          {
+            fields.map((data,index)=>(
+              <Box key={index} css={{'position':'relative','margin':'4px 0'}} >
+                  <AiFillCloseCircle style={{'color':'crimson','cursor':'pointer'}} onClick={(e:any)=>remove(index)}/>
+                  <InputWithLabel label='Required Document'
+                  register={register(`job_required_document.${index}.name`)}
+                  errors={errors.job_required_document?.message}
+                  />
+              </Box>
+            ))
+          }
+          <Button
+          color={'lightBlueOutline'}
+              type="button"
+              onClick={(e) =>{
+                e.preventDefault()
+                append({'name':''})
+              }}
+            >Append</Button>
         <br />
         {
           componentHasMounted?
