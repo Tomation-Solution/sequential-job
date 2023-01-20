@@ -40,8 +40,8 @@ api.interceptors.response.use(function (response) {
   const code:any = error.response.data.messages[0]
   if(code.token_class === 'AccessToken') {
     if (window.location.pathname !=='/expired_token_page'){
-      window.location.reload()
-      window.location.href='/expired_token_page'
+      // window.location.reload()
+      // window.location.href='/expired_token_page'
     }
   } 
   // Any status codes that falls outside the range of 2xx cause this function to trigger

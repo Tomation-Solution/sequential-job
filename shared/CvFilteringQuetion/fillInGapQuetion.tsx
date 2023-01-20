@@ -39,7 +39,7 @@ const FillInGapQuetion = ({state,setState,setView}:PropForQuetionComonents):Reac
              <Box css={{'maxWidth':'400px'}}>
             <InputWithLabel label="Answer" register={register('answer')} />
             <br />
-            <InputWithLabel label="Quetion Mark" register={register('quetion_mark')} />
+            <InputWithLabel label="Point optainable" register={register('quetion_mark')} />
             <br />
 
             </Box>

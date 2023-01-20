@@ -123,7 +123,7 @@ const MultiChoiceQuetion = ({state,setState,setView}:PropForQuetionComonents):Re
                 </Box>
                 <br />
                 <Box>
-                    <InputWithLabel  label="Quetion Mark" register={register('quetion_mark')}/>
+                    <InputWithLabel  label="Point optainable" register={register('quetion_mark')}/>
                 </Box>
             </Box>
 

@@ -90,7 +90,7 @@ const OptionQuetion = ({state,setState,setView}:PropForQuetionComonents):React.R
                 </Box>
                 <br />
                 <Box>
-                    <InputWithLabel  label="Quetion Mark" register={register('quetion_mark')}/>
+                    <InputWithLabel  label="point optainable" register={register('quetion_mark')}/>
                 </Box>
                 
             </Box>

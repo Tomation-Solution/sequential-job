@@ -49,6 +49,13 @@ export const create_quetion= async(data:CvFilteringQuetionType)=>{
     return  resp.data.data
 
 }
+
+export const create_test = async (data:CvFilteringQuetionType)=>{
+    let senddata:any = {...data,'title':'Test Quetion'}
+    const resp = await api.post('/jobs/company-test-handler/',senddata);
+    return  resp.data.data
+
+}
 type get_all_quetionResponse = {
     title:string;
     id:number
