@@ -15,9 +15,19 @@ export type JobType = {
     "job_filter": null|number,
     "description_content":string,
     interview?:number|null;
+    job_test:null|number;
+    job_variant:'filter_only'|'filter_and_test'
 }
 
+type get_all_quetionResponse = {
+    title:string;
+    id:number
+}
 
+type addQuetionToJobProp  = {
+    "job_id":number,
+    "id":number
+}
 
 export const create_job_api = (job:JobCreateForm)=>{
         const form = new FormData()
@@ -29,6 +39,7 @@ export const create_job_api = (job:JobCreateForm)=>{
     form.append('currency',job.currency)
     form.append('job_required_document',job.job_required_document.map((data,index)=>data.name).toString())
     form.append('description_content',JSON.stringify(job.description_content))
+    form.append('job_variant',job.job_variant)
     return  api.post('/jobs/company-job-handler/',form).then(res=>res.data)
 }
 // 
@@ -56,19 +67,20 @@ export const create_test = async (data:CvFilteringQuetionType)=>{
     return  resp.data.data
 
 }
-type get_all_quetionResponse = {
-    title:string;
-    id:number
+
+export const get_all_test =async ():Promise<get_all_quetionResponse[]> => {
+    const resp = await api.get('/jobs/company-test-handler/list_qeutions/',);
+    return  resp.data.data
+}
+export const add_test_to_job = async(data:addQuetionToJobProp)=>{
+    const resp = await api.post('/jobs/company-test-handler/add_qeution_to_job/',{...data,'title':'..'});
+    return  resp.data.data
 }
 export const get_all_quetion =async ():Promise<get_all_quetionResponse[]> => {
     const resp = await api.get('/jobs/company-filterquetion-handler/list_qeutions/',);
     return  resp.data.data
 }
 
-type addQuetionToJobProp  = {
-    "job_id":number,
-    "id":number
-}
 export const add_quetion_to_job = async(data:addQuetionToJobProp)=>{
     const resp = await api.post('/jobs/company-filterquetion-handler/add_qeution_to_job/',{...data,'title':'..'});
     return  resp.data.data

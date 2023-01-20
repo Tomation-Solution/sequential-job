@@ -29,8 +29,14 @@ const Nav = ():React.ReactElement => {
     icon:<FaStickyNote/>
   },
   {
-    label:'Set Test',
+    label:'Set Sorting Quetion',
     route:'/jobs/CvFilteringQuetion/',
+    icon:<FaStickyNote/>
+
+  },
+  {
+    label:'Set Test',
+    route:'/jobs/JobTest/',
     icon:<FaStickyNote/>
 
   },

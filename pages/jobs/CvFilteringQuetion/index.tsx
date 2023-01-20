@@ -80,6 +80,7 @@ const CvFilteringQuetion:NextPage = ()=>{
     return(
         <GeneralLayout>
           <Preloader loading={isLoading} />
+          <h2>Set Sorting Quetions</h2>
 
           <InputWithLabel register={register('title')}
           label="Title" css={{'width':'60%','margin':'0 auto'}} />

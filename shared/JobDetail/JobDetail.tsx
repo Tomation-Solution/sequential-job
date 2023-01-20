@@ -6,11 +6,13 @@ import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
 import { JobType } from "../../service/api/job.api"
 import { useRouter } from "next/router"
+import useToast from "../../hooks/useToastify"
 
 type Prop = {
     currentJob:JobType;
 }
 const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
+    const {notify} = useToast()
     const data:string= JSON.parse( currentJob.description_content)
     const route = useRouter()
     return (
@@ -65,7 +67,22 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
 
             </Box>
             <br />
-            <p style={{'color':'crimson','cursor':'pointer'}} onClick={(e)=>route.push(`/jobs/CvFilteringQuetion/${currentJob.id}/interview/viewInterView`)}>
+
+            <p style={{'color':'crimson','cursor':'pointer'}} onClick={(e)=>{
+                if(currentJob.job_variant =='filter_only'){
+                    if(currentJob.job_filter == null){
+                        notify('Please Set CvFilter For this job first','error')
+                        return null
+                    }
+                }
+                if(currentJob.job_variant == 'filter_and_test'){
+                    if((currentJob.job_filter == null) || currentJob.job_test == null){
+                        notify('Please Set CvFilter and Test for this job first','error')
+                        return 
+                    }
+                 }
+                route.push(`/jobs/CvFilteringQuetion/${currentJob.id}/interview/viewInterView`)
+            }}>
                 view Interview
             </p>
             <br />
@@ -95,10 +112,18 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
                 </Button>
 </Box> 
                 :
-                <Button css={{'margin':'0 auto'}} onClick={(e)=>route.push(`/jobs/CvFilteringQuetion/${currentJob.id}/`)}>Add Cv Filtering</Button>
+                <Button  onClick={(e)=>route.push(`/jobs/CvFilteringQuetion/${currentJob.id}/`)}>Add Cv Filtering</Button>
             }
-
-
+<br />
+            {
+                (currentJob.job_variant==='filter_and_test'&&currentJob.job_test==null)?
+                <Button 
+                onClick={(e)=>route.push(`/jobs/JobTest/${currentJob.id}/`)}
+                color={'lightBlueOutline'}
+                >
+                    Add Test
+                </Button>:''
+            }
             <br /><br />
         </Box>
     )

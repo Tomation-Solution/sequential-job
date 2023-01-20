@@ -32,7 +32,9 @@ export type JobCreateForm = {
   'salary':number;
   'currency':'string',
   'job_required_document':{'name':string}[];
-  'description_content':string
+  'description_content':string;
+  job_variant:'filter_only'|'filter_and_test'
+
 }
 
 const schema = yup.object({
@@ -46,6 +48,7 @@ const schema = yup.object({
     'name':yup.string().required(),
   })),
   'description_content':yup.string(),
+  job_variant:yup.string()
 })
 const AddJobs = () => {
   const [componentHasMounted,setComponentHasMounted] = useState(false)
@@ -92,6 +95,9 @@ const AddJobs = () => {
   useEffect(()=>{
     setValue('description_content','...')
     setComponentHasMounted(true)
+
+
+    setValue('job_variant','filter_only')
   },[])
   return (
     <LiveJobWithOtherContentLayout
@@ -176,6 +182,24 @@ const AddJobs = () => {
                 append({'name':''})
               }}
             >Append</Button>
+        <br />
+
+    
+
+          <Box css={{'position':'relative',}}>
+          <SelectComponent 
+          showLabel={true}
+          label='Job Variant'
+          options={[
+            {'name':'filter_only','value':'filter_only'},
+          {'name':'Filter and Test','value':'filter_and_test'},
+          ]}
+          setVaue={setValue}
+          name='job_variant'
+          
+        />
+          </Box>
+
         <br />
         {
           componentHasMounted?

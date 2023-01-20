@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useQuery ,useMutation} from "react-query";
 import useToast from "../../../../hooks/useToastify";
 import GeneralLayout from "../../../../layout/GeneralLayout/GeneralLayout";
-import { add_quetion_to_job, get_all_quetion } from "../../../../service/api/job.api";
+import { add_quetion_to_job, add_test_to_job, get_all_quetion, get_all_test } from "../../../../service/api/job.api";
 import Box from "../../../../shared/Box/Box";
 import Button from "../../../../shared/Button/Button";
 import Preloader from "../../../../shared/Preloader/Preloder";
@@ -13,9 +13,9 @@ import SelectComponent from "../../../../shared/Select/Select";
 
 
 
-const AddQuetionTOJob:NextPage = ()=>{
-    const {isLoading,data,isError} = useQuery('questions',get_all_quetion)
-    const {isLoading:quetion_loading,mutate} = useMutation(add_quetion_to_job,{
+const AddTestTOJob:NextPage = ()=>{
+    const {isLoading,data,isError} = useQuery('tests',get_all_test)
+    const {isLoading:quetion_loading,mutate} = useMutation(add_test_to_job,{
         'onSuccess':(data)=>{
             notify('Quetion Added Succeffuly','success')
         },
@@ -39,12 +39,12 @@ const AddQuetionTOJob:NextPage = ()=>{
     return (
         <GeneralLayout>
             <Preloader loading={isLoading || quetion_loading} />
-            <h2 style={{'textAlign':'center'}}>You Need to pick the quetion you want to ask about the job: This Filters the candidate</h2>
+            <h2 style={{'textAlign':'center'}}>Please Pick Test For this Job</h2>
                             <br />
                            <Box css={{'width':'400px','margin':'0 auto'}}>
                            <SelectComponent 
                         showLabel={true}
-                        label='Pick From the quetions below'
+                        label='Pick From the Test below'
                         options={data?data.map((quetion,index)=>{
                                 return{
                                     'name':quetion.title,
@@ -64,4 +64,4 @@ const AddQuetionTOJob:NextPage = ()=>{
     )
 }
 
-export default AddQuetionTOJob
+export default AddTestTOJob
