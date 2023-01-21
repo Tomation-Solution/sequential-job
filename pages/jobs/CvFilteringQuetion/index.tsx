@@ -75,7 +75,6 @@ const CvFilteringQuetion:NextPage = ()=>{
       }
       const sent_data:any = {...state,title}
       mutate(sent_data)
-    
     }
     return(
         <GeneralLayout>

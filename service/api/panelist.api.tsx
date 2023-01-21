@@ -13,7 +13,7 @@ type get_rating_sheetProp ={
     "job_id":number,
     "job_applicant":number
 }
-type  getRatingSheetResponse =  {
+export type  getRatingSheetResponse =  {
     "interview": number,
     "job_seeker": number,
     "panelist": number,

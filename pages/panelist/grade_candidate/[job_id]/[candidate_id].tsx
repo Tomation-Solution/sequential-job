@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useMutation, useQuery } from "react-query";
 import GeneralLayout from "../../../../layout/GeneralLayout/GeneralLayout";
 import LiveJobWithOtherContentLayout from "../../../../layout/LiveJobWithOtherContentLayout/LiveJobWithOtherContentLayout";
-import { get_interview_aggregate, get_rating_sheet, rating_job_seekers, rating_job_seekersProp } from "../../../../service/api/panelist.api";
+import { getRatingSheetResponse, get_interview_aggregate, get_rating_sheet, rating_job_seekers, rating_job_seekersProp } from "../../../../service/api/panelist.api";
 import Box from "../../../../shared/Box/Box";
 import Button from "../../../../shared/Button/Button";
 import TabsComp from "../../../../shared/Tabs/Tabs";
@@ -17,6 +17,7 @@ import * as yup from "yup";
 import { useState } from "react";
 import Preloader from "../../../../shared/Preloader/Preloder";
 import useToast from "../../../../hooks/useToastify";
+import { number } from "yup/lib/locale";
 
 
 
@@ -82,7 +83,23 @@ const GradeCandidates:NextPage = ()=>{
         handleSubmission(data)
       }
 
-      console.log({aggregate_data})
+      
+      const calculate_perentageRating = (rating_sheet:{cut_off:number;id:string;score: number;value: string}[]):number=>{
+        // Score Obtainable aka CutOFf
+        const score_obtainable:number = rating_sheet.reduce((total,currentValue)=>{
+
+            return total + currentValue.cut_off
+        },0)
+
+        const score_obtained:number = rating_sheet.reduce((total,currentValue)=>{
+           let score =0
+            if(currentValue.score){
+                score = currentValue.score
+            }
+            return total + score
+        },0)
+        return (score_obtained / score_obtainable) *100
+      }
     useEffect(()=>{
         if(typeof candidate_id =='string'&& typeof job_id =='string'){
             console.log({candidate_id,job_id})
@@ -111,6 +128,7 @@ const GradeCandidates:NextPage = ()=>{
         }
 
     },[rating_sheet])
+    console.log({rating_fields})
     return (
         <LiveJobWithOtherContentLayout header="Tomiwa Ayandele">
             <br />
@@ -150,6 +168,16 @@ const GradeCandidates:NextPage = ()=>{
                         </Box>
                                     ))
                                 }
+                                <br />
+                                <Box css={{'display':'flex','justifyContent':'space-between','margin':'10px auto'}} >
+                            <Button color={'whiteBtn'} css={{'width':'40%'}}>
+                            Percentage  Rating
+                            </Button>
+                            <WhiteInput 
+                            // regsiter={register(`rating_sheet.${index}.score`)}
+                            placeHolder={`${calculate_perentageRating(rating_fields)}`}
+                              css={{'width':'40%'}}/>
+                        </Box>
                                 <br />
                                 <TextAreaWithLabel label="Interviewer’s Remark"
                                     register={register('interviewer_remark')}

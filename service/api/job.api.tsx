@@ -55,14 +55,14 @@ export const get_job_detail = async (id:number)=>{
 }
 
 export const create_quetion= async(data:CvFilteringQuetionType)=>{
-    let senddata:any = {...data,'title':'Test Quetion'}
+    let senddata:any = {...data,'title':data.title}
     const resp = await api.post('/jobs/company-filterquetion-handler/',senddata);
     return  resp.data.data
 
 }
 
 export const create_test = async (data:CvFilteringQuetionType)=>{
-    let senddata:any = {...data,'title':'Test Quetion'}
+    let senddata:any = {...data,'title':data.title}
     const resp = await api.post('/jobs/company-test-handler/',senddata);
     return  resp.data.data
 
