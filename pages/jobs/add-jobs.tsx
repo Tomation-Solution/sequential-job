@@ -181,7 +181,7 @@ const AddJobs = () => {
                 e.preventDefault()
                 append({'name':''})
               }}
-            >Append</Button>
+            >Add</Button>
         <br />
 
     

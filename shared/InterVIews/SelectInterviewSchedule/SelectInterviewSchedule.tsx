@@ -44,7 +44,7 @@ const schema = yup.object({
 
 const SelectInterviewSchedule = ():React.ReactElement => {
 
-
+  const [step,setStep] = useState(1)
   const {notify} = useToast()
 
   const {isLoading,error,data,isError} = useQuery('jobs',get_jobs_api)
@@ -91,12 +91,35 @@ const SelectInterviewSchedule = ():React.ReactElement => {
     };
 
 
+    useEffect(()=>{
+      // console.log({errors})
+        if(errors.job_id?.message){
+          notify('Please Select Job You setting the Interview for','error')
+        }
 
-    console.log({'form error':errors})
+        if(errors.list_of_available_dates?.message){
+          notify('Please Check Date you did not select all','error')
+        }
+
+        if(errors.list_of_available_time?.message){
+          notify('Please Check Time you did not select all','error')
+        }
+        
+        if(errors.rating_sheet?.message){
+          notify('Rating Sheet is required','error')
+        }
+        
+        if(errors.list_of_email?.message){
+          notify('Panelist email is required','error')
+        }
+        
+      },[errors])
 
   return (
     <Box>
-        <h2>Set Up Interview</h2>
+        <h2>{
+          (step==1)?'Set Up Interview Date':(step ===2)?'Set Up Interview Rating Scale':'Set Up Interview Panelist'
+          }</h2>
 <br /><br />
 
 <Preloader 
@@ -116,7 +139,12 @@ loading={isLoading || submitting}
         />
       <br />
           <br />
-      <label htmlFor="">Set Available date  for candidates to pick from:</label>
+
+          {step===1?
+          <Box>
+
+
+<label htmlFor="">Set Available date  for candidates to pick from:</label>
           <br />
           <br />
           <p>Dates Selected</p>
@@ -141,7 +169,7 @@ loading={isLoading || submitting}
                 e.preventDefault()
                 append({'available_dates':''})
               }}
-            >Append</Button>
+            >Add</Button>
             
     <br />
           <br />
@@ -168,9 +196,21 @@ loading={isLoading || submitting}
                 e.preventDefault()
                 appendAvailableTime({'available_time':''})
               }}
-            >Append</Button>
+            >Add</Button>
+          
+
+
+          </Box>:''
+        }
+
           <br />
           <br />
+
+          {
+            step ===2 ?
+            <Box>
+
+
       <label htmlFor="">Set Name and Cut Off for:</label>
       <Box css={{'display':'flex','flexWrap':'wrap','gap':'10px 6px',}}>
             {
@@ -198,9 +238,17 @@ loading={isLoading || submitting}
                 e.preventDefault()
                 appendRatingSheet({'name':'Title Of Doings','cut_off':10})
               }}
-            >Append</Button>
+            >Add</Button>
+
+            </Box>:''
+          }
+     
           <br />
-          <p>
+          {
+            step==3?
+            <Box>
+
+<p>
           Invite member of Panel 
           </p>
           <br />
@@ -224,10 +272,40 @@ loading={isLoading || submitting}
           >
           {'  '} Add Email Address
           </Button>
+
           <br />
-          <br />
-          <br />
-          <Button>Submit</Button>
+            </Box>
+            :''
+          }
+          
+          <Box css={{'display':'flex','justifyContent':'space-between','maxWidth':'400px','margin':'0 auto'}}>
+          
+          {
+            step!==1?
+            <Button color={'whiteBtn'}
+            css={{'width':'40%'}}
+            onClick={(e)=>{
+              e.preventDefault()
+              setStep(step-1)
+            }}
+            >Previous</Button>:''
+          }
+          {
+            step==3?
+            <Button
+            css={{'width':'40%'}}
+            >Submit</Button>
+            :
+            <Button 
+            css={{'width':'40%'}}
+            color={'whiteBtn'} type='button'  
+            onClick={(e)=>{
+              e.preventDefault()
+              setStep(step+1)
+            }}>Next</Button>
+          }
+
+          </Box>
     </Box>
   </form>
     </Box>
