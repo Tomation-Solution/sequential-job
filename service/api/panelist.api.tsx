@@ -65,3 +65,21 @@ export const get_interview_aggregate = async (data:IntervierwAggregateProps):Pro
     const resp = await api.post(`/interview/panelist_view_jobs/interview_aggregate/`,data);
     return resp.data.data
 }
+
+export type AggregateBreakDownResponse =    {
+    "panelist": {
+        "name": string,
+        "id": number
+    },
+    "rating_sheet": {
+        "score": number,
+        "value": string,
+        "cut_off": number
+    }[],
+    "summary_of_qualification": string,
+    "interviewer_remark": string
+}
+export const get_interview_aggregate_breakdown = async (job_id:number):Promise<AggregateBreakDownResponse[]>=>{
+    const resp = await api.post(`/interview/panelist_view_jobs/get_interview_aggregate_breakdown/`,{job_id});
+    return resp.data.data
+}

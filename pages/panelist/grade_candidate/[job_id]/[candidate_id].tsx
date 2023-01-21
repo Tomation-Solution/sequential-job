@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useMutation, useQuery } from "react-query";
 import GeneralLayout from "../../../../layout/GeneralLayout/GeneralLayout";
 import LiveJobWithOtherContentLayout from "../../../../layout/LiveJobWithOtherContentLayout/LiveJobWithOtherContentLayout";
-import { getRatingSheetResponse, get_interview_aggregate, get_rating_sheet, rating_job_seekers, rating_job_seekersProp } from "../../../../service/api/panelist.api";
+import { AggregateBreakDownResponse, getRatingSheetResponse, get_interview_aggregate, get_interview_aggregate_breakdown, get_rating_sheet, rating_job_seekers, rating_job_seekersProp } from "../../../../service/api/panelist.api";
 import Box from "../../../../shared/Box/Box";
 import Button from "../../../../shared/Button/Button";
 import TabsComp from "../../../../shared/Tabs/Tabs";
@@ -17,9 +17,8 @@ import * as yup from "yup";
 import { useState } from "react";
 import Preloader from "../../../../shared/Preloader/Preloder";
 import useToast from "../../../../hooks/useToastify";
-import { number } from "yup/lib/locale";
-
-
+import { TableColumnType } from "../../../../shared/Table/Table.style";
+import Table from '../../../../shared/Table/Table'
 
 const schema = yup.object({
     'job':yup.number().required(),
@@ -35,17 +34,120 @@ const schema = yup.object({
 
 const GradeCandidates:NextPage = ()=>{
     const {notify} =useToast();
+    const [show_table,setShowTable] = useState(false)
+    const {data:aggBreakDown,isLoading:BreakDownLoading,mutate:getaggBreakDown} = useMutation(get_interview_aggregate_breakdown,{
+    onSuccess(data, variables, context) {
+        setShowTable(true)
+    },
+    })
+    const getAggreColumns = (aggr_data:AggregateBreakDownResponse[]|undefined):TableColumnType[]=>{
+        if(aggr_data){
+            if(aggr_data.length!==0){
+                if(aggr_data[0].rating_sheet.length!=0){
+                    return aggr_data[0].rating_sheet.map((data,index)=>{
+                        return {
+                            'Header':data.value,
+                            'accessor':`rating_sheet`,
+                            Cell:(tableProps:any)=>(
+                                <p>{tableProps.row.original.rating_sheet[index].score}</p>
+                            ),
+                            'id':index
+                        }
+                    })
+                }
+             }
+        }
+         return []
+    }
+    const getObtainableAndObtainedPoints = (aggr_data:AggregateBreakDownResponse[]|undefined,row=0):{obtainable:number;obtained:number}=>{
+        if(aggr_data){
+            if(aggr_data.length!==0){
+                if(aggr_data[0].rating_sheet.length!=0){
+                    const score_obtainable:number = aggr_data[row].rating_sheet.reduce((total,currentValue)=>{
 
+                        return total + currentValue.cut_off
+                    },0)
+                    const score_obtained:number = aggr_data[row].rating_sheet.reduce((total,currentValue)=>{
+                        let score =0
+                         if(currentValue.score){
+                             score = currentValue.score
+                         }
+                         return total + score
+                     },0)
 
-    const {isLoading:aggregate_isloading,mutate:get_aggregate,data:aggregate_data} = useMutation(get_interview_aggregate,)
+                    return {
+                        'obtainable':score_obtainable,
+                        'obtained':score_obtained,
+                    }
+                }
+             }
+        }
+
+        return {'obtainable':0,'obtained':0}
+    }
+    const prop_columns:TableColumnType[] =[
+        {
+            Header:'Full Name',
+            accessor:'panelist',
+            Cell:(tableProps:any)=>{
+                return (
+                    <p>{tableProps.row.original.panelist.name}</p>
+                )
+            }
+
+        },
+        ...getAggreColumns(aggBreakDown),
+        {
+            Header:'Total Obtainable Points',
+            accessor:'rating_sheet',
+            id:-2,
+            Cell:(tableProps:any)=>(
+                <p>{getObtainableAndObtainedPoints(aggBreakDown,tableProps.row.index).obtainable}</p>
+            )
+        },
+        {
+            Header:'Obtained Points',
+            accessor:'rating_sheet',
+            id:-1,
+            Cell:(tableProps:any)=>(
+                <p>{
+            (getObtainableAndObtainedPoints(aggBreakDown,tableProps.row.index).obtained / getObtainableAndObtainedPoints(aggBreakDown,tableProps.row.index).obtainable)*100
+                
+                }%</p>
+            )
+        },
+        {
+            Header:'% of Points Obtained',
+            accessor:'rating_sheet',
+            id:-3,
+            Cell:(tableProps:any)=>(
+                <p>{getObtainableAndObtainedPoints(aggBreakDown,tableProps.row.index).obtained}</p>
+            )
+        },
+        {
+            Header:'summary_of_qualification',
+            accessor:'summary_of_qualification',
+        },
+        {
+            Header:'interviewer_remark',
+            accessor:'interviewer_remark',
+        },
+    ] 
+    
+      
+    
+    const {isLoading:aggregate_isloading,mutate:get_aggregate,data:aggregate_data} = useMutation(get_interview_aggregate,{
+        'onError':(err)=>{
+        },
+        'onSuccess':(data)=>{
+        }
+    })
 
     const {mutate,isLoading,data:rating_sheet} = useMutation(get_rating_sheet,{
         'onSuccess':(data)=>{
-            console.log({'success':data})
             notify('Rating Sheet Gotten Successfully','success')
         },
         'onError':(err:any)=>{
-            console.log({'error':err})
             notify('Check your network and refresh','error')
         }
     })
@@ -102,7 +204,6 @@ const GradeCandidates:NextPage = ()=>{
       }
     useEffect(()=>{
         if(typeof candidate_id =='string'&& typeof job_id =='string'){
-            console.log({candidate_id,job_id})
             setValue('job',parseInt(job_id))
             setValue('job_applicant',parseInt(candidate_id))
             mutate({
@@ -115,7 +216,6 @@ const GradeCandidates:NextPage = ()=>{
 
         if(rating_sheet){
             setValue('rating_sheet',rating_sheet.rating_sheet.map((data,index)=>{
-                console.log(data)
                 return {
                     'value':data.name||data.value as string,
                     'cut_off':data.cut_off,
@@ -128,12 +228,12 @@ const GradeCandidates:NextPage = ()=>{
         }
 
     },[rating_sheet])
-    console.log({rating_fields})
     return (
-        <LiveJobWithOtherContentLayout header="Tomiwa Ayandele">
+        <GeneralLayout>
             <br />
             <br />
-            <Preloader loading={isLoading ||submitting||aggregate_isloading}/>
+            
+            <Preloader loading={isLoading ||submitting||aggregate_isloading||BreakDownLoading}/>
             <TabsComp
             onChange={(value)=>{
                 if(value=='aggregate'){
@@ -144,88 +244,103 @@ const GradeCandidates:NextPage = ()=>{
                         if(parseInt(job_id) != currentJobId){
                             //if this is true update the currentJobId and trigger the mutate
                             setCurrentJobId(parseInt(job_id))
-                            get_aggregate({'job_id':parseInt(job_id)})
+                            // get_aggregate({'job_id':parseInt(job_id)})
+                            setShowTable(false)
+                            getaggBreakDown(parseInt(job_id))
+
                         }
                     }
                 }
             }}
-                data={
-                    [
-                    {
-                        'label':'Candidates Grade',
-                        'key':'grade',
-                        'template':<form onSubmit={handleSubmit(onSubmit)}>
-                                <Box>
-                                {
-                                  rating_fields.map((data,index)=>(
-                        <Box css={{'display':'flex','justifyContent':'space-between','margin':'10px auto'}} key={index}>
-                            <Button color={'whiteBtn'} css={{'width':'40%'}}>
-                            {data.value}
-                            </Button>
-                            <WhiteInput 
-                            regsiter={register(`rating_sheet.${index}.score`)}
-                            placeHolder={`/${data.cut_off}`}  css={{'width':'40%'}}/>
+            data={
+                [
+                {
+                    'label':'Candidates Grade',
+                    'key':'grade',
+                    'template':<form onSubmit={handleSubmit(onSubmit)} style={{'maxWidth':'1000px','margin':'0 auto'}}>
+                            <Box>
+                            {
+                                rating_fields.map((data,index)=>(
+                    <Box css={{'display':'flex','justifyContent':'space-between','margin':'10px auto'}} key={index}>
+                        <Button color={'whiteBtn'} css={{'width':'40%'}}>
+                        {data.value}
+                        </Button>
+                        <WhiteInput 
+                        regsiter={register(`rating_sheet.${index}.score`)}
+                        placeHolder={`/${data.cut_off}`}  css={{'width':'40%'}}/>
+                    </Box>
+                                ))
+                            }
+                            <br />
+                            <Box css={{'display':'flex','justifyContent':'space-between','margin':'10px auto'}} >
+                        <Button color={'whiteBtn'} css={{'width':'40%'}}>
+                        Percentage  Rating
+                        </Button>
+                        <WhiteInput 
+                        // regsiter={register(`rating_sheet.${index}.score`)}
+                        placeHolder={`${calculate_perentageRating(rating_fields)}`}
+                            css={{'width':'40%'}}/>
+                    </Box>
+                            <br />
+                            <TextAreaWithLabel label="Interviewer’s Remark"
+                                register={register('interviewer_remark')}
+                            />
+                            <br />
+                            <TextAreaWithLabel label="Summary Of Qualification"
+                                register={register('summary_of_qualification')}
+                            />
+                            <br />
+                            <br />
+                            <br />
+                            <Button css={{'margin':'0 auto'}}>Submit</Button>
+                            <br />
+                            <br />
+                            <br />
                         </Box>
-                                    ))
-                                }
-                                <br />
-                                <Box css={{'display':'flex','justifyContent':'space-between','margin':'10px auto'}} >
-                            <Button color={'whiteBtn'} css={{'width':'40%'}}>
-                            Percentage  Rating
-                            </Button>
-                            <WhiteInput 
-                            // regsiter={register(`rating_sheet.${index}.score`)}
-                            placeHolder={`${calculate_perentageRating(rating_fields)}`}
-                              css={{'width':'40%'}}/>
-                        </Box>
-                                <br />
-                                <TextAreaWithLabel label="Interviewer’s Remark"
-                                    register={register('interviewer_remark')}
-                                />
-                                <br />
-                                <TextAreaWithLabel label="Summary Of Qualification"
-                                    register={register('summary_of_qualification')}
-                                />
-                                <br />
-                                <br />
-                                <br />
-                                <Button css={{'margin':'0 auto'}}>Submit</Button>
-                                <br />
-                                <br />
-                                <br />
-                            </Box>
-                            
-                        </form>
-                    },
-                    {
-                        'label':'Aggregate Grade',
-                        'key':'aggregate',
-                        'template':
-                        <>
-                        {
-                            aggregate_data?
-                            
-                            aggregate_data.map((data,index)=>(
-                                <Box 
-                                css={{'display':'flex','justifyContent':'space-between','margin':'10px auto'}} key={index}>
-                                    <Button color={'whiteBtn'} css={{'width':'50%'}}>
-                                    {data.value}
-                                    </Button>
-                                   
-                                   <Button color={'whiteBtn'} css={{'width':'40%'}}>
-                                    {data.aggrate_rating}
-                                   </Button>
-                                </Box>
-                            ))
-                            :''
-                        }
-                        </>
+                        
+                    </form>
+                },
+                {
+                    'label':'Aggregate Grade',
+                    'key':'aggregate',
+                    'template':
+                    <>
 
-                    },
-                ]}
+                    {
+                show_table?
+                <Table prop_columns={prop_columns} custom_data={aggBreakDown}/>:''
+                    }
+                    
+                    {/* {
+                        aggregate_data?
+                        
+                        aggregate_data.map((data,index)=>(
+                            <Box css={{'border':'1px solid red','width':'100%'}}>
+                            </Box>  
+                        ))
+                        :''
+                    } */}
+                    </>
+
+                },
+            ]}
             />
-        </LiveJobWithOtherContentLayout>
+
+            {/* <Box 
+css={{'display':'flex','justifyContent':'space-between','margin':'10px auto'}} key={index}>
+    <Button color={'whiteBtn'} css={{'width':'50%'}}>
+    {data.value}
+    </Button>
+   
+   <Button color={'whiteBtn'} css={{'width':'40%'}}>
+    {data.aggrate_rating}
+   </Button>
+</Box> */}
+        </GeneralLayout>
     )
 }
 
 export default GradeCandidates
+
+
+
