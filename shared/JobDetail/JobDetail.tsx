@@ -124,6 +124,9 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
                     Add Test
                 </Button>:''
             }
+<br />
+            <Button css={{'margin':'0 auto'}}  onClick={(e)=>route.push(`/job/${currentJob.id}/`)}>Job Dashboard</Button>
+            <br /><br />
             <br /><br />
         </Box>
     )
