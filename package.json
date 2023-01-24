@@ -12,6 +12,7 @@
     "@hookform/resolvers": "^2.9.10",
     "@next/font": "13.1.0",
     "@nteract/editor": "^10.1.12",
+    "@radix-ui/react-checkbox": "^1.0.1",
     "@radix-ui/react-dropdown-menu": "^2.0.1",
     "@radix-ui/react-icons": "^1.1.1",
     "@radix-ui/react-select": "^1.1.2",

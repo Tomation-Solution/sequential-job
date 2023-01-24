@@ -16,7 +16,7 @@ const FillInGapQuetionDispalay = ({data}:Prop):React.ReactElement=>{
         <br />
         <br />
             <p>Answer:{' '}<small><strong>{data.answer}</strong></small></p>
-            <p>Mark:{' '}<small><strong>{data.quetion_mark}</strong></small></p>
+            <p>Points obtainable:{' '}<small><strong>{data.quetion_mark}</strong></small></p>
         </Box>
     )
 }

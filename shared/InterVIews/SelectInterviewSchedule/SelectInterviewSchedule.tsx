@@ -211,7 +211,7 @@ loading={isLoading || submitting}
             <Box>
 
 
-      <label htmlFor="">Set Name and Cut Off for:</label>
+      <label htmlFor="">Set Criteria  and  Point obtainable:</label>
       <Box css={{'display':'flex','flexWrap':'wrap','gap':'10px 6px',}}>
             {
               ratingSheet.map((data,index)=>(
@@ -220,9 +220,9 @@ loading={isLoading || submitting}
                 css={{'position':'relative','display':'grid','gridTemplateColumns':'1fr 1fr 5%','gap':'10px 6px',
                 'alignItems':'center','justifyContent':'center'}}> 
                   {/* <AiFillCloseCircle style={{'color':'crimson','cursor':'pointer'}} onClick={(e:any)=>remove(index)}/> */}
-                  <InputWithLabel label='Name' register={register(`rating_sheet.${index}.name`)}
+                  <InputWithLabel label='Criteria' register={register(`rating_sheet.${index}.name`)}
                   />
-                  <InputWithLabel label='Cut off'   register={register(`rating_sheet.${index}.cut_off`)}
+                  <InputWithLabel label='Point obtainable'   register={register(`rating_sheet.${index}.cut_off`)}
                   />
                 <AiFillCloseCircle style={{'color':'crimson','cursor':'pointer'}} onClick={(e:any)=>removeRatingSheet(index)}/>
                 </Box>

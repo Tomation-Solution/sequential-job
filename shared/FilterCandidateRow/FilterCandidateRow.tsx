@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { getSortedJobCandidateResponse } from '../../service/api/candidate_related.api'
 import Box from '../Box/Box'
 import Button from '../Button/Button'
@@ -8,16 +8,21 @@ import cookieCutter from 'cookie-cutter'
 import jwt_decode from "jwt-decode";
 import { UserType } from '../../service/api/authentication/authentication.api'
 import { useRouter } from 'next/router'
+import CheckBox from '../Checkbox/Checkbox'
 
 
 type Prop ={
-  applicant:getSortedJobCandidateResponse
+  applicant:getSortedJobCandidateResponse,
+  list_of_ids:number[],
+  setListOfId:any
 }
 
-const FilterCandidateRow = ({applicant}:Prop) => {
+const FilterCandidateRow = ({applicant,list_of_ids,setListOfId}:Prop) => {
   const logged_in_user:UserType = jwt_decode(JSON.parse( cookieCutter.get('user')).access)
   const route = useRouter()
   const { job_id } = route.query
+
+
   return (
     <Box
         css={{
@@ -32,8 +37,17 @@ const FilterCandidateRow = ({applicant}:Prop) => {
             },
         }}
     >
-
-<p>{applicant.jobseekers.email}</p>
+        <CheckBox onCheck={(checked)=>{
+          console.log({'checked':checked,'email':applicant.id})
+          if(checked){
+            // checkCandidate(applicant.id)
+            setListOfId( [applicant.id,...list_of_ids,])
+          }else{
+            // let postion_index = list_of_ids.indexOf(applicant.id)
+            setListOfId(list_of_ids.filter((id,index)=>id!==applicant.id)) 
+          }
+        }}/>
+        <p>{applicant.jobseekers.email}</p>
         <p>{applicant.filter_quetions_score}</p>
         <Button css={{'padding':'.4rem 1rem','width':'100px'}} onClick={(e)=>{
           window.open(applicant.jobseekers.cv_url, '_blank')
@@ -46,7 +60,8 @@ const FilterCandidateRow = ({applicant}:Prop) => {
             }}
           >Grade</Button>
           :
-          <Button color={'lightBlueOutline'} css={{'padding':'.4rem 1rem','width':'100px'}}>Invite</Button>
+          // ''
+          <Button color={'lightBlueOutline'} css={{'padding':'.4rem 1rem','width':'100px'}}>Aggre</Button>
         }
     </Box>
   )
