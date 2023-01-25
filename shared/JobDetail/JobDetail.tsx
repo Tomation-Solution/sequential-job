@@ -7,18 +7,39 @@ import rehypeRaw from 'rehype-raw'
 import { JobType } from "../../service/api/job.api"
 import { useRouter } from "next/router"
 import useToast from "../../hooks/useToastify"
+import { getUser } from "../../utils/extra_function"
+import { useMutation } from "react-query"
+import { applyForJobs } from "../../service/api/jobJobSeeker.api"
+import Preloader from "../Preloader/Preloder"
 
 type Prop = {
     currentJob:JobType;
 }
 const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
     const {notify} = useToast()
+    const loggedInUser = getUser()
     const data:string= JSON.parse( currentJob.description_content)
     const route = useRouter()
+
+    const { mutate,isLoading:applying} = useMutation(applyForJobs,{
+        'onSuccess':(data)=>{
+            notify('Application Success','success')
+            notify('Please hold on while we load job quetions','success')
+            route.push(`/job_seeker/cvfiltertest/${currentJob.id}/`)
+        },
+        'onError':(error:any)=>{
+            notify('You have already applied','error')
+        }
+    })
+
+    const handleJobSubbmission = ()=>{
+        mutate(currentJob.id)
+    }
     return (
         <Box css={{'color':'$white','padding':'0 .5rem','@bp2':{
             'textAlign':'center','maxWidth':'600px','margin':'0 auto'
         }}}>
+            <Preloader loading={applying}/>
             <p style={{'fontWeight':'lighter',}}><small>ABC Company Ltd</small></p>
 
             <Box css={{'padding':'.5rem 0','display':'flex','alignItems':'center','justifyContent':'space-between',
@@ -67,7 +88,8 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
 
             </Box>
             <br />
-
+                {
+                    loggedInUser?.user_type=='company'?
             <p style={{'color':'crimson','cursor':'pointer'}} onClick={(e)=>{
                 if(currentJob.job_variant =='filter_only'){
                     if(currentJob.job_filter == null){
@@ -84,7 +106,8 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
                 route.push(`/jobs/CvFilteringQuetion/${currentJob.id}/interview/viewInterView`)
             }}>
                 view Interview
-            </p>
+            </p>:''
+                }
             <br />
 
             <h2 style={{'color':'#24CDE2','padding':'1rem 0','fontWeight':'lighter'}}>Job Description</h2>
@@ -95,8 +118,21 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
             </ReactMarkdown>
             </Box>
             <br /><br />
-            <br /><br />
             {
+                loggedInUser?.user_type=='job_seakers'?
+                <Box>
+                    <Button color={'lightBlueBtn'} 
+                    onClick={handleJobSubbmission}
+                    css={{'margin':'0 auto','width':'200px'}}>Apply</Button>
+                </Box>
+                :
+                ''
+            }
+            <br /><br />
+                {
+            loggedInUser?.user_type=='company'?
+            <Box>
+                {
                 currentJob.job_filter?
 <Box css={{
     'display':'flex','justifyContent':'space-between','width':'400px','margin':'0 auto'
@@ -126,6 +162,11 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
             }
 <br />
             <Button css={{'margin':'0 auto'}}  onClick={(e)=>route.push(`/job/${currentJob.id}/`)}>Job Dashboard</Button>
+                </Box>:''
+                }
+
+
+
             <br /><br />
             <br /><br />
         </Box>

@@ -1,6 +1,10 @@
 import { JobCreateForm } from "../../pages/jobs/add-jobs";
 import { CvFilteringQuetionType } from "../../pages/jobs/CvFilteringQuetion";
 import api from "../axios";
+/* @ts-ignore */
+import cookieCutter from 'cookie-cutter'
+import jwt_decode from "jwt-decode";
+import { UserType } from "./authentication/authentication.api";
 
 export type JobType = {
     id:number;
@@ -44,8 +48,17 @@ export const create_job_api = (job:JobCreateForm)=>{
 }
 // 
 export const get_jobs_api =async ():Promise<JobType[]>=> {
+    // console.log
+    let user = cookieCutter.get('user') 
+    let url ='/jobs/company-job-handler/'
+    if(user){
+        const user:UserType = jwt_decode(JSON.parse( cookieCutter.get('user')).access)
+        if(user.user_type==='job_seakers'){
+            url = '/jobs/job-seeker-view/'
+        }
+    }
 
-    const resp = await api.get('/jobs/company-job-handler/');
+    const resp = await api.get(url);
     return  resp.data.data
 }
 

@@ -9,6 +9,7 @@ export const StyledButton = styled('button',{
     'textAlign':'center',
     cursor:'pointer',
     display:'block',
+    'outline':'none',
 
     // ':hover':{
     //     boxShadow:'0 0 0 1 white'

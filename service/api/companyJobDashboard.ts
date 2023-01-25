@@ -32,3 +32,19 @@ export const  get_applicantFinal_result = async (job_id:number):Promise<get_appl
     const resp = await api.get('/jobs/company-generate-job-final-result/?job_id='+job_id)
     return resp.data.data
 }
+
+
+export type send_applicationLetterApiProp = {
+    "applicant_id":number,
+    "action":'selected'|'in_view'|'not_selected'|'idle'
+}
+export type send_applicationLetterApiResponse ={
+    "message":string,
+    "status_code": 200,
+    "data": any,
+    "success": boolean
+}
+export const send_applicationLetterApi = async (data:send_applicationLetterApiProp[]):Promise<send_applicationLetterApiResponse>=>{
+    const resp = await api.post('/jobs/company-generate-job-final-result/send_final_letters/',{'list_of_applicant_and_action':data})
+    return resp.data 
+}

@@ -16,23 +16,37 @@ import Preloader from '../shared/Preloader/Preloder'
 import { useState } from 'react'
 import JobDetail from '../shared/JobDetail/JobDetail'
 import { useMediaQuery } from 'react-responsive'
-// console.log({'token stuff':cookieCutter.get('user')})
+import OffCanvas from '../shared/OffCanvas/OffCanvas'
+import jwt_decode from "jwt-decode";
+import { UserType } from '../service/api/authentication/authentication.api'
+/* @ts-ignore */
+import cookieCutter from 'cookie-cutter'
+import { getUser } from '../utils/extra_function'
 
 
 const Home:NextPage = ()=>{ 
  const {status,error,data,isError} = useQuery('jobs',get_jobs_api)
   const [currentJob,setCurrentJob] = useState<null|JobType>(null)
+  const [isOpen, setIsOpen] = useState(false)
+  const logged_in_user = getUser()
+
   const isDesktopOrLaptop = useMediaQuery({
     query: '(min-width: 1250px)'
   })
   const handleJobDetail = (job:JobType)=>{
-      if(isDesktopOrLaptop){
-        //if it laptop just ffill the currentJob state
-        setCurrentJob(job)
-      }else{
-        //if it is a small device we rediredt to a detail page
-      }
-  }
+      // if(isDesktopOrLaptop){
+      //   if it laptop just ffill the currentJob state
+      //   setCurrentJob(job)
+      // }else{
+      //   if it is a small device we rediredt to a detail page
+      // }
+
+      setIsOpen(true)
+      setCurrentJob(job)
+
+    }
+
+
  return (
     <GeneralLayout>
       <Preloader loading={status=='loading'} />
@@ -44,8 +58,8 @@ const Home:NextPage = ()=>{
     }}>
      <TabsComp
         data={[
-{          'key':'Live',
-          'label':'Live',
+{          'key':logged_in_user?.user_type ==='company'?'Live':'Jobs',
+          'label':logged_in_user?.user_type ==='company'?'Live':'Jobs',
           'template':<Box css={{
               '@bp1':{
                 'display':'flex',
@@ -53,7 +67,7 @@ const Home:NextPage = ()=>{
               },
               '@bp3':{
                 'display':'grid',
-                'gridTemplateColumns':'repeat(1,360px)',
+                'gridTemplateColumns':'repeat(3,360px)',
                 'padding':'0 1rem',
                 'gap':'10px'
               },
@@ -74,42 +88,37 @@ const Home:NextPage = ()=>{
           
         },
           { 
-            'key':'Closed',
-          'label':'Closed',
+            'key':logged_in_user?.user_type ==='company'?'Closed':'Saved Jobs',
+          'label':logged_in_user?.user_type ==='company'?'Closed':'Saved Jobs',
           'template':
-          <Box css={{
-            '@bp1':{
-              'display':'flex',
-              'flexWrap':'wrap',
-              'justifyContent':'space-between'
-            },
-            '@bp3':{
-              'display':'grid',
-              'gridTemplateColumns':'repeat(3,360px)',
-              'gap':'10px'
-            }
-        }}>
-         {
-            data?
-          data.map((job,index)=>(
-              <JobCard job={job} key={index}/>
-            )):''
+            <>
+              Coming Soon
+            </>
             
-          }
-        </Box>
-        
-      },
+          },
         ]}
       />
-      {
-        isDesktopOrLaptop?
-    <Box>
-      {currentJob&&<JobDetail currentJob={currentJob}/>}
-    </Box>:''
-      }
+     
      </Box>
+
+     <OffCanvas
+      setIsOpen={setIsOpen}
+      isOpen={isOpen}
+      direction={isDesktopOrLaptop?'right':'bottom'}
+     >
+     {currentJob&&<JobDetail currentJob={currentJob}/>}
+
+     </OffCanvas>
     </GeneralLayout>
   )
 }
 
 export default Home
+
+
+// {
+//   isDesktopOrLaptop?
+// <Box>
+// {currentJob&&<JobDetail currentJob={currentJob}/>}
+// </Box>:''
+// }

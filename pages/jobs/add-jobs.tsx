@@ -38,17 +38,17 @@ export type JobCreateForm = {
 }
 
 const schema = yup.object({
-  'job_title':yup.string(),
-  'is_active':yup.boolean(),
-  'location':yup.string(),
-  'job_type':yup.string(),
-  'salary':yup.number(),
-  'currency':yup.string(),
+  'job_title':yup.string().required(),
+  'is_active':yup.boolean().required(),
+  'location':yup.string().required(),
+  'job_type':yup.string().required(),
+  'salary':yup.number().required(),
+  'currency':yup.string().required(),
   'job_required_document':yup.array().of(yup.object({
     'name':yup.string().required(),
   })),
-  'description_content':yup.string(),
-  job_variant:yup.string()
+  'description_content':yup.string().required(),
+  job_variant:yup.string().required()
 })
 const AddJobs = () => {
   const [componentHasMounted,setComponentHasMounted] = useState(false)
@@ -85,7 +85,8 @@ const AddJobs = () => {
     let new_job:any = {...job}
     if(simpleMdeInstance){1
       // we get the data and put it in the json so we can send to the backemnd
-      new_job['description_content']=simpleMdeInstance.value()
+      const description_content =  simpleMdeInstance.value().replace(/\n/g,'<br/>')
+      new_job['description_content']=description_content
       mutate(new_job)
     }
    

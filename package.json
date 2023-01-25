@@ -37,6 +37,7 @@
     "react-hook-form": "^7.41.5",
     "react-icons": "^4.7.1",
     "react-markdown": "^8.0.4",
+    "react-modern-drawer": "^1.2.0",
     "react-query": "^3.39.2",
     "react-responsive": "^9.0.2",
     "react-simplemde-editor": "^5.2.0",
