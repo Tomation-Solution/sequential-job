@@ -11,12 +11,13 @@ type Prop = {
   regsiter?:any;
   error?:string;
   css?: Stitches.CSS;
+  intputCss?: Stitches.CSS;
   placeHolder?:string
 }
-export const WhiteInput = ({regsiter,error='',placeHolder='/100' ,css}:Prop) => {
+export const WhiteInput = ({regsiter,error='',placeHolder='' ,css,intputCss}:Prop) => {
   return (
     <Box css={css}>
-    <WhiteInputStyled placeholder={placeHolder}  {...regsiter}/>
+    <WhiteInputStyled css={intputCss} placeholder={placeHolder}  {...regsiter}/>
     <p style={{'color':'crimson'}}>{error}</p>
     </Box>
   )

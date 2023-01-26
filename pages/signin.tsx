@@ -62,7 +62,7 @@ const Signin:NextPage =()=>{
             if(userInfo.user_type ==='panelist'){
                 route.push('/panelist/')
             }else{
-                route.push('/')
+                route.push('/dashboard_index')
             }
         },
         'onError':(error:any)=>{

@@ -128,3 +128,16 @@ export const setCutOffForQuetion = async (data:setCutOffForQuetionProp)=>{
     const resp = await api.post(`/jobs/company-filterquetion-handler/set_cut_off_for_quetion/`,data);
     return  resp.data
 }
+
+
+//
+export const getCutOffForTest =async (id:string):Promise<getCutOffForQuetionReponseType>=> {
+    const resp = await api.get(`/jobs/company-test-handler/${id}/get_cut_off_for_quetion/`);
+    return  resp.data.data
+}
+
+
+export const setCutOffForTest = async (data:setCutOffForQuetionProp)=>{
+    const resp = await api.post(`/jobs/company-test-handler/set_cut_off_for_quetion/`,data);
+    return  resp.data
+}

@@ -18,7 +18,7 @@ type Prop = {
 const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
     const {notify} = useToast()
     const loggedInUser = getUser()
-    const data:string= JSON.parse( currentJob.description_content)
+    const data:string= currentJob.description_content?JSON.parse( currentJob.description_content):''
     const route = useRouter()
 
     const { mutate,isLoading:applying} = useMutation(applyForJobs,{
@@ -140,7 +140,7 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
 
 <Button   css={{'margin':'0 auto'}} color={'lightBlueOutline'} 
                 onClick={(e)=>route.push(`/jobs/CvFilteringQuetion/application-sorting-create/${currentJob.job_filter}/`)}
-                >Update Cut Off Mark</Button>
+                > Sorting Cut Off Mark</Button>
                 <Button color={'whiteBtn'}
                    onClick={(e)=>route.push(`/jobs/CvFilteringQuetion/${currentJob.id}/view-filter-candidate/`)}
                 > 
@@ -159,6 +159,26 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
                 >
                     Add Test
                 </Button>:''
+            }
+            <br />
+            {
+                (currentJob.job_variant==='filter_and_test'&&currentJob.job_test!=null)?
+               <Box 
+               css={{
+                'display':'flex','justifyContent':'space-between','width':'400px','margin':'0 auto'
+                     }}
+               >
+                    <Button   css={{'margin':'0 auto'}} color={'lightBlueOutline'} 
+                    onClick={(e)=>route.push(`/jobs/JobTest/application-sorting-create/${currentJob.job_test}/`)}
+                    >Test Cut Off Mark</Button>
+
+                    <Button color={'whiteBtn'}
+                    onClick={(e)=>route.push(`/jobs/JobTest/${currentJob.id}/view-filter-candidate/`)}
+                    > 
+                    View Sorted Candidate
+                    </Button>
+               </Box>
+                :''
             }
 <br />
             <Button css={{'margin':'0 auto'}}  onClick={(e)=>route.push(`/job/${currentJob.id}/`)}>Job Dashboard</Button>

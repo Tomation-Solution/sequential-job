@@ -74,7 +74,11 @@ const CvFilterTest = ()=>{
     const {mutate:submitQUetions,isLoading:submitting} = useMutation(submitCvFilterQuetions,{
         'onSuccess':(data)=>{
             notify('Submitted','success')
-            route.push('notice/1/')
+            let has_test = 'no'
+            if(data.job_variant=='filter_and_test'){
+                has_test='yes'
+            }
+            route.push(`notice/${has_test}/`)
         },
         'onError':(err)=>{
             notify('Error!','error')

@@ -39,7 +39,7 @@ export type JobCreateForm = {
 
 const schema = yup.object({
   'job_title':yup.string().required(),
-  'is_active':yup.boolean().required(),
+  'is_active':yup.boolean() ,
   'location':yup.string().required(),
   'job_type':yup.string().required(),
   'salary':yup.number().required(),
@@ -72,7 +72,9 @@ const AddJobs = () => {
   const { register,control,setValue,handleSubmit, formState: { errors } } = useForm<JobCreateForm>({
     resolver: yupResolver(schema),
     defaultValues:{
-      'job_required_document':[{'name':''}]
+      'job_required_document':[{'name':''}],
+      'is_active':false,
+      'job_variant':'filter_only'
     },
     mode: "onBlur"
   });
@@ -96,9 +98,8 @@ const AddJobs = () => {
   useEffect(()=>{
     setValue('description_content','...')
     setComponentHasMounted(true)
+    setValue('is_active',false)
 
-
-    setValue('job_variant','filter_only')
   },[])
   return (
     <LiveJobWithOtherContentLayout
@@ -192,12 +193,11 @@ const AddJobs = () => {
           showLabel={true}
           label='Job Variant'
           options={[
-            {'name':'filter_only','value':'filter_only'},
+            {'name':'filter Only','value':'filter_only'},
           {'name':'Filter and Test','value':'filter_and_test'},
           ]}
           setVaue={setValue}
           name='job_variant'
-          
         />
           </Box>
 

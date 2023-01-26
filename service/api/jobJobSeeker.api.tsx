@@ -45,7 +45,14 @@ type Prop ={
     
 }
 
-export const submitCvFilterQuetions = async ({data,job_id}:Prop):Promise<any>=>{
+
+type submitCvFilterQuetionsResponseType ={
+    'fillInTheGap_result':number,
+    'quetionOption_result':number,
+    'filterQuetionMultiChoiceQuetion':number,
+    'job_variant':'filter_only'|'filter_and_test'
+}
+export const submitCvFilterQuetions = async ({data,job_id}:Prop):Promise<submitCvFilterQuetionsResponseType>=>{
     const senddata :any = {
         'job_id':job_id,
         'filter_quetion_option':data.filter_quetion_option,
@@ -53,5 +60,5 @@ export const submitCvFilterQuetions = async ({data,job_id}:Prop):Promise<any>=>{
         'filter_quetion_multi_choice_quetion':data.filter_quetion_multi_choice_quetion
     }
     const resp =  await api.post(`/jobs/job-seeker-view/submit_quetion/`,senddata)
-    return resp.data.data
+    return resp.data.data[0]
 }

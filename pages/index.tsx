@@ -1,124 +1,301 @@
-import { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import GeneralLayout from '../layout/GeneralLayout/GeneralLayout'
-import Box from '../shared/Box/Box'
-import Button from '../shared/Button/Button'
-import DropdownMenuDemo from '../shared/DropdownMenuDemo/DropdownMenuDemo'
-import JobCard from '../shared/JobCard/JobCard'
-import SearchBar from '../shared/SearchBar/SearchBar'
-import TabsComp from '../shared/Tabs/Tabs'
+import { NextPage } from "next";
+import { useState } from "react";
+import { useMediaQuery } from "react-responsive";
+import LandingPageLayout from "../layout/LandingPageLayout/LandingPageLayout";
+import { JobType } from "../service/api/job.api";
+import Box from "../shared/Box/Box";
+import Button from "../shared/Button/Button";
+import JobCard from "../shared/JobCard/JobCard";
+import JobDetail from "../shared/JobDetail/JobDetail";
+import OffCanvas from "../shared/OffCanvas/OffCanvas";
+import WhiteInput from "../shared/WhiteInput/WhiteInput";
 
-import api from '../service/axios'
-import { useQuery  } from 'react-query'
-import { get_jobs_api, JobType } from '../service/api/job.api'
-import Preloader from '../shared/Preloader/Preloder'
-import { useState } from 'react'
-import JobDetail from '../shared/JobDetail/JobDetail'
-import { useMediaQuery } from 'react-responsive'
-import OffCanvas from '../shared/OffCanvas/OffCanvas'
-import jwt_decode from "jwt-decode";
-import { UserType } from '../service/api/authentication/authentication.api'
-/* @ts-ignore */
-import cookieCutter from 'cookie-cutter'
-import { getUser } from '../utils/extra_function'
-
-
-const Home:NextPage = ()=>{ 
- const {status,error,data,isError} = useQuery('jobs',get_jobs_api)
+const dummyJobs:JobType[] =[
+  {
+    'id':1,
+      "job_title": 'Hello Job',
+      "is_active": true,
+      "location": 'Lagos',
+      "job_type": 'Remote',
+      "salary": '100',
+      "currency": 'Dollars',
+      "job_required_document": 'Cert',
+      "description": null,
+      "job_filter": null,
+      "description_content":'',
+      interview:null,
+      job_test:null,
+      job_variant:'filter_only'
+    },{
+      'id':1,
+        "job_title": 'Hello Job',
+        "is_active": true,
+        "location": 'Lagos',
+        "job_type": 'Remote',
+        "salary": '100',
+        "currency": 'Dollars',
+        "job_required_document": 'Cert',
+        "description": null,
+        "job_filter": null,
+        "description_content":'',
+        interview:null,
+        job_test:null,
+        job_variant:'filter_only'
+      },{
+        'id':1,
+          "job_title": 'Hello Job',
+          "is_active": true,
+          "location": 'Lagos',
+          "job_type": 'Remote',
+          "salary": '100',
+          "currency": 'Dollars',
+          "job_required_document": 'Cert',
+          "description": null,
+          "job_filter": null,
+          "description_content":'',
+          interview:null,
+          job_test:null,
+          job_variant:'filter_only'
+        },{
+          'id':1,
+            "job_title": 'Hello Job',
+            "is_active": true,
+            "location": 'Lagos',
+            "job_type": 'Remote',
+            "salary": '100',
+            "currency": 'Dollars',
+            "job_required_document": 'Cert',
+            "description": null,
+            "job_filter": null,
+            "description_content":'',
+            interview:null,
+            job_test:null,
+            job_variant:'filter_only'
+          },{
+            'id':1,
+              "job_title": 'Hello Job',
+              "is_active": true,
+              "location": 'Lagos',
+              "job_type": 'Remote',
+              "salary": '100',
+              "currency": 'Dollars',
+              "job_required_document": 'Cert',
+              "description": null,
+              "job_filter": null,
+              "description_content":'',
+              interview:null,
+              job_test:null,
+              job_variant:'filter_only'
+            },{
+              'id':1,
+                "job_title": 'Hello Job',
+                "is_active": true,
+                "location": 'Lagos',
+                "job_type": 'Remote',
+                "salary": '100',
+                "currency": 'Dollars',
+                "job_required_document": 'Cert',
+                "description": null,
+                "job_filter": null,
+                "description_content":'',
+                interview:null,
+                job_test:null,
+                job_variant:'filter_only'
+              },{
+                'id':1,
+                  "job_title": 'Hello Job',
+                  "is_active": true,
+                  "location": 'Lagos',
+                  "job_type": 'Remote',
+                  "salary": '100',
+                  "currency": 'Dollars',
+                  "job_required_document": 'Cert',
+                  "description": null,
+                  "job_filter": null,
+                  "description_content":'',
+                  interview:null,
+                  job_test:null,
+                  job_variant:'filter_only'
+                },{
+                  'id':1,
+                    "job_title": 'Hello Job',
+                    "is_active": true,
+                    "location": 'Lagos',
+                    "job_type": 'Remote',
+                    "salary": '100',
+                    "currency": 'Dollars',
+                    "job_required_document": 'Cert',
+                    "description": null,
+                    "job_filter": null,
+                    "description_content":'',
+                    interview:null,
+                    job_test:null,
+                    job_variant:'filter_only'
+                  }
+                  ,{
+                    'id':1,
+                      "job_title": 'Hello Job',
+                      "is_active": true,
+                      "location": 'Lagos',
+                      "job_type": 'Remote',
+                      "salary": '100',
+                      "currency": 'Dollars',
+                      "job_required_document": 'Cert',
+                      "description": null,
+                      "job_filter": null,
+                      "description_content":'',
+                      interview:null,
+                      job_test:null,
+                      job_variant:'filter_only'
+                    },{
+                      'id':1,
+                        "job_title": 'Hello Job',
+                        "is_active": true,
+                        "location": 'Lagos',
+                        "job_type": 'Remote',
+                        "salary": '100',
+                        "currency": 'Dollars',
+                        "job_required_document": 'Cert',
+                        "description": null,
+                        "job_filter": null,
+                        "description_content":'',
+                        interview:null,
+                        job_test:null,
+                        job_variant:'filter_only'
+                      },{
+                        'id':1,
+                          "job_title": 'Hello Job',
+                          "is_active": true,
+                          "location": 'Lagos',
+                          "job_type": 'Remote',
+                          "salary": '100',
+                          "currency": 'Dollars',
+                          "job_required_document": 'Cert',
+                          "description": null,
+                          "job_filter": null,
+                          "description_content":'',
+                          interview:null,
+                          job_test:null,
+                          job_variant:'filter_only'
+                        }
+] 
+const LandingPageIndex:NextPage = ()=>{
   const [currentJob,setCurrentJob] = useState<null|JobType>(null)
   const [isOpen, setIsOpen] = useState(false)
-  const logged_in_user = getUser()
+  const handleJobDetail = (job:JobType)=>{
+    setCavasOpenClose(true)
+    setCurrentJob(job)
+    console.log("Twoj")
+  }
 
   const isDesktopOrLaptop = useMediaQuery({
     query: '(min-width: 1250px)'
   })
-  const handleJobDetail = (job:JobType)=>{
-      // if(isDesktopOrLaptop){
-      //   if it laptop just ffill the currentJob state
-      //   setCurrentJob(job)
-      // }else{
-      //   if it is a small device we rediredt to a detail page
-      // }
+  const [cavasOpen, setCavasOpenClose] = useState(false)
 
-      setIsOpen(true)
-      setCurrentJob(job)
+  return (
+    <LandingPageLayout>
+<br />
 
-    }
+<Box css={{
 
+  'padding':'0 1rem',
+  'maxWidth':'650px',
+  'margin':'0 auto',
+  '&> div':{
+    'margin':'1rem 0'
+  },
+'@bp2':{
+    'display':'flex','justifyContent':'space-between',
+    '&> div':{
+      'margin':'unset'
+    },
+  }
+}}>
+<Box css={{'position':'relative','backgroundColor':'#D9D9D9','overflow':'hidden','borderRadius':'5px'}}>
+  <label htmlFor="" style={{'color':'#24CDE2',
+  // 'border':'1px solid red',
+  'display':'inline-block',
+  'padding':'.4rem .4rem','position':'absolute','transform':'translateY(1px)'
+}} >What</label>
+<WhiteInput 
+placeHolder="Job title, keywords, or company"
+intputCss={{'borderRadius':'0px','width':'100%',
+'&::placeholder':{
+  'fontSize':'.7rem !important',
+  'color':'#0404045c'
+}
+}} css={{
+  // 'backgroundColor':'red',
+  'paddingLeft':'3.3rem'}}/>
+</Box>
 
- return (
-    <GeneralLayout>
-      <Preloader loading={status=='loading'} />
-     
-     <Box css={{'display':'flex','justifyContent':'space-between',
-    'maxWidth':'1600px',
-    // 'border':'1px solid red',
-    'margin':'0 auto'
-    }}>
-     <TabsComp
-        data={[
-{          'key':logged_in_user?.user_type ==='company'?'Live':'Jobs',
-          'label':logged_in_user?.user_type ==='company'?'Live':'Jobs',
-          'template':<Box css={{
+<Box css={{'position':'relative','backgroundColor':'#D9D9D9','overflow':'hidden','borderRadius':'5px'}}>
+  <label htmlFor="" style={{'color':'#24CDE2',
+  // 'border':'1px solid red',
+  'display':'inline-block',
+  'padding':'.4rem .4rem','position':'absolute','transform':'translateY(1px)'
+}} >Where </label>
+<WhiteInput 
+placeHolder="City, remote, hybrid, or on-site"
+intputCss={{'borderRadius':'0px','width':'100%',
+'&::placeholder':{
+  'fontSize':'.7rem !important',
+  'color':'#0404045c'
+}
+}} css={{
+  // 'backgroundColor':'red',
+  'paddingLeft':'3.3rem',
+ 
+  }}/>
+</Box>
+</Box>
+<br />
+<br />
+<Button css={{'margin':' 0 auto','borderRadius':'5px'}} >
+Search
+</Button>
+
+<br />
+<h1 style={{'textAlign':'center'}}>Result for position of Business Developer , Remote  </h1>
+<br />
+<Box css={{
               '@bp1':{
+                'margin':'0 auto',
                 'display':'flex',
-                'flexWrap':'wrap'
+                'flexWrap':'wrap',
               },
               '@bp3':{
                 'display':'grid',
-                'gridTemplateColumns':'repeat(3,360px)',
+                'gridTemplateColumns':'repeat(3,1fr)',
                 'padding':'0 1rem',
                 'gap':'10px'
               },
               '@bp5':{
-                'gridTemplateColumns':'repeat(3,360px)',
+                'gridTemplateColumns':'repeat(4,1fr)',
               }
           }}>
-          {
-            data?
-          data.map((job,index)=>(
-              <Box onClick={()=>handleJobDetail(job)}>
-                <JobCard job={job} key={index}/>
+            {
+              dummyJobs.map((data,index)=>(
+                <Box onClick={()=>handleJobDetail(data)}>
+                <JobCard job={data} key={index}/>
               </Box>
-            )):''
-            
-          }
-          </Box>
-          
-        },
-          { 
-            'key':logged_in_user?.user_type ==='company'?'Closed':'Saved Jobs',
-          'label':logged_in_user?.user_type ==='company'?'Closed':'Saved Jobs',
-          'template':
-            <>
-              Coming Soon
-            </>
-            
-          },
-        ]}
-      />
-     
-     </Box>
+              ))
+            }
 
-     <OffCanvas
-      setIsOpen={setIsOpen}
-      isOpen={isOpen}
+</Box>
+
+
+<OffCanvas
+      setIsOpen={setCavasOpenClose}
+      isOpen={cavasOpen}
       direction={isDesktopOrLaptop?'right':'bottom'}
      >
      {currentJob&&<JobDetail currentJob={currentJob}/>}
 
      </OffCanvas>
-    </GeneralLayout>
+    </LandingPageLayout>
   )
 }
 
-export default Home
-
-
-// {
-//   isDesktopOrLaptop?
-// <Box>
-// {currentJob&&<JobDetail currentJob={currentJob}/>}
-// </Box>:''
-// }
+export default LandingPageIndex
