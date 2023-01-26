@@ -3,18 +3,17 @@ import GeneralLayout from '../../layout/GeneralLayout/GeneralLayout';
 import ForgotPasswodSvg from '../../assets/forgot_password.svg'
 import InputWithLabel from '../../shared/InputWithLabel/InputWithLabel';
 import Button from '../../shared/Button/Button';
-import FormIntroImageContainer from '../../shared/FormIntroImageContainer/FormIntroImageContainer';
-import FormIntroContainer from '../../shared/FormIntroContainer/FormIntroContainer';
-import api, { url } from '../../service/axios';
+import api ,{url}from '../../service/axios';
 import { useState } from 'react';
 import useToast from '../../hooks/useToastify';
-import { siginResponseType } from '../../redux/siginin/sigininApi';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Preloader from '../../shared/Preloader/Preloder';
 import axios from 'axios';
-
+import FormIntroImageContainer from '../../shared/FormIntroImageContainer/FormIntroImageContainer';
+import FormIntroContainer from '../../shared/FormIntroContainer/FormIntroContainer';
+import {SignUpFormType  } from '../../pages/signup'
 
 
 
@@ -42,7 +41,7 @@ const SendResetPasswordMail:NextPage = ()=>{
     setIsLoading(true)
     try{
       const resp = await axios.post(url+'/mailing/request_forgot_password/',data);
-      const response_data:siginResponseType = resp.data
+      const response_data:any = resp.data
       if(response_data.status_code == 200){
         notify(response_data.message,'success')
       }
@@ -72,7 +71,7 @@ const SendResetPasswordMail:NextPage = ()=>{
         onSubmit={handleSubmit(onSubmit)} style={{'maxWidth':'400px','margin':'0 auto','padding':'0 1rem'}}>
 
         <InputWithLabel label='' register={register('email')}/>
-        <Button isLoading={isLoading} style={{'width':'40%','margin':'10px auto'}}>Recover</Button>
+        <Button css={{'width':'40%','margin':'10px auto'}}>Recover</Button>
       </form>
     </GeneralLayout>
   )
