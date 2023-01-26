@@ -12,7 +12,6 @@ import * as yup from 'yup';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import SvgRest from '../../../../assets/rest_password.svg'
 import axios from 'axios';
-import { siginResponseType } from '../../../../redux/siginin/sigininApi';
 import Preloader from '../../../../shared/Preloader/Preloder';
 import { url } from '../../../../service/axios';
 type FormType = {
@@ -51,7 +50,7 @@ const ResetPasswordPage:NextPage = ()=>{
  
     try{
       const resp = await axios.post(`${url}/mailing/reset_password/${uidb64}/${token}/`,{password})
-      const response_data:siginResponseType = resp.data
+      const response_data:any = resp.data
       console.log({response_data})
       if(response_data.status_code == 200){
         notify(response_data.message,'success')
@@ -89,12 +88,14 @@ const ResetPasswordPage:NextPage = ()=>{
         <InputWithLabel label='Password'
           register={register('password')}
           type='password' 
+          errors={errors.password?.message}
+
         />
         <br />
         <InputWithLabel label='Confirm Password'
           register={register('confirm_password')}
           type='password' 
-          errorMessage={errors.confirm_password?.message}
+          errors={errors.confirm_password?.message}
         />
         <br />
 
