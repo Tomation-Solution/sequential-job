@@ -10,7 +10,7 @@ import InputWithLabel from '../../../../shared/InputWithLabel/InputWithLabel';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import SvgRest from '../../../../assets/rest_password.svg'
+// import SvgRest from '../../../../assets/rest_password.svg'
 import axios from 'axios';
 import Preloader from '../../../../shared/Preloader/Preloder';
 import { url } from '../../../../service/axios';
@@ -72,7 +72,7 @@ const ResetPasswordPage:NextPage = ()=>{
 
   return (
     <GeneralLayout>
-      <FormIntroImageContainer image={SvgRest.src}/>
+      {/* <FormIntroImageContainer image={SvgRest.src}/> */}
       <FormIntroContainer heading={{
         phone:'Rest your password!',
         laptop:'Rest your password!'

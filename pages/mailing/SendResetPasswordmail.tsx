@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 import GeneralLayout from '../../layout/GeneralLayout/GeneralLayout';
-import ForgotPasswodSvg from '../../assets/forgot_password.svg'
+// import ForgotPasswodSvg from '../../assets/forgot_password.svg'
 import InputWithLabel from '../../shared/InputWithLabel/InputWithLabel';
 import Button from '../../shared/Button/Button';
 import api ,{url}from '../../service/axios';
@@ -59,7 +59,7 @@ const SendResetPasswordMail:NextPage = ()=>{
   }
   return (
     <GeneralLayout>
-      <FormIntroImageContainer image={ForgotPasswodSvg.src}/>
+      {/* <FormIntroImageContainer image={ForgotPasswodSvg.src}/> */}
       <FormIntroContainer heading={{
         phone:'Lost your password? ',
         laptop:'Lost your password? '
