@@ -15,6 +15,7 @@ import {GiUnlitBomb} from 'react-icons/gi'
 import { useRouter } from 'next/router'
 /* @ts-ignore */
 import cookieCutter from 'cookie-cutter'
+import { getUser } from '../../utils/extra_function'
 
 
 
@@ -61,7 +62,7 @@ const Nav = ():React.ReactElement => {
     icon:<GiUnlitBomb/>
   },
   ]
-  
+  const user = getUser()
   const isDesktopOrLaptop = useMediaQuery({
     query: '(min-width: 1000px)'
   })
@@ -71,16 +72,28 @@ const Nav = ():React.ReactElement => {
   return (
     <NavContainer>
       <h2>Browse Jobs</h2>
-            <li  onClick={(e)=> handleRoute('/')}>
+
+            <li  onClick={(e)=> handleRoute('/dashboard_index')}>
                 <IoBagSharp />
                 <p>Jobs</p>
             </li>
 
+            {
+        user?.user_type=='company'?
             <li onClick={(e)=>handleRoute('/jobs/add-jobs/')}>
                 <RiUploadCloudFill/>
                 <p>Create Job</p>
-            </li>
+            </li>:''
+      }
 
+{
+  user?.user_type==='job_seakers'?
+  <li onClick={(e)=>handleRoute('/job_seeker/interviews/')}>
+  <AiFillBell/>
+
+  <p>View Invitations</p>
+</li>:''
+}
             <li >
                 <AiFillBell/>
 
@@ -104,7 +117,20 @@ const Nav = ():React.ReactElement => {
         </li>
         }/>: <div style={{'marginTop':'20px'}}>
           {
-            extra_links.map((data,index)=>(
+            extra_links.filter((value)=>{
+              if(user?.user_type!='company'){
+                if(value.label==='Set Interview'){
+                  return false
+                }
+                if(value.label==='Set Sorting Quetion'){
+                  return false
+                }
+                if(value.label==='Set Test'){
+                  return false
+                }
+              }
+              return true
+            }).map((data,index)=>(
               <li  key={index} onClick={()=>{
                 if(data.label==='Logout'){
                   cookieCutter.set('user',null)
