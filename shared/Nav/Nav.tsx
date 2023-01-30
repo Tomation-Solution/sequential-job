@@ -100,7 +100,7 @@ const Nav = ():React.ReactElement => {
                 <p>Notification</p>
             </li>
 
-            <li >
+            <li onClick={(e)=>handleRoute('/profile/')}>
                 <FaUserCog/>
                 <p>Profile</p>
             </li>

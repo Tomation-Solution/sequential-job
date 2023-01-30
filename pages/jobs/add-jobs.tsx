@@ -61,7 +61,7 @@ const AddJobs = () => {
     onSuccess:(data, variables, context)=>{
         console.log({'success':data})
         if(data.status==201){
-          route.push('/')
+          route.push('/dashboard_index')
           notify(`"${data.data.job_title}" Successful`,'success')
         }
     },
