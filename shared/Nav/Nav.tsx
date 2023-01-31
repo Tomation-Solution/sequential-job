@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { NavContainer,  } from './Nav.style'
 import {IoBagSharp} from 'react-icons/io5'
 import {CiCircleMore} from 'react-icons/ci'
@@ -16,12 +16,21 @@ import { useRouter } from 'next/router'
 /* @ts-ignore */
 import cookieCutter from 'cookie-cutter'
 import { getUser } from '../../utils/extra_function'
-
+import { useAppDispatch, useAppSelector } from '../../redux/hook'
+import { selectjobSeekerInvites, updateInviteCount } from '../../redux/JobSeekerInterviewNotifcation/JobSeekerInterviewNotifcationSlice'
+import { get_interviews } from '../../service/api/jobSeekerInterview.api'
+import { useQuery } from 'react-query'
+import Box from '../Box/Box'
 
 
 
 const Nav = ():React.ReactElement => {
-  
+  const {isLoading,data,status} = useQuery('get_interviews_for_jobseekers',get_interviews)
+
+  const { invites_count } = useAppSelector(selectjobSeekerInvites)
+  const dispatch = useAppDispatch()
+
+
   const route = useRouter()
   const extra_links = [
   {
@@ -69,6 +78,12 @@ const Nav = ():React.ReactElement => {
   const handleRoute = (value:string):void=>{
     route.push(value)
   }
+  useEffect(()=>{
+    //
+    if(status==='success'){
+      dispatch(updateInviteCount(data.length))
+    }
+  },[status])
   return (
     <NavContainer>
       <h2>Browse Jobs</h2>
@@ -88,10 +103,13 @@ const Nav = ():React.ReactElement => {
 
 {
   user?.user_type==='job_seakers'?
-  <li onClick={(e)=>handleRoute('/job_seeker/interviews/')}>
+  <li style={{'position':'relative'}} onClick={(e)=>handleRoute('/job_seeker/interviews/')}>
   <AiFillBell/>
 
-  <p>View Invitations</p>
+  <Box css={{'position':'absolute','backgroundColor':'red','color':'white','display':'inline-block','width':'20px','height':'20px','textAlign':'center','borderRadius':'50%','right':'0','top':'0'}}>
+  {status==='loading'?'...':invites_count+'+'}
+  </Box>
+  <p>View Invitations </p>
 </li>:''
 }
             <li >

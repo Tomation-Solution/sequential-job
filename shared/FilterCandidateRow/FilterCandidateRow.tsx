@@ -47,6 +47,7 @@ const FilterCandidateRow = ({applicant,list_of_ids,setListOfId}:Prop) => {
             setListOfId(list_of_ids.filter((id,index)=>id!==applicant.id)) 
           }
         }}/>
+        <p>{applicant.jobseekers.full_name}</p>
         <p>{applicant.jobseekers.email}</p>
         <p>{applicant.filter_quetions_score}</p>
         <Button css={{'padding':'.4rem 1rem','width':'100px'}} onClick={(e)=>{

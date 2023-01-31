@@ -42,3 +42,27 @@ export const InviteCandidatesApi = async (ids:number[]):Promise<InviteCandidates
 
     return resp.data 
 }
+
+
+
+
+
+export type IntrestedCandidateInInterview =  {
+    "id": number,
+    "interview": number,
+    "date_picked": string,
+    "time_picked": string,
+    "has_mail_sent": boolean,
+    "has_picked_invitation": boolean,
+    "job_seeker": {
+        "full_name": string,
+        "email": string,
+        "cv": string
+    }
+}
+
+export const get_candidate_that_accepted_interview =async (job_id:number):Promise<IntrestedCandidateInInterview[]> => {
+    const resp = await api.get(`/interview/interview_setup/get_candidate_that_accepted_interview/?job_id=${job_id}`)
+
+    return resp.data.data
+}

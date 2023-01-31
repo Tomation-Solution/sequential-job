@@ -22,6 +22,8 @@ import { create_job_api } from '../../service/api/job.api'
 import Preloader from '../../shared/Preloader/Preloder'
 import listOfNigerianStates  from '../../utils/list_of_states'
 import {AiFillCloseCircle} from 'react-icons/ai'
+import countries_and_state  from '../../utils/countries_and_state'
+
 
 
 export type JobCreateForm = {
@@ -33,7 +35,8 @@ export type JobCreateForm = {
   'currency':'string',
   'job_required_document':{'name':string}[];
   'description_content':string;
-  job_variant:'filter_only'|'filter_and_test'
+  job_variant:'filter_only'|'filter_and_test',
+  country:string
 
 }
 
@@ -48,12 +51,14 @@ const schema = yup.object({
     'name':yup.string().required(),
   })),
   'description_content':yup.string().required(),
-  job_variant:yup.string().required()
+  job_variant:yup.string().required(),
+  'country':yup.string().required()
 })
 const AddJobs = () => {
   const [componentHasMounted,setComponentHasMounted] = useState(false)
   const route = useRouter() 
   const {notify} = useToast();
+  const [ListOfStates,setListOfStates] = useState<string[]>([]);
   const  {isLoading,mutate} = useMutation(create_job_api,{
     onError:(error:any)=>{
       console.log({'endpoint Error':error})
@@ -90,6 +95,7 @@ const AddJobs = () => {
       const description_content =  simpleMdeInstance.value().replace(/\n/g,'<br/>')
       new_job['description_content']=description_content
       mutate(new_job)
+      // console.log({new_job})
     }
    
   }
@@ -114,17 +120,31 @@ const AddJobs = () => {
     <br />
         <SelectComponent 
           showLabel={true}
-          label='Location'
+          label='Country'
+          setVaue={(name:string,value:string)=>{
+            const data = JSON.parse(value)
+            setValue('country',data.country_name)
+            setListOfStates(data.states)
+          }}
+          name='country'
+          options={
+          countries_and_state.countries.map((data,index)=>{
+            return {'name':data.country,'value':JSON.stringify({'country_name':data.country,'states':data.states}),}
+          })
+        }
+        />
+    <br />
+
+         <SelectComponent 
+          showLabel={true}
+          label='State'
           setVaue={setValue}
           name='location'
-          options={listOfNigerianStates.map((data:string,index:number)=>{
-            return (
-              {
-                'value':data,
-              'name':data
-              }
-            )
-          })}
+          options={
+            ListOfStates.map((data,index)=>{
+            return {'name':data,'value':data}
+          })
+        }
         />
 
 <br />

@@ -62,3 +62,23 @@ export const submitCvFilterQuetions = async ({data,job_id}:Prop):Promise<submitC
     const resp =  await api.post(`/jobs/job-seeker-view/submit_quetion/`,senddata)
     return resp.data.data[0]
 }
+
+
+
+export const getTestFilterQuetions =  async (job_id:number):Promise<getCvFilterQuetionsResponse>=>{
+
+    const resp =  await api.post(`/jobs/job-seeker-view/get_test/`,{job_id})
+    return resp.data.data
+}
+
+
+export const submitTestQuetion = async ({data,job_id}:Prop):Promise<submitCvFilterQuetionsResponseType>=>{
+    const senddata :any = {
+        'job_id':job_id,
+        'filter_quetion_option':data.filter_quetion_option,
+        'fill_in_the_gap':data.fill_in_the_gap,
+        'filter_quetion_multi_choice_quetion':data.filter_quetion_multi_choice_quetion
+    }
+    const resp =  await api.post(`/jobs/job-seeker-view/submit_test/`,senddata)
+    return resp.data.data[0]
+}

@@ -11,6 +11,8 @@ export type JobType = {
     "job_title": string,
     "is_active": boolean,
     "location": string,
+    'country':string,
+    'org_name':string,
     "job_type": string,
     "salary": string,
     "currency": string,
@@ -44,6 +46,7 @@ export const create_job_api = (job:JobCreateForm)=>{
     form.append('job_required_document',job.job_required_document.map((data,index)=>data.name).toString())
     form.append('description_content',JSON.stringify(job.description_content))
     form.append('job_variant',job.job_variant)
+    form.append('country',job.country)
     return  api.post('/jobs/company-job-handler/',form).then(res=>res.data)
 }
 // 

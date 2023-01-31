@@ -5,6 +5,7 @@ import { useMutation, useQuery } from "react-query";
 import useToast from "../../../hooks/useToastify";
 import GeneralLayout from "../../../layout/GeneralLayout/GeneralLayout";
 import { generateJobDataApi, get_applicantFinal_result, send_applicationLetterApi, send_applicationLetterApiProp } from "../../../service/api/companyJobDashboard";
+import { get_candidate_that_accepted_interview } from "../../../service/api/interview.api";
 import Box from "../../../shared/Box/Box";
 import Button from "../../../shared/Button/Button";
 import CheckBox from "../../../shared/Checkbox/Checkbox";
@@ -13,6 +14,7 @@ import Preloader from "../../../shared/Preloader/Preloder";
 import SelectComponent from "../../../shared/Select/Select";
 import Table from "../../../shared/Table/Table";
 import { TableColumnType } from "../../../shared/Table/Table.style";
+import TabsComp from "../../../shared/Tabs/Tabs";
 
 
 
@@ -21,6 +23,7 @@ import { TableColumnType } from "../../../shared/Table/Table.style";
 const JobDashboard:NextPage =()=>{
     const {notify} =useToast();
     const route = useRouter();
+    const [enable_getting_info,setEnableGettingInfo] = useState(false)// this will only enable when the url params are availabe
     
 
     const [selected_applicants,setSelectedApplicants] = useState<number[]>([])
@@ -34,6 +37,9 @@ const JobDashboard:NextPage =()=>{
         }
     })
 
+    const  {isLoading:getingCadidates , data:intrestedCandidates,} = useQuery('get_candidate_that_accepted_interview',()=>get_candidate_that_accepted_interview(typeof job_id==='string'?parseInt(job_id):0),{
+        'enabled':enable_getting_info
+    })
     const {mutate:sendLetter,isLoading:sendingLetters} = useMutation(send_applicationLetterApi,{
         onSuccess(data, variables, context) {
             refetch()
@@ -137,16 +143,86 @@ const JobDashboard:NextPage =()=>{
                 }
             }
         ]
+
+    const prop_columns_forcandidate:TableColumnType[]=[
+        {
+            Header:'full Name',
+            accessor:'job_seeker',
+            id:1,
+            Cell:(tableProps:any)=>{
+                return (
+                    <p>{tableProps.row.original.job_seeker.full_name}</p>
+                )
+            }
+        },
+        {
+            Header:'Date Picked',
+            accessor:'date_picked',
+            id:2,
+        }
+        ,
+        {
+            Header:'Time Picked',
+            accessor:'time_picked',
+            id:3,
+        }
+        ,
+        {
+            Header:'Email',
+            accessor:'job_seeker',
+            id:4,
+            Cell:(tableProps:any)=>{
+                return (
+                    <p>{tableProps.row.original.job_seeker.email}</p>
+                )
+            }
+        }
+        ,
+        {
+            Header:'Cv',
+            accessor:'job_seeker',
+            id:5,
+            Cell:(tableProps:any)=>{
+                return (
+                    <Button color={'lightBlueOutline'} onClick={()=>{
+                        window.location.href=tableProps.row.original.job_seeker.cv
+                    }}>View Cv</Button>
+                )
+            }
+        }
+
+    ]
     useEffect(()=>{
         if(status=='error'){
             notify('Please CHeck Your network','error')
         }
     },[status])
     
+    useEffect(()=>{
+        if(typeof job_id == 'string'){
+            setEnableGettingInfo(true)
+        }
+    },[route.isReady])
 
     return(
         <GeneralLayout>
-            <h3 style={{'textAlign':'center'}}>This shows all the peformance of all Invited Applicant</h3>
+            <TabsComp
+            data={[
+                {
+                    'key':'acceptedInvite',
+                    'label':'Cadidates that Accepted the Invites',
+                    'template':<Box>
+<h3 style={{'textAlign':'center'}}>This shows all the Candidates that accepted Invite</h3>
+                    <Preloader loading={getingCadidates}/>
+                    <Table prop_columns={prop_columns_forcandidate} custom_data={intrestedCandidates}/>
+
+                    </Box>
+                },
+                {
+                    'key':'InvitedApplicantPerformace',
+                    'label':'Invited Applicant Performace',
+                    'template':<Box>
+<h3 style={{'textAlign':'center'}}>This shows all the peformance of all Invited Applicant</h3>
             <Preloader loading={isLoading||generating||sendingLetters}/>
             <br />
             <br />
@@ -178,6 +254,11 @@ const JobDashboard:NextPage =()=>{
             onClick={()=>mutate()}
             >Generate</Button>
             </Box>
+                    </Box>
+                }
+            ]}
+            />
+            
         </GeneralLayout>
     )
 }

@@ -13,7 +13,6 @@ type Prop ={
 }
  const JobCard = ({job}:Prop):React.ReactElement => {
 
-
   return (
     <JobCardContainer>
         <Box css={{'display':'flex','justifyContent':'space-between','alignItems':'center'}}>
@@ -22,13 +21,13 @@ type Prop ={
             </h2>
             <BsHeartFill/>
         </Box>
-        <h3><strong>ABC Limited</strong></h3>
-        <p>{job.location}</p>
+        <h3><strong>{job.org_name}</strong></h3>
+        <p>{job.country},{job.location}</p>
       <Box css={{'display':'flex','justifyContent':'space-between','alignItems':'center','width':'270px','margin':'.7rem 0'}}>
       <span>
         <IoBagSharp />
         {' '}
-            Full-Time
+            {job.job_type.replace('_',' ').toUpperCase()}
         </span>
         <span>
            <FaMoneyBillWave/>{' '}${job.salary}/year

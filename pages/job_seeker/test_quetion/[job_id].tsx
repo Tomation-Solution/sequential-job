@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useMutation } from "react-query";
 import GeneralLayout from "../../../layout/GeneralLayout/GeneralLayout";
-import { getCvFilterQuetions, submitCvFilterQuetions } from "../../../service/api/jobJobSeeker.api";
+import { getCvFilterQuetions, getTestFilterQuetions, submitCvFilterQuetions, submitTestQuetion } from "../../../service/api/jobJobSeeker.api";
 import Box from "../../../shared/Box/Box"
 import FillinGapQuetionJobSeekerTake from "../../../shared/JobSeekerTakeCvFilterQuetion/FillinGapQuetionJobSeekerTake";
 import Preloader from "../../../shared/Preloader/Preloder";
@@ -62,7 +62,7 @@ const CvFilterTest = ()=>{
     const {notify} = useToast()
     const {job_id} = route.query
     // const [finalData ,setFinalData] = useState<CvFilterTestType>({} as CvFilterTestType );
-    const {mutate,status,isLoading,data} = useMutation(getCvFilterQuetions,{
+    const {mutate,status,isLoading,data} = useMutation(getTestFilterQuetions,{
         onSuccess:(data)=>{
             console.log({'data Gotten':data})
         },
@@ -71,14 +71,10 @@ const CvFilterTest = ()=>{
         }
     })
 
-    const {mutate:submitQUetions,isLoading:submitting} = useMutation(submitCvFilterQuetions,{
+    const {mutate:submitQUetions,isLoading:submitting} = useMutation(submitTestQuetion,{
         'onSuccess':(data)=>{
             notify('Submitted','success')
-            let has_test = 'no'
-            if(data.job_variant=='filter_and_test'){
-                has_test=job_id?.toString() as string
-            }
-            route.push(`notice/${has_test}/`)
+            route.push(`/job_seeker/test_quetion/notice/`)
         },
         'onError':(err)=>{
             notify('Error!','error')

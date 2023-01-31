@@ -6,7 +6,8 @@ export type getSortedJobCandidateResponse =    {
     "jobseekers": {
         "cv_url":string,
         "jobseekers_id":number,
-        "email": string
+        "email": string,
+        'full_name':string
     },
     "filter_quetions_score": 20,
     "job": 1

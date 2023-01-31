@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useMutation, useQuery } from 'react-query'
 import useToast from '../../../../hooks/useToastify'
+import GeneralLayout from '../../../../layout/GeneralLayout/GeneralLayout'
 import LiveJobWithOtherContentLayout from '../../../../layout/LiveJobWithOtherContentLayout/LiveJobWithOtherContentLayout'
 import { getSortedJobCandidate, get_sorted_job_candidate } from '../../../../service/api/candidate_related.api'
 import Box from '../../../../shared/Box/Box'
@@ -34,10 +35,17 @@ export const ViewFilterCandidate:NextPage = () => {
     },[filtering_state])
 
   return (
-    <LiveJobWithOtherContentLayout
-        header='Filtered Candidate'
+    <GeneralLayout
+        
     >
+        <h1 style={{'textAlign':'center'}}>Filtered Candidate</h1>
         <Preloader loading={isLoading}/>
+        <Box css={{
+            '@bp2':{
+                'maxWidth':'900px',
+                'margin':'0 auto'
+            }
+        }}>
         <TabsComp
         onChange={(value)=>{
             console.log({value})
@@ -70,8 +78,9 @@ export const ViewFilterCandidate:NextPage = () => {
                 },
             ]}
         />
+        </Box>
    
-    </LiveJobWithOtherContentLayout>
+    </GeneralLayout>
   )
 }
 

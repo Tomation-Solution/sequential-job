@@ -17,7 +17,7 @@ import Preloader from '../Preloader/Preloder'
 type Prop ={
   applicants:getSortedJobCandidateResponse[]
 }
-const btnStyle ={'width':'45%','borderRadius':'999px','paddingTop':'.5rem','paddingBottom':'.5rem'}
+const btnStyle ={'width':'40%','borderRadius':'999px','paddingTop':'.5rem','paddingBottom':'.5rem'}
 const FilterCandidateContainer = ({applicants}:Prop) => {
   const {notify} = useToast()
   
@@ -51,7 +51,7 @@ const FilterCandidateContainer = ({applicants}:Prop) => {
 <Box css={{
                         'color':'$white',
                         '@bp2':{
-                     'maxWidth':'800px'
+                    //  'maxWidth':'800px'
                     }}}>
                       <Preloader  loading={isLoading}/>
 
@@ -66,7 +66,7 @@ const FilterCandidateContainer = ({applicants}:Prop) => {
                       <br />
                       {
                         logged_in_user.user_type=='panelist'?'':
-                      <Box css={{'display':'flex','alignItems':'center','justifyContent':'space-between',}}>
+                      <Box css={{'display':'flex','alignItems':'center','justifyContent':'space-between','margin':'0 auto','maxWidth':'500px'}}>
                         <Button css={btnStyle} 
                         onClick={InviteAll}
                         >
