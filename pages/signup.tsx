@@ -92,7 +92,7 @@ const Signup:NextPage =()=>{
         <GeneralLayout remove_nav={true}>
             <Preloader loading={isLoading}/>
             {/* <InputWithLabel label="Organization Name"/> */}
-              <Box css={{'maxWidth':'600px','margin':'0 auto'}}>
+              <Box css={{'maxWidth':'600px','margin':'0 auto','height':'100vh'}}>
                {/* <img src={Signupsvg.src} alt="" style={{'width':'90%'}} /> */}
 
 
