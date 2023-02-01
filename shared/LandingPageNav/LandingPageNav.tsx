@@ -7,9 +7,12 @@ import {GiHamburgerMenu} from 'react-icons/gi'
 import { useState } from "react"
 import {AiFillCloseCircle} from  'react-icons/ai'
 import { useRouter } from "next/router"
+import { useTheme } from "next-themes";
 
 const LandingPageNav = ():ReactElement=>{
     const route = useRouter()
+  const { theme, setTheme } = useTheme();
+
     const isTab = useMediaQuery({
         query: '(min-width: 500px)'
       })
@@ -41,7 +44,7 @@ const LandingPageNav = ():ReactElement=>{
 
 {
     !isLaptop?
-<GiHamburgerMenu style={{'color':'white','display':'block',
+<GiHamburgerMenu style={{'color':theme!='light'?'black':'white','display':'block',
 'fontSize':'1.5rem',
 'transform':'translateY(-5px)','cursor':'pointer'}} onClick={()=>setIsOpen(true)}/>:''
 }

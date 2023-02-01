@@ -144,3 +144,23 @@ export const setCutOffForTest = async (data:setCutOffForQuetionProp)=>{
     const resp = await api.post(`/jobs/company-test-handler/set_cut_off_for_quetion/`,data);
     return  resp.data
 }
+
+
+type switchJobOnProp = {
+    job_id:number,
+    switch:boolean
+}
+type switchJobResponse = {
+    "status": number,
+    "message": string,
+    "data": {
+        "switch": string
+    }
+}
+export const switchJobOnApi = async (data:switchJobOnProp ):Promise<switchJobResponse>=>{
+    const form = new FormData()
+    form.append('job_id',data.job_id.toString())
+    form.append('switch',data.switch?'True':'False')
+    const resp = await api.post('/jobs/company-job-handler/switch_job_on/',form)
+    return resp.data 
+}

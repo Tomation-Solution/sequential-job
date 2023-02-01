@@ -35,7 +35,11 @@ type Prop = {
     name?:string;
 }
 const SelectComponent = ({name='',setVaue=null,label,options,showLabel=true,control_border}:Prop):React.ReactElement => (
-  <Box css={showLabel?{'display':'flex','flexDirection':'column'}:{}}>
+  <Box css={showLabel?{'display':'flex','flexDirection':'column',
+  'label':{
+    'color':'$thickText'
+  }
+  }:{}}>
     {
       showLabel?
       <label htmlFor="" style={{'padding':'.4rem 0'}}>{label}</label>

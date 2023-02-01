@@ -17,3 +17,17 @@ export const signUpApi  = (data:SignUpFormType)=> api.post('/auth/create-company
 
 
 export const signInApi =(data:{'email':string,'password':string})=>api.post('/auth/login/',data).then(res=>res.data)
+
+
+export type signUpAsJobSeeker = {
+  "email":string,
+    "full_name":string,
+    "password":string,
+    "phone_number":string,
+    'passwordConfirmation':string,
+
+}
+export const signUpAsJobSeekerApi = async (data:signUpAsJobSeeker)=>{
+    const  resp = await api.post('/auth/create-seeker/',data)
+    return resp.data
+}

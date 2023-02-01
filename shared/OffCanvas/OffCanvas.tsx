@@ -2,6 +2,7 @@ import React from 'react'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 import Drawer from 'react-modern-drawer'
 import 'react-modern-drawer/dist/index.css'
+import Box from '../Box/Box'
 
 
 type Prop =React.PropsWithChildren<
@@ -38,13 +39,20 @@ const OffCanvas = ({children,isOpen,setIsOpen,size=40,direction='left',btnClick=
         size={`${size}%`}
         direction={direction}
         zIndex={4000}
-        style={{'backgroundColor':'#000022','overflow':'scroll'}}
+        style={{'overflow':'scroll'}}
       >
+        <Box 
+        css={{
+          'backgroundColor':'$thickBlue'
+        }}
+        >
+
         <br />
         <br />
         {
           children
         }
+        </Box>
       </Drawer>
     </>
   )

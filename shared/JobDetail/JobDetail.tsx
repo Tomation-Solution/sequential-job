@@ -4,13 +4,14 @@ import {ImDownload2} from 'react-icons/im'
 import Button from "../Button/Button"
 import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
-import { JobType } from "../../service/api/job.api"
+import { JobType, switchJobOnApi } from "../../service/api/job.api"
 import { useRouter } from "next/router"
 import useToast from "../../hooks/useToastify"
 import { getUser } from "../../utils/extra_function"
 import { useMutation } from "react-query"
 import { applyForJobs } from "../../service/api/jobJobSeeker.api"
 import Preloader from "../Preloader/Preloder"
+import Switch from "../Switch/Switch"
 
 type Prop = {
     currentJob:JobType;
@@ -18,7 +19,15 @@ type Prop = {
 const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
     const {notify} = useToast()
     const loggedInUser = getUser()
+  const user=getUser()
+
     const data:string= currentJob.description_content?JSON.parse( currentJob.description_content):''
+    const { mutate:jobSwitch , isLoading} = useMutation(switchJobOnApi,{
+        onSuccess:(data)=>{
+            // console.log({'switchWasASuccess':data})
+            notify('Updated Successfully','success')
+        }
+    })
     const route = useRouter()
 
     const { mutate,isLoading:applying} = useMutation(applyForJobs,{
@@ -39,8 +48,8 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
         <Box css={{'color':'$white','padding':'0 .5rem','@bp2':{
             'textAlign':'center','maxWidth':'600px','margin':'0 auto'
         }}}>
-            <Preloader loading={applying}/>
-            <p style={{'fontWeight':'lighter',}}><small>ABC Company Ltd</small></p>
+            <Preloader loading={applying||isLoading}/>
+            <p style={{'fontWeight':'lighter',}}><small>{currentJob.org_name}</small></p>
 
             <Box css={{'padding':'.5rem 0','display':'flex','alignItems':'center','justifyContent':'space-between',
                     '& h2':{
@@ -109,6 +118,31 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
             </p>:''
                 }
             <br />
+            {
+                loggedInUser?.user_type==='company'?
+                <>
+                                    <Box css={{'display':'flex','justifyContent':'center','justifyItems':'center',
+                                
+                                }}>
+                    <Switch
+                    defaultChecked={currentJob.is_active?true:false}
+                    onChange={(value)=>{
+                        console.log({value})
+                    if(window.confirm('Are You Sure You Want To Change Job Status')){
+                        //
+                        jobSwitch({
+                            'job_id':currentJob.id,
+                            'switch':value
+                        })
+                    } 
+                    }}
+                    label='Is Active'
+                    />
+                    </Box>
+                        <br />
+                </>:''
+
+            }
 
             <h2 style={{'color':'#24CDE2','padding':'1rem 0','fontWeight':'lighter'}}>Job Description</h2>
             <br /><br />

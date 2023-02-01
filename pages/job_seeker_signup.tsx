@@ -11,7 +11,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import Preloader from "../shared/Preloader/Preloder";
 import { useMutation } from "react-query";
-import { signInApi, UserType } from "../service/api/authentication/authentication.api";
+import { signInApi, signUpAsJobSeeker, signUpAsJobSeekerApi, UserType } from "../service/api/authentication/authentication.api";
 import useToast from "../hooks/useToastify";
 import { useRouter } from "next/router";
 /* @ts-ignore */
@@ -35,46 +35,47 @@ const cssStyleForInput = {
     }
 }
 
-type SignInType = {
-    email:string;
-    password:string;
-}
+
 const schema = yup.object({
     email:yup.string().email().required(),
-    password:yup.string(),
+    full_name:yup.string(),
+    phone_number:yup.string(),
+    'password':yup.string().required('Password is required'),
+    passwordConfirmation: yup.string()
+    .oneOf([yup.ref('password'), null], 'Passwords must match')
 })
-const Signin:NextPage =()=>{
+const JobSeekerSignup:NextPage =()=>{
     // const [cookie, setCookie] = useCookies(["user"])
     const {notify} = useToast()
     const route = useRouter()
-    const { register, handleSubmit, formState: { errors } } = useForm<SignInType>({
+    const { register, handleSubmit, formState: { errors } } = useForm<signUpAsJobSeeker>({
         resolver: yupResolver(schema)
       });
 
 
-      const  {isLoading,mutate} = useMutation(signInApi,{
+      const  {isLoading,mutate} = useMutation(signUpAsJobSeekerApi,{
         'onSuccess':(resp)=>{
             notify(resp.message,'success')
-            // localStorage.setItem('tokens',resp.tokens)
-            //delete cookie
-            // cookieCutter.set('user','',resp.tokens)
-            cookieCutter.set('user',JSON.stringify(resp.data.tokens))
-            const userInfo:UserType =  jwt_decode(resp.data.tokens.access)
-            if(userInfo.user_type ==='panelist'){
-                route.push('/panelist/')
-            }else{
-                route.push('/dashboard_index')
-            }
+            notify('Please Check Your Mail For Verification','success')
         },
         'onError':(error:any)=>{
-            console.log(error)
+           
+            let  msg = ''
             const data:any = error.response.data
-            notify(data.message,'error')
+            if(data.error.email){
+                // email already exist
+                msg = data.error.email
+            }
+            if(data.error.organisation_name_shortname){
+                // email already exist
+              msg = data.error.organisation_name_shortname
+            }
+
+            notify(msg,'error')
+
         }
       })
-      const onSubmit = (data: SignInType) => {
-        // mutate(data)
-        console.log(data)
+      const onSubmit = (data: signUpAsJobSeeker) => {
         mutate(data)
       }
     return (
@@ -91,10 +92,12 @@ const Signin:NextPage =()=>{
         <br /><br />
         <br /><br />
         <LoginNav>
-          <h2>Sign In</h2>
+          <h2>
+          Create JobSeeker Account
+          </h2>
           <div>
             <a onClick={()=>route.push('/')}>Go Home</a>
-            <a onClick={()=>route.push('/job_seeker_signup')}>Sign Up</a>
+            <a onClick={()=>route.push('/signin')}>Sign in</a>
           </div>
         </LoginNav>   
 
@@ -104,12 +107,30 @@ const Signin:NextPage =()=>{
         errors={errors.email?.message}
         label="Email" css={cssStyleForInput}/>
         <br />
+<InputWithLabel 
+        register={register('full_name')}
+        errors={errors.full_name?.message}
+        label="Full name" css={cssStyleForInput}/>
+        <br />
+        <InputWithLabel 
+        register={register('phone_number')}
+        errors={errors.phone_number?.message}
+        label="Phone Number" css={cssStyleForInput}/>
+        <br />
+
         <InputWithLabel 
         register={register('password')}
         errors={errors.password?.message}
         label="Password" css={cssStyleForInput}/>
         <br />
-        <Button css={{'margin':'0 auto'}}>Submit</Button>
+        <Box css={{'display':'flex','alignItems':'center','justifyContent':'space-between','button':{
+            'width':'35%'
+        }}}>
+        <Button >Submit</Button>
+        <Button type='button' color={'lightBlueOutline'} onClick={()=>{
+            route.push('/signup')
+        }}>Sign up as organisation</Button>
+        </Box>
 
         <br />
         </form>
@@ -121,7 +142,7 @@ const Signin:NextPage =()=>{
     )
 }
 
-export default Signin
+export default JobSeekerSignup
 
 
 

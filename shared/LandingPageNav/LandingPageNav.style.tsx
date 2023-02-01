@@ -25,7 +25,7 @@ export const NavLinks = styled('li',{
 
     'a':{
         'textDecoration':'none',
-        color:'White',
+        color:'$lightText',
         'display':'inline-block',
         'padding':'.8rem 0',
         'transition':'.4s all ease-in-out',
@@ -37,7 +37,7 @@ export const NavLinks = styled('li',{
         'a':{
             'padding':'unset',
             '&:hover':{
-                color:'white',
+                // color:'white',
                 'borderBottom':'3px solid lightBlue'
             }
         }

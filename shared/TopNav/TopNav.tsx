@@ -9,14 +9,22 @@ import Logo from '../../asset/logo.svg'
 import UserLogo from '../../asset/user.jpg'
 import { useMediaQuery } from 'react-responsive'
 import {BiFilter} from 'react-icons/bi'
-
+import { getUser } from '../../utils/extra_function'
+import {BsFillMoonFill,BsSunFill} from 'react-icons/bs'
+import Box from '../Box/Box'
+import { useTheme } from "next-themes";
 
 export const TopNav = () => {
-
+  const user = getUser()
   const isTab = useMediaQuery({
     query: '(min-width: 500px)'
   })
+  const { theme, setTheme } = useTheme();
   
+  const toggleTheme = () =>
+  setTheme(theme === "light" ? "dark" : "light");
+
+
   return (
     <TopNavContainer>
       <div 
@@ -42,7 +50,13 @@ export const TopNav = () => {
     
       <div>
       <IoMdNotifications/>
-        <AiTwotoneSetting/>
+      {
+        theme=='light'?
+        <BsSunFill onClick={toggleTheme}/>
+        :
+        <BsFillMoonFill onClick={toggleTheme}/>
+      }
+      {/* <AiTwotoneSetting/> */}
       </div>
       </NavToolBox>:''
     }

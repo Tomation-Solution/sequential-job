@@ -16,11 +16,11 @@ export const InputWithLabelContainerStyle = styled('div',{
         'outline':'none',
         'padding':'.5rem 1rem',
         'borderRadius':'10px',
-        color:'$white'
+        color:'$lightText'
     },
     'label':{
         padding:'.6rem 0',
-        color:'$white'
+        color:'$lightText'
     }
 })
 

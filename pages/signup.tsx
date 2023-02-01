@@ -16,15 +16,15 @@ import { useRouter } from "next/router";
 const cssStyleForInput = {
     'input':{
         // 'border':'1px solid '
-        'backgroundColor':' rgba(242, 238, 252, 0.685);',
-        'color':'$thickBlue',
+        // 'backgroundColor':' rgba(242, 238, 252, 0.685);',
+        'color':'$lightText',
         'border':'1px solid  #f2eefc0',
         '&:focus':{
             'border':'1px solid $lightBlue'
         }
     },
     'label':{
-        color:'$thickBlue'
+        color:'$lightText'
     }
 }
 
@@ -97,9 +97,10 @@ const Signup:NextPage =()=>{
 
 
                 <Box css={{'h1':{
-                        'color':'$white','padding':'.6rem'},
+                        'color':'$thickText','padding':'.6rem'},
                         'p':{
-                            'color':'rgba(242, 238, 252, 0.54)'},
+                            'color':'$thickText'
+                        },
                             'textAlign':'center'
                     }}>
                         <h1>Sign Up</h1>
@@ -107,7 +108,7 @@ const Signup:NextPage =()=>{
                     </Box>
                 <br />
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <Pane>
+                    <Pane >
                     <InputWithLabel label="Full Name" 
                         errors={errors.full_name?.message}
                         register={register('full_name')}
@@ -157,13 +158,19 @@ const Signup:NextPage =()=>{
                         errors={errors.passwordConfirmation?.message}
                         register={register('passwordConfirmation')} css={cssStyleForInput}/>
                                <br />
-                    <Button css={{'margin':'0 auto'}} >Submit</Button>
+                               <br />
+        <Box css={{'display':'flex','alignItems':'center','justifyContent':'space-between','button':{
+            'width':'35%'
+        }}}>
+        <Button >Submit</Button>
+        <Button type='button' color={'lightBlueOutline'} onClick={()=>{
+            route.push('/job_seeker_signup')
+        }}>Sign up as JobSeeker</Button>
+        </Box>
                     </Pane>
                     <br />
                 </form>
-                    <Button 
-                    onClick={()=>route.push('/signin')}
-                    color={'lightBlueOutline'} css={{'margin':'0 auto'}}>Sign In</Button>
+                  
 
               </Box>
         </GeneralLayout>

@@ -7,12 +7,12 @@ import {FaMoneyBillWave} from 'react-icons/fa'
 import {IoBagSharp,IoSend} from 'react-icons/io5'
 import {FaUserAlt} from 'react-icons/fa'
 import { JobType } from '../../service/api/job.api'
+import { getUser } from '../../utils/extra_function'
 
 type Prop ={
   job:JobType
 }
  const JobCard = ({job}:Prop):React.ReactElement => {
-
   return (
     <JobCardContainer>
         <Box css={{'display':'flex','justifyContent':'space-between','alignItems':'center'}}>

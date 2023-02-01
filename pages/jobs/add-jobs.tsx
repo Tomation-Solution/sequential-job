@@ -23,7 +23,7 @@ import Preloader from '../../shared/Preloader/Preloder'
 import listOfNigerianStates  from '../../utils/list_of_states'
 import {AiFillCloseCircle} from 'react-icons/ai'
 import countries_and_state  from '../../utils/countries_and_state'
-
+import money_countrySymbol from '../../utils/money_countrySymbol'
 
 
 export type JobCreateForm = {
@@ -173,12 +173,17 @@ const AddJobs = () => {
           <CombineSelectAndInput
           select_name='currency'
           select_setValue={setValue}
-          select_options={[
-            {'name':'Dollar','value':'dollar'},
-            {'name':'Naira','value':'naira'},
-            {'name':'Pounds','value':'pounds'},
-            {'name':'Sterlin','value':'sterlin'},
-          ]}
+          select_options={
+          //   [
+          //   {'name':'Dollar','value':'dollar'},
+          //   {'name':'Naira','value':'naira'},
+          //   {'name':'Pounds','value':'pounds'},
+          //   {'name':'Sterlin','value':'sterlin'},
+          // ]
+          money_countrySymbol.map((data,index)=>{
+            return {'name':data.name,'value':data.symbol}
+          })
+        }
           // for the input field
           inputLabel={'salary'}
           inputRegister={register('salary')}
@@ -224,10 +229,12 @@ const AddJobs = () => {
         <br />
         {
           componentHasMounted?
-          <>
+          <Box css={{
+            'color':'$lightText !important'
+          }}>
             <label htmlFor="">Description</label>
             <GetInstance setInstance={setSimpleMdeInstance}/>
-          </>
+          </Box>
             :''
         }
 

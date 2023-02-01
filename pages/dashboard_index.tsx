@@ -22,13 +22,35 @@ import { UserType } from '../service/api/authentication/authentication.api'
 /* @ts-ignore */
 import cookieCutter from 'cookie-cutter'
 import { getUser } from '../utils/extra_function'
-
-
+import JobAppliedFor from '../shared/JobAppliedFor/JobAppliedFor'
+import { styled } from "../stitches.config";
+import { useTheme } from "next-themes";
+export const JOBGRIDSTYLE= {
+  '@bp1':{
+    'display':'flex',
+    'flexWrap':'wrap',
+    'margin':'0 auto'
+  },
+  '@bp3':{
+    'display':'grid',
+    'gridTemplateColumns':'repeat(3,360px)',
+    'padding':'0 1rem',
+    'gap':'10px'
+  },
+  '@bp5':{
+    'gridTemplateColumns':'repeat(3,360px)',
+  }
+}
 const Home:NextPage = ()=>{ 
  const {status,error,data,isError} = useQuery('jobs',get_jobs_api)
   const [currentJob,setCurrentJob] = useState<null|JobType>(null)
   const [isOpen, setIsOpen] = useState(false)
   const logged_in_user = getUser()
+  const { theme, setTheme } = useTheme();
+  const toggleTheme = () =>
+    setTheme(theme === "light" ? "dark" : "light");
+
+
 
   const isDesktopOrLaptop = useMediaQuery({
     query: '(min-width: 1250px)'
@@ -43,7 +65,6 @@ const Home:NextPage = ()=>{
  return (
     <GeneralLayout>
       <Preloader loading={status=='loading'} />
-     
      <Box css={{'display':'flex','justifyContent':'space-between',
     'maxWidth':'1600px',
     // 'border':'1px solid red',
@@ -53,22 +74,7 @@ const Home:NextPage = ()=>{
         data={[
 {          'key':logged_in_user?.user_type ==='company'?'Live':'Jobs',
           'label':logged_in_user?.user_type ==='company'?'Live':'Jobs',
-          'template':<Box css={{
-              '@bp1':{
-                'display':'flex',
-                'flexWrap':'wrap',
-                'margin':'0 auto'
-              },
-              '@bp3':{
-                'display':'grid',
-                'gridTemplateColumns':'repeat(3,360px)',
-                'padding':'0 1rem',
-                'gap':'10px'
-              },
-              '@bp5':{
-                'gridTemplateColumns':'repeat(3,360px)',
-              }
-          }}>
+          'template':<Box css={JOBGRIDSTYLE}>
           {
             data?
           data.map((job,index)=>(
@@ -82,11 +88,14 @@ const Home:NextPage = ()=>{
           
         },
           { 
-            'key':logged_in_user?.user_type ==='company'?'Closed':'Saved Jobs',
-          'label':logged_in_user?.user_type ==='company'?'Closed':'Saved Jobs',
+            'key':logged_in_user?.user_type ==='company'?'Closed':'Jobs Applied ',
+          'label':logged_in_user?.user_type ==='company'?'Closed':'Jobs Applied',
           'template':
             <>
-              Coming Soon
+              {logged_in_user?.user_type ==='job_seakers'?
+              <JobAppliedFor/>
+              :''    
+            }
             </>
             
           },

@@ -1,4 +1,5 @@
 import api from "../axios"
+import { JobType } from "./job.api"
 
 
 
@@ -81,4 +82,13 @@ export const submitTestQuetion = async ({data,job_id}:Prop):Promise<submitCvFilt
     }
     const resp =  await api.post(`/jobs/job-seeker-view/submit_test/`,senddata)
     return resp.data.data[0]
+}
+
+type JobAppliedForResponse = {
+    "id": number,
+    "job": JobType
+}
+export const jobs_applied_for_list = async ():Promise<JobAppliedForResponse[]>=>{
+    const resp = await api.get('/jobs/job-seeker-view/jobs_applied_for_list/')
+    return resp.data.data
 }

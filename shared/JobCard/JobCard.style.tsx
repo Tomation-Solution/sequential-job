@@ -3,14 +3,13 @@ import { styled } from "../../stitches.config";
 
 
 
-
 export const JobCardContainer = styled('div',{
-    backgroundColor:'$white',
+    backgroundColor:'white',
     padding:'1rem .8rem',
     borderRadius:'10px',
-    'color':'$thickBlue',
+    'color':'#000022',
     'margin':'20px 0',
-
+    'boxShadow':'rgba(149, 157, 165, 0.2) 0px 8px 24px',
     h2:{
         fontWeight:'lighter',
         paddingBottom:'.3rem'
