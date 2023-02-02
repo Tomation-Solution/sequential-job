@@ -20,7 +20,7 @@ type Prop  = React.PropsWithChildren<{
   
   useEffect(()=>{
     if(route.isReady){
-      if(!route.pathname.includes('/signin') && !route.pathname.includes('/signup')){
+      if(!route.pathname.includes('/signin') && !route.pathname.includes('/signup')&& !route.pathname.includes('/mailing')){
   
         console.log(console.log(route.pathname),)
         const user = cookieCutter.get('user')

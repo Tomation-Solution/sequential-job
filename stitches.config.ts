@@ -58,6 +58,9 @@ export const {
  export const globalStyles = globalCss({
     '*':{
       // 'color':'$white',
-      'listStyleType':'none'
+      'listStyleType':'none',
+    },
+    'body':{
+      'backgroundColor':'$thickBlue'
     }
   })

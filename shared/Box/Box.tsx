@@ -6,6 +6,6 @@ import React from 'react'
 
 
 const Box = styled('div',{
-
+    'color':'$lightText'
 })
 export default Box

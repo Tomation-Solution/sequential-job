@@ -4,7 +4,9 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useToast from '../../../../hooks/useToastify';
 import GeneralLayout from '../../../../layout/GeneralLayout/GeneralLayout';
+import LandingPageLayout from '../../../../layout/LandingPageLayout/LandingPageLayout';
 import api, { url } from '../../../../service/axios';
+import Box from '../../../../shared/Box/Box';
 import Button from '../../../../shared/Button/Button';
 import Preloader from '../../../../shared/Preloader/Preloder';
 
@@ -28,7 +30,7 @@ const ActivateAccount:NextPage = ()=>{
     try{
       const resp =await  axios.get(`${url}/mailing/activate/${uidb64}/${token}/`)
       setStatus('okay')
-      notify('Invalid Token','success')
+      notify('Email Verfication Successfull','success')
       //mission acomplised
     }catch(errr){
       setStatus('error')
@@ -41,9 +43,11 @@ const ActivateAccount:NextPage = ()=>{
     }
   },[route.isReady])
   return (
-    <GeneralLayout>
-      <Preloader loading={status=='loading'}/>
-      <div style={{'display':'flex','alignItems':'center','justifyContent':'center','height':'100vh','textAlign':'center'}}>
+    <LandingPageLayout>
+     <Box>
+
+       {/* <Preloader loading={status=='loading'}/> */}
+       <div style={{'display':'flex','alignItems':'center','justifyContent':'center','height':'100vh','textAlign':'center'}}>
         {
           status==='okay'?
             <div style={{'maxWidth':'700px',}}>
@@ -64,7 +68,14 @@ const ActivateAccount:NextPage = ()=>{
             </div>
         }
       </div>
-    </GeneralLayout>
+      {
+        status=='loading'?
+        <Box>
+          <h1>Verifying</h1>
+        </Box>:''
+      }
+     </Box>
+    </LandingPageLayout>
   )
 }
 
