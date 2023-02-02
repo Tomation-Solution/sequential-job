@@ -56,18 +56,23 @@ const ActivateAccount:NextPage = ()=>{
               <p>Let The Job Hunt Begin!!</p> 
               <br />
               <Button css={{'padding':'1rem','width':'150px','borderRadius':'10px','margin':'0 auto'}}
-                onClick={()=>handleRoute('/')}
+                onClick={()=>handleRoute('/signin')}
               >Explore</Button>
             </div>:
-            <div style={{'maxWidth':'700px',}}>
-              <h1>Invalid Token</h1>
-              <br />
-              <Button css={{'padding':'1rem','width':'150px','borderRadius':'10px','margin':'0 auto'}}
-                onClick={()=>handleRoute('/signin')}
-              >Sign In</Button>
-            </div>
+            ''
+           
         }
       </div>
+      {
+        status==='error'?
+        <div style={{'maxWidth':'700px',}}>
+        <h1>Invalid Token</h1>
+        <br />
+        <Button css={{'padding':'1rem','width':'150px','borderRadius':'10px','margin':'0 auto'}}
+          onClick={()=>handleRoute('/signin')}
+        >Sign In</Button>
+      </div>:''
+      }
       {
         status=='loading'?
         <Box>
