@@ -7,6 +7,7 @@ import Box from "../shared/Box/Box";
 import Button from "../shared/Button/Button";
 import JobCard from "../shared/JobCard/JobCard";
 import JobDetail from "../shared/JobDetail/JobDetail";
+import LandingPageSearchBar from "../shared/LandingPageSearchBar/LandingPageSearchBar";
 import OffCanvas from "../shared/OffCanvas/OffCanvas";
 import WhiteInput from "../shared/WhiteInput/WhiteInput";
 
@@ -27,7 +28,11 @@ const LandingPageIndex:NextPage = ()=>{
 
   return (
     <LandingPageLayout>
-
+      <Box css={{'backgroundColor':'$thickBlue','padding':'1rem'}}>
+      <Box css={{'maxWidth':'1000px','margin':'0 auto'}}>
+        <LandingPageSearchBar/>
+      </Box>
+      </Box>
     </LandingPageLayout>
   )
 }
