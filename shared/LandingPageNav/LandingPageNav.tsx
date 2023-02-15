@@ -1,17 +1,19 @@
 import { ReactElement } from "react-markdown/lib/react-markdown"
 import Box from "../Box/Box"
-import Logo from '../../asset/logo.svg'
+import Logo from '../../asset/darklogo.png'
 import { useMediaQuery } from 'react-responsive'
-import { LandingNavBox, LandingPageNavContainer, NavLinks, NavLinksContainer } from "./LandingPageNav.style"
+import { LandingPageNavContainer,SubMenue } from "./LandingPageNav.style"
 import {GiHamburgerMenu} from 'react-icons/gi'
 import { useState } from "react"
 import {AiFillCloseCircle} from  'react-icons/ai'
 import { useRouter } from "next/router"
 import { useTheme } from "next-themes";
+import Button from "../Button/Button"
+import {BsArrowRight} from 'react-icons/bs'
 
+const SigninSigUoBtnCss = {'padding':'.8rem 1.2rem','borderRadius':'5px','fontWeight':'bold'}
 const LandingPageNav = ():ReactElement=>{
     const route = useRouter()
-  const { theme, setTheme } = useTheme();
 
     const isTab = useMediaQuery({
         query: '(min-width: 500px)'
@@ -19,103 +21,38 @@ const LandingPageNav = ():ReactElement=>{
       const isLaptop = useMediaQuery({
         query: '(min-width: 1000px)'
       })
-    const [isOpen,setIsOpen] = useState(false) 
 
     const handleRoute= (path:string):void=>{
         route.push(path)
     }
     return (
         <LandingPageNavContainer>
-           <Box css={{
-            'display':'flex',
-            'justifyContent':'space-between',
-            'alignItems':'center',
-            // 'overflow':'hidden',
-            'padding':'1rem 2.5rem',
-            '@bp3':{
-    'maxWidth':'1000px','margin':'0 auto'
+          <Box css={{'display':'flex','justifyContent':'space-between','alignItems':'center','padding':'1rem .3rem','@bp2':{
+            'padding':'.5rem','max-width':'1300px','margin':'0 auto'
+          }}}>
+            <Box css={{'width':'100px','@bp2':{
+              'width':'150px'
+            }}}>
+              <img src={Logo.src} alt=""  style={{'width':'100%','height':'100%'}}/>
+            </Box>
 
-            }
-           }}>
-                <Box>
-                    <img src={Logo.src} alt=""  
-                    style={{'height':'100%','width':'100%'}}/>
-                </Box>
-
-{
-    !isLaptop?
-<GiHamburgerMenu style={{'color':theme!='light'?'black':'white','display':'block',
-'fontSize':'1.5rem',
-'transform':'translateY(-5px)','cursor':'pointer'}} onClick={()=>setIsOpen(true)}/>:''
-}
-            <LandingNavBox  css={{ 'transform':`translateX(${isOpen?0:100}%)`,'boxShadow': `0 2px 5px ${isOpen?'white':'black'}`,}}>
-              
-              {
-                !isLaptop?
-                <>
-                <Box css={{'position':'absolute','right':'0','padding':'0 10px'}}>
-                    <AiFillCloseCircle 
-                    onClick={()=>setIsOpen(false)} 
-                    style={{'position':'relative','cursor':'pointer'}}/>
-                </Box>
-                <br />
-                <br />
-                </>:''
-              }
-                <Box css={{'@bp3':{
-                    'display':'flex',
-                    'justifyContent':'space-between',
-                    // 'border':'1px solid red',
-                    'width':'100%'
-                }}}>
-
-                <NavLinksContainer>
-                    <NavLinks>
-                    <a  onClick={(e)=>{
-                        e.preventDefault()
-                        handleRoute('/')
-                    }}>Find job</a>
-                    </NavLinks>
-                    <NavLinks>
-                    <a onClick={(e)=>{
-                        e.preventDefault()
-                        handleRoute('/about')
-                    }}>About</a>
-                    </NavLinks>
-                    <NavLinks>
-                    <a onClick={(e)=>{
-                        e.preventDefault()
-                        handleRoute('/employer')
-                    }}>Employer </a>
-                    </NavLinks>
-
-                    </NavLinksContainer>
-
-                    <NavLinksContainer>
-                            <NavLinks>
-                                <a href="">
-                                Upload your resume
-                                </a>
-                            </NavLinks>
-                            <NavLinks>
-                                <a onClick={(e)=>{
-                        e.preventDefault()
-                        handleRoute('/signin')
-                    }}>
-                                signin
-                                </a>
-                            </NavLinks>
-                            <NavLinks>
-                                <a href="">
-                                Help</a> 
-                            </NavLinks>
-                    
-                    </NavLinksContainer>
-                </Box>
-
-
-            </LandingNavBox>
-           </Box>
+            <Box css={{'display':'flex','width':'200px','justifyContent':'space-between',}}>
+              <Button css={SigninSigUoBtnCss}>Sign up</Button>
+              <Button color={'lightBlueShadow'}  css={SigninSigUoBtnCss}>Log in</Button>
+            </Box>
+          </Box>
+            
+          <Box css={{ 'backgroundColor':'#fbfefe',}}>
+          <SubMenue>
+            <ul className="first_sub">
+              <li><a href="">Find Job</a></li>
+              <li><a href="">Upload CV</a></li>
+            </ul>
+            <ul className="sec_sub">
+              <li><a href="">For Employers <BsArrowRight style={{'transform':'translateY(3px)'}}/></a></li>
+            </ul>
+          </SubMenue>
+          </Box>
         </LandingPageNavContainer>
     )
 }

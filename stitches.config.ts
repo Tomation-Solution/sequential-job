@@ -1,6 +1,7 @@
 import { createStitches } from '@stitches/react';
 
 
+
 export const {
     styled,
     css,
@@ -20,8 +21,8 @@ export const {
         grayish:'rgba(230, 232, 233, 0.29)',
         thickText:'#FFFFFFDE',
         lightText:'#FFFFFF',
-
       },
+      
     //   conditions:{
     //     bp1:'@media (min-width:400px)',
     //   }
@@ -51,10 +52,19 @@ export const {
       grayish:'rgba(230, 232, 233, 0.29)',
       thickText:'#1c1e21',
       lightText:'black',
-
-    }
+    },
   })
-
+export const  landingPage =createTheme({
+    'colors':{
+      thickBlue:'#000022',
+      lightBlue:'#24CDE2',
+      white:'#FFFFFF',
+      red:'#FF0000',
+      grayish:'rgba(230, 232, 233, 0.29)',
+      thickText:'#FFFFFFDE',
+      lightText:'#FFFFFF',
+    },
+  })
  export const globalStyles = globalCss({
     '*':{
       // 'color':'$white',

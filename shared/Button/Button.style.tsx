@@ -18,16 +18,22 @@ export const StyledButton = styled('button',{
         color:{
             'lightBlueBtn':{
                 'backgroundColor':'$lightBlue',
-                color:'$white',
+                color:'white',
             },
             'whiteBtn':{
                 'backgroundColor':'$white',
                 color:'$thickBlue'
             },
             'lightBlueOutline':{
-                'backgroundColor':'$thickBlue',
+                'backgroundColor':'$lightBlue',
                 'color':'$lightBlue',
                 'border':'1px solid $lightBlue'
+            },
+            'lightBlueShadow':{
+                'backgroundColor':'transparent',
+                'color':'$lightBlue',
+                // 'border':'1px solid $lightBlue',
+                'boxShadow':'rgba(36, 204, 226, 0.2) 0px 2px 8px 0px',
             },
             'danger':{
                 'backgroundColor':'$thickBlue',
