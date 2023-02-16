@@ -40,6 +40,12 @@ export const StyledButton = styled('button',{
                 'color':'Crimson',
                 'border':'1px solid  Crimson',
             }
+        },
+        'shape':{
+            'usual_btn_shap':{
+                    'padding':'.7rem 1rem',
+                    'borderRadius':'5px'
+            }
         }
     },
     defaultVariants:{
