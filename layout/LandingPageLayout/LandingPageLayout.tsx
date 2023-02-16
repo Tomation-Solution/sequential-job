@@ -3,6 +3,7 @@ import LandingPageNav from "../../shared/LandingPageNav/LandingPageNav"
 import { LandingPageLayoutContainer } from "./LandingPageLayout.style"
 import { useTheme } from "next-themes";
 import { useEffect } from "react";
+import Footer from "../../shared/Footer/Footer";
 
 
 
@@ -25,8 +26,8 @@ const LandingPageLayout = ({children}:Prop):React.ReactElement=>{
         <LandingPageLayoutContainer>
 
             <LandingPageNav />
-            <br />
             {children}
+            <Footer/>
         </LandingPageLayoutContainer>
     )
 }

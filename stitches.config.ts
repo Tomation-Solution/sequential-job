@@ -66,11 +66,46 @@ export const  landingPage =createTheme({
     },
   })
  export const globalStyles = globalCss({
+  '@font-face':[
+    {
+      'fontFamily': 'RedHatTextBold',
+      src: "url('./assets/fonts/static/RedHatText-Bold.ttf') format('truetype')",
+      'fontWeight':'bold',
+      fontStyle: 'normal',
+    },
+    {
+      'fontFamily': 'RedHatText-SemiBold',
+      src: "url('./assets/fonts/static/RedHatText-SemiBold.ttf') format('truetype')",
+      'fontWeight':'bold',
+      fontStyle: 'normal',
+    },
+    {
+      'fontFamily': 'staticRedHatText-Light',
+      src: "url('./assets/fonts/staticRedHatText-Light.ttf') format('truetype')",
+      'fontWeight':'normal',
+      fontStyle: 'normal',
+    },
+    {
+      'fontFamily': 'RedHatTextMedium',
+      src: "url('./assets/fonts/static/RedHatText-Medium.ttf') format('truetype')",
+      'fontWeight':'normal',
+      fontStyle: 'normal',
+    },
+    {
+      'fontFamily': 'Regular',
+      src: "url('./assets/fonts/static/RedHatText-Regular.ttf') format('truetype')",
+      'fontWeight':'normal',
+      fontStyle: 'normal',
+    },
+  ],
     '*':{
       // 'color':'$white',
       'listStyleType':'none',
+      'font-family':"Arial",
     },
     'body':{
       'backgroundColor':'$thickBlue'
-    }
+    },
+   
   })
+  // ../assets/fonts/static/SpaceGrotesk-Bold.ttf
