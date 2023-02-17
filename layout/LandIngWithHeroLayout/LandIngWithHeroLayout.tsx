@@ -6,12 +6,17 @@ import LandingPageLayout from "../LandingPageLayout/LandingPageLayout";
 
 
 
-type Prop =  React.PropsWithChildren<{}>
-const LandIngWithHeroLayout =({children}:Prop):React.ReactElement=>{
+type Prop =  React.PropsWithChildren<{
+    use_hero?:boolean
+}>
+const LandIngWithHeroLayout =({children,use_hero=true}:Prop):React.ReactElement=>{
 
     return(
         <LandingPageLayout>
-            <HeroSection/>
+            {
+                use_hero?
+                <HeroSection/>:''
+            }
             {children}
             <VisionAndMission/>
         </LandingPageLayout>
