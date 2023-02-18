@@ -5,10 +5,19 @@ import LandingPageLayout from "../layout/LandingPageLayout/LandingPageLayout";
 import { JobType } from "../service/api/job.api";
 import Box from "../shared/Box/Box";
 import Button from "../shared/Button/Button";
+import InfoPaneWithPics from "../shared/InfoPaneWithPics/InfoPaneWithPics";
 import JobCard from "../shared/JobCard/JobCard";
 import JobDetail from "../shared/JobDetail/JobDetail";
+import LandingPageSearchBar from "../shared/LandingPageSearchBar/LandingPageSearchBar";
 import OffCanvas from "../shared/OffCanvas/OffCanvas";
+import SearchBar from "../shared/SearchBar/SearchBar";
+import SelectComponent from "../shared/Select/Select";
+import SelectBarV2 from "../shared/SelectBarV2/SelectBarV2";
 import WhiteInput from "../shared/WhiteInput/WhiteInput";
+import {BsSearch} from 'react-icons/bs'
+import VisionAndMission from "../shared/VisionAndMission/VisionAndMission";
+
+const LineCss ={'height':'60px','width':'1px','backgroundColor':'#e6e7e8d1'}
 
 const dummyJobs:JobType[] =[]
 const LandingPageIndex:NextPage = ()=>{
@@ -27,105 +36,89 @@ const LandingPageIndex:NextPage = ()=>{
 
   return (
     <LandingPageLayout>
+      <Box css={{'backgroundColor':'$thickBlue','padding':'1rem',}}>
+      <Box css={{'maxWidth':'1000px','margin':'0 auto'}}>
+        <LandingPageSearchBar/>
+      </Box>
+      </Box>
 <br />
+<br />
+<br />
+<br />
+      <Box css={{
+        'display':'flex',
+        'flexDirection':'column',
+        'padding':'1rem',
+        'maxWidth':'1300px',
+        'margin':'0 auto',
+        '&>div:nth-child(1)':{
+            'marginLeft':'auto',
+            'marginBottom':'40px',
+        },
+        '@bp3':{
+          '&>div:nth-child(1)':{
+            'margin':'unset'
+          },
+        'display':'flex','justifyContent':'space-between', 'flexDirection':'row',
 
-<Box css={{
+      }}}>
+      <InfoPaneWithPics/>
+      <InfoPaneWithPics/>
+      </Box>
+      <br />
+<br />
+<Box css={{'backgroundColor':'$thickBlue'}}>
 
-  'padding':'0 1rem',
-  'maxWidth':'650px',
-  'margin':'0 auto',
-  '&> div':{
-    'margin':'1rem 0'
-  },
+<Box css={{'padding':'2rem 1rem',
+'display':'flex','justifyContent':'center','alignItems':'center','flexDirection':'column','gap':'10px','maxWidth':'1300px','margin':'0 auto',
+'.line':{'display':'none'},
 '@bp2':{
-    'display':'flex','justifyContent':'space-between',
-    '&> div':{
-      'margin':'unset'
-    },
+  '.line':{'display':'block'},
+  '&':{
+    'flexDirection':'row','flexWrap':'wrap','gap':'0 60px'
   }
-}}>
-<Box css={{'position':'relative','backgroundColor':'#D9D9D9','overflow':'hidden','borderRadius':'5px'}}>
-  <label htmlFor="" style={{'color':'#24CDE2',
-  // 'border':'1px solid red',
-  'display':'inline-block',
-  'padding':'.4rem .4rem','position':'absolute','transform':'translateY(1px)'
-}} >What</label>
-<WhiteInput 
-placeHolder="Job title, keywords, or company"
-intputCss={{'borderRadius':'0px','width':'100%',
-'&::placeholder':{
-  'fontSize':'.7rem !important',
-  'color':'#0404045c'
-}
-}} css={{
-  // 'backgroundColor':'red',
-  'paddingLeft':'3.3rem'}}/>
-</Box>
-
-<Box css={{'position':'relative','backgroundColor':'#D9D9D9','overflow':'hidden','borderRadius':'5px'}}>
-  <label htmlFor="" style={{'color':'#24CDE2',
-  // 'border':'1px solid red',
-  'display':'inline-block',
-  'padding':'.4rem .4rem','position':'absolute','transform':'translateY(1px)'
-}} >Where </label>
-<WhiteInput 
-placeHolder="City, remote, hybrid, or on-site"
-intputCss={{'borderRadius':'0px','width':'100%',
-'&::placeholder':{
-  'fontSize':'.7rem !important',
-  'color':'#0404045c'
-}
-}} css={{
-  // 'backgroundColor':'red',
-  'paddingLeft':'3.3rem',
- 
-  }}/>
-</Box>
-</Box>
-<br />
-<br />
-<Button css={{'margin':' 0 auto','borderRadius':'5px'}} >
-Search
-</Button>
-
-<br />
-<h1 style={{'textAlign':'center'}}>Result for position of Business Developer , Remote  </h1>
-<br />
-<Box css={{
-              '@bp1':{
-                'margin':'0 auto',
-                'display':'flex',
-                'flexWrap':'wrap',
-              },
-              '@bp3':{
-                'display':'grid',
-                'gridTemplateColumns':'repeat(3,1fr)',
-                'padding':'0 1rem',
-                'gap':'10px'
-              },
-              '@bp5':{
-                'gridTemplateColumns':'repeat(4,1fr)',
-              }
-          }}>
-            {
-              dummyJobs.map((data,index)=>(
-                <Box onClick={()=>handleJobDetail(data)}>
-                <JobCard job={data} key={index}/>
-              </Box>
-              ))
-            }
+}}}>
+  <SelectBarV2 label="Popular Job Categories"/>
+  <Box className="line" css={LineCss}></Box>
+  <SelectBarV2 label="Popular Job Titles"/>
+  <Box className="line" css={LineCss}></Box>
+  <SelectBarV2 label="Popular Job Locations"/>
+  <Box className="line" css={LineCss}></Box>
+  <SelectBarV2 label="Popular Job Searches"/>
+  <Button
+    css={{'borderRadius':'5px',
+    'width':'45px',
+    'height':'45px',
+    'display':'flex','alignItems':'center',}}
+  >
+                    <BsSearch/>
+     </Button>
 
 </Box>
 
-
-<OffCanvas
-      setIsOpen={setCavasOpenClose}
-      isOpen={cavasOpen}
-      direction={isDesktopOrLaptop?'right':'bottom'}
-     >
-     {currentJob&&<JobDetail currentJob={currentJob}/>}
-
-     </OffCanvas>
+</Box>
+<br />
+<br />
+<br />
+<Box css={{'color':'#000000',
+'padding':'.4rem','textAlign':'center','maxWidth':'700px','margin':'0 auto',
+  'h2':{
+  'fontWeight':'700','fontSize':'2rem',},'p':{'fontSize':'.8rem'},
+  '@bp2':{
+    'h2':{
+      'fontWeight':'600',
+      'fontSize':'2.5rem'
+    },'p':{'fontSize':'.9rem'},
+  }
+  }}>
+  <h2>Who We Are</h2>
+  <br/>
+  <p>Sequential jobs is a job portal established in 2022 to simplify the job sourcing and placement processes for both the job seekers and employers respectively. It is developed to ensure that an average suitable applicant secures the dream job while ensuring that stress free operations are established in a stress free environment.</p>
+</Box>
+<br />
+<br />
+<br />
+<VisionAndMission/>
     </LandingPageLayout>
   )
 }

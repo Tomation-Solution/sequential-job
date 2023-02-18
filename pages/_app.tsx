@@ -9,7 +9,7 @@ import NextNProgress from 'nextjs-progressbar';
 import { Provider } from 'react-redux';
 import  store  from '../redux/store';
 import { ThemeProvider } from "next-themes";
-import { darkTheme } from '../stitches.config'
+import { darkTheme,landingPage } from '../stitches.config'
 // Create a client
 
 const queryClient = new QueryClient()
@@ -22,7 +22,8 @@ export default function App({ Component, pageProps }: AppProps) {
     defaultTheme="system"
     value={{
       light: "light",
-      dark: darkTheme.className
+      dark: darkTheme.className,
+      'landing_page':landingPage.className
     }}
   >
       <Provider store={store}>

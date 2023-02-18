@@ -19,8 +19,11 @@ import cookieCutter from 'cookie-cutter'
 import jwt_decode from "jwt-decode";
 import { LoginContainer, LoginContainerImg, LoginContentContainer, LoginNav } from "../shared/LoginContainerImg/LoginContainerImg.style";
 import loginImage from '../asset/login.jpg'
+import { useTheme } from "next-themes";
+import { useEffect } from "react";
 
-const cssStyleForInput = {
+
+export const cssStyleForInput = {
     'input':{
         // 'border':'1px solid '
         // 'backgroundColor':' rgba(242, 238, 252, 0.685);',
@@ -45,6 +48,8 @@ const schema = yup.object({
 })
 const Signin:NextPage =()=>{
     // const [cookie, setCookie] = useCookies(["user"])
+    const { theme, setTheme } = useTheme();
+
     const {notify} = useToast()
     const route = useRouter()
     const { register, handleSubmit, formState: { errors } } = useForm<SignInType>({
@@ -77,6 +82,11 @@ const Signin:NextPage =()=>{
         console.log(data)
         mutate(data)
       }
+
+      useEffect(()=>{
+        
+        setTheme('dark')
+    },[])
     return (
             <Box css={{'backgroundColor':'$thickBlue','color':'$lightText '}}>
                 <Preloader loading={isLoading}/>
@@ -85,35 +95,35 @@ const Signin:NextPage =()=>{
                 css={{'backgroundImage':`linear-gradient(to bottom, #24cce22d,black),url(${loginImage.src})`}}
                 />
 
-                <LoginContentContainer>
+            <LoginContentContainer>
 
-    <br /><br />
-        <br /><br />
-        <br /><br />
-        <LoginNav>
-          <h2>Sign In</h2>
-          <div>
+            <br /><br />
+            <br /><br />
+            <br /><br />
+            <LoginNav>
+            <h2>Sign In</h2>
+            <div>
             <a onClick={()=>route.push('/')}>Go Home</a>
             <a onClick={()=>route.push('/job_seeker_signup')}>Sign Up</a>
-          </div>
-        </LoginNav>   
+            </div>
+            </LoginNav>   
 
-        <form onSubmit={handleSubmit(onSubmit)} >
-        <InputWithLabel 
-        register={register('email')}
-        errors={errors.email?.message}
-        label="Email" css={cssStyleForInput}/>
-        <br />
-        <InputWithLabel 
-        register={register('password')}
-        errors={errors.password?.message}
-        label="Password" css={cssStyleForInput}/>
-        <br />
-        <Button css={{'margin':'0 auto'}}>Submit</Button>
+            <form onSubmit={handleSubmit(onSubmit)} >
+            <InputWithLabel 
+            register={register('email')}
+            errors={errors.email?.message}
+            label="Email" css={cssStyleForInput}/>
+            <br />
+            <InputWithLabel 
+            register={register('password')}
+            errors={errors.password?.message}
+            label="Password" css={cssStyleForInput}/>
+            <br />
+            <Button shape={'usual_btn_shap'} css={{'margin':'0 auto'}}>Submit</Button>
 
-        <br />
-        </form>
-</LoginContentContainer>
+            <br />
+            </form>
+            </LoginContentContainer>
 
 
             </LoginContainer>

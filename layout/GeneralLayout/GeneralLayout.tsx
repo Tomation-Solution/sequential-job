@@ -7,6 +7,7 @@ import { GeneralLayoutStyle, MainBoardStyle } from "./GeneralLayout.style"
 /* @ts-ignore */
 import cookieCutter from 'cookie-cutter'
 import useToast from "../../hooks/useToastify"
+import { useTheme } from "next-themes";
 
 
 
@@ -18,6 +19,13 @@ type Prop  = React.PropsWithChildren<{
   const route = useRouter()
   const {notify} = useToast()
   
+  const { theme, setTheme } = useTheme();
+
+  useEffect(()=>{
+      if(theme==='landing_page'){
+        setTheme('light')
+      }
+  },[])
   useEffect(()=>{
     if(route.isReady){
       if(!route.pathname.includes('/signin') && !route.pathname.includes('/signup')&& !route.pathname.includes('/mailing')){
