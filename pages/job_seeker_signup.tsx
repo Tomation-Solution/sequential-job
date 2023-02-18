@@ -79,6 +79,7 @@ const JobSeekerSignup:NextPage =()=>{
         }
       })
       const onSubmit = (data: signUpAsJobSeeker) => {
+        // console.log({data})
         mutate(data)
       }
 

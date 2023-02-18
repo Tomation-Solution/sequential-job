@@ -44,7 +44,7 @@ const ActivateAccount:NextPage = ()=>{
   },[route.isReady])
   return (
     <LandingPageLayout>
-     <Box>
+     <Box css={{'color':'$thickBlue'}}>
 
        {/* <Preloader loading={status=='loading'}/> */}
        <div style={{'display':'flex','alignItems':'center','justifyContent':'center','height':'100vh','textAlign':'center'}}>
@@ -62,17 +62,18 @@ const ActivateAccount:NextPage = ()=>{
             ''
            
         }
-      </div>
-      {
+         {
         status==='error'?
         <div style={{'maxWidth':'700px',}}>
-        <h1>Invalid Token</h1>
+        <h1>Invalid Token Or You Have Been activated</h1>
         <br />
         <Button css={{'padding':'1rem','width':'150px','borderRadius':'10px','margin':'0 auto'}}
           onClick={()=>handleRoute('/signin')}
-        >Sign In</Button>
+        >Try to Sign In</Button>
       </div>:''
       }
+      </div>
+     
       {
         status=='loading'?
         <Box>
