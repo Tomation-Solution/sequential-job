@@ -4,6 +4,7 @@ import {ImDownload2} from 'react-icons/im'
 import Button from "../Button/Button"
 import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
+import remarkRehype from 'remark-rehype'
 import { JobType, switchJobOnApi } from "../../service/api/job.api"
 import { useRouter } from "next/router"
 import useToast from "../../hooks/useToastify"
@@ -21,7 +22,8 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
     const loggedInUser = getUser()
   const user=getUser()
 
-    const data:string= currentJob.description_content?JSON.parse( currentJob.description_content):''
+    // const data:string= currentJob.description_content?JSON.parse( currentJob.description_content):''
+    const data:string= currentJob.description_content?currentJob.description_content:''
     const { mutate:jobSwitch , isLoading} = useMutation(switchJobOnApi,{
         onSuccess:(data)=>{
             // console.log({'switchWasASuccess':data})
@@ -147,7 +149,10 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
             <h2 style={{'color':'#24CDE2','padding':'1rem 0','fontWeight':'lighter'}}>Job Description</h2>
             <br /><br />
             <Box css={{'textAlign':'left','overflow':'scroll','padding':'0 1rem'}}>
-            <ReactMarkdown rehypePlugins={[rehypeRaw]}>
+            <ReactMarkdown 
+            rehypePlugins={[rehypeRaw]}
+            remarkRehypeOptions={{'allowDangerousHtml':true}}
+            >
                 {data}
             </ReactMarkdown>
             </Box>
