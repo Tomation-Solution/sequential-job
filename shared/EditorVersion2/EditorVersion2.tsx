@@ -7,6 +7,7 @@ import Editor from 'react-medium-editor';
 import Box from '../Box/Box';
 
 
+
 type Prop = {
   onChangeFunc:(text:string)=>void
 }
