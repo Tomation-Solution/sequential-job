@@ -12,7 +12,9 @@ export const JobCardContainer = styled('div',{
     'boxShadow':'rgba(149, 157, 165, 0.2) 0px 8px 24px',
     h2:{
         fontWeight:'lighter',
-        paddingBottom:'.3rem'
+        paddingBottom:'.3rem',   
+         'color':'#000022',
+
     },
     h3:{
         paddingBottom:'.3rem'
@@ -24,10 +26,12 @@ export const JobCardContainer = styled('div',{
         backgroundColor:'#F2EEFCAB',
         'display':'inline-block',
         'padding':'.3rem .8rem',
-        'borderRadius':'5px'
+        'borderRadius':'5px',
+        'color':'#000022',
+
     },
     p:{
-        'padding':'.4rem 0'
+        'padding':'.4rem 0',
     },
     '@bp2':{
         width:'360px'
