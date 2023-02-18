@@ -181,7 +181,7 @@ const AddJobs = () => {
           //   {'name':'Sterlin','value':'sterlin'},
           // ]
           money_countrySymbol.map((data,index)=>{
-            return {'name':data.name,'value':data.symbol}
+            return {'name':`${data.name} (${data.symbol})`,'value':data.symbol}
           })
         }
           // for the input field

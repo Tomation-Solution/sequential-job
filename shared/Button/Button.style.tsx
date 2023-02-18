@@ -25,7 +25,7 @@ export const StyledButton = styled('button',{
                 color:'$thickBlue'
             },
             'lightBlueOutline':{
-                'backgroundColor':'$lightBlue',
+                'backgroundColor':'transparent',
                 'color':'$lightBlue',
                 'border':'1px solid $lightBlue'
             },

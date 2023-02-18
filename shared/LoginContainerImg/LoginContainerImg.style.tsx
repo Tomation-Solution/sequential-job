@@ -5,13 +5,14 @@ export const LoginNav = styled('div',{
     justifyContent: 'space-between',
     'alignItems':'center',
     'a':{
-      'color': '$lightText',
+      'color': '$lightBlue',
       display:'inlineBlock',
       padding:'1rem',
+      'cursor':'pointer'
     },
     'h2':{
-      'color': '$lightText',
-    }
+      'color': '$thickText',
+    },
 
 })
 
@@ -72,10 +73,11 @@ export const LoginContentContainer= styled('div',{
     },
     '@bp900':{
             height: '100%',
-            maxWidth:' unset',
             padding: '2rem 0',
+            maxWidth:'unset',
             button: {
-            width: '70%',
+            padding: '1rem',
+            width: '80%',
             margin: '0 auto',
             }
     }

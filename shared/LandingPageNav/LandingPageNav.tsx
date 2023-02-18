@@ -22,7 +22,8 @@ const LandingPageNav = ():ReactElement=>{
         query: '(min-width: 1000px)'
       })
 
-    const handleRoute= (path:string):void=>{
+    const handleRoute= (e:any,path:string):void=>{
+      e.preventDefault()
         route.push(path)
     }
     return (
@@ -37,8 +38,14 @@ const LandingPageNav = ():ReactElement=>{
             </Box>
 
             <Box css={{'display':'flex','width':'200px','justifyContent':'space-between',}}>
-              <Button css={SigninSigUoBtnCss}>Sign up</Button>
-              <Button color={'lightBlueShadow'}  css={SigninSigUoBtnCss}>Log in</Button>
+              <Button css={SigninSigUoBtnCss} onClick={e=>{
+                handleRoute(e,'/job_seeker_signup/')
+              }}>Sign up</Button>
+              <Button color={'lightBlueShadow'} 
+               onClick={e=>{
+                handleRoute(e,'/signin/')
+              }}
+              css={SigninSigUoBtnCss}>Log in</Button>
             </Box>
           </Box>
             

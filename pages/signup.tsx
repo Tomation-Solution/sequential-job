@@ -13,6 +13,9 @@ import { useMutation } from "react-query";
 import { signUpApi } from "../service/api/authentication/authentication.api";
 import useToast from "../hooks/useToastify";
 import { useRouter } from "next/router";
+import { useTheme } from "next-themes";
+import { useEffect } from "react";
+
 const cssStyleForInput = {
     'input':{
         // 'border':'1px solid '
@@ -57,6 +60,7 @@ const schema = yup.object({
     
 })
 const Signup:NextPage =()=>{
+    const { theme, setTheme } = useTheme();
 
     const {notify} = useToast()
     const route = useRouter()
@@ -88,6 +92,10 @@ const Signup:NextPage =()=>{
       const onSubmit = (data: SignUpFormType) => {
         mutate(data)
       }
+      useEffect(()=>{
+        
+        setTheme('dark')
+    },[])
     return (
         <GeneralLayout remove_nav={true}>
             <Preloader loading={isLoading}/>

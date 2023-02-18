@@ -58,7 +58,7 @@ export const DropdownMenuArrow = styled(DropdownMenu.Arrow, { fill: 'white' });
     all: 'unset',
     fontSize: 13,
     lineHeight: 1,
-    color: '$thickBlue',
+    color: '$thickText',
     borderRadius: 3,
     display: 'flex',
     alignItems: 'center',
@@ -75,7 +75,7 @@ export const DropdownMenuArrow = styled(DropdownMenu.Arrow, { fill: 'white' });
   
     '&[data-highlighted]': {
       backgroundColor:'$thickBlue',
-      color: 'white',
+      color: '$thickText',
     },
   };
   

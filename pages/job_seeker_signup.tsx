@@ -19,7 +19,8 @@ import cookieCutter from 'cookie-cutter'
 import jwt_decode from "jwt-decode";
 import { LoginContainer, LoginContainerImg, LoginContentContainer, LoginNav } from "../shared/LoginContainerImg/LoginContainerImg.style";
 import loginImage from '../asset/login.jpg'
-
+import { useTheme } from "next-themes";
+import { useEffect } from "react";
 const cssStyleForInput = {
     'input':{
         // 'border':'1px solid '
@@ -45,6 +46,8 @@ const schema = yup.object({
     .oneOf([yup.ref('password'), null], 'Passwords must match')
 })
 const JobSeekerSignup:NextPage =()=>{
+    const { theme, setTheme } = useTheme();
+
     // const [cookie, setCookie] = useCookies(["user"])
     const {notify} = useToast()
     const route = useRouter()
@@ -78,6 +81,11 @@ const JobSeekerSignup:NextPage =()=>{
       const onSubmit = (data: signUpAsJobSeeker) => {
         mutate(data)
       }
+
+      useEffect(()=>{
+        
+        setTheme('dark')
+    },[])
     return (
             <Box css={{'backgroundColor':'$thickBlue','color':'$lightText '}}>
                 <Preloader loading={isLoading}/>
@@ -127,7 +135,9 @@ const JobSeekerSignup:NextPage =()=>{
             'width':'35%'
         }}}>
         <Button >Submit</Button>
-        <Button type='button' color={'lightBlueOutline'} onClick={()=>{
+        <Button type='button' 
+        color='lightBlueOutline'
+        onClick={()=>{
             route.push('/signup')
         }}>Sign up as organisation</Button>
         </Box>
