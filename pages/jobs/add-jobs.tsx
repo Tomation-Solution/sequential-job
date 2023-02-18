@@ -24,6 +24,7 @@ import listOfNigerianStates  from '../../utils/list_of_states'
 import {AiFillCloseCircle} from 'react-icons/ai'
 import countries_and_state  from '../../utils/countries_and_state'
 import money_countrySymbol from '../../utils/money_countrySymbol'
+import EditorVersion2 from '../../shared/EditorVersion2/EditorVersion2'
 
 
 export type JobCreateForm = {
@@ -72,7 +73,7 @@ const AddJobs = () => {
     },
   })
   const [simpleMdeInstance,setSimpleMdeInstance] =  useState<SimpleMDE | null>(null);
-
+  const [descriptionText,setDescriptionText] = useState('')
 
   const { register,control,setValue,handleSubmit, formState: { errors } } = useForm<JobCreateForm>({
     resolver: yupResolver(schema),
@@ -90,13 +91,14 @@ const AddJobs = () => {
 
   const onSubmit = (job:JobCreateForm)=>{
     let new_job:any = {...job}
-    if(simpleMdeInstance){1
-      // we get the data and put it in the json so we can send to the backemnd
-      const description_content =  simpleMdeInstance.value().replace(/\n/g,'<br/>')
-      new_job['description_content']=description_content
-      mutate(new_job)
-      // console.log({new_job})
-    }
+    new_job['description_content']=descriptionText
+    // console.log({new_job})
+    mutate(new_job)
+    // if(simpleMdeInstance){1
+    //   // we get the data and put it in the json so we can send to the backemnd
+    //   const description_content =  simpleMdeInstance.value().replace(/\n/g,'<br/>')
+    //   // console.log({new_job})
+    // }
    
   }
 
@@ -227,7 +229,7 @@ const AddJobs = () => {
           </Box>
 
         <br />
-        {
+        {/* {
           componentHasMounted?
           <Box css={{
             'color':'$lightText !important'
@@ -236,7 +238,11 @@ const AddJobs = () => {
             <GetInstance setInstance={setSimpleMdeInstance}/>
           </Box>
             :''
-        }
+        } */}
+
+        <EditorVersion2 onChangeFunc={(text)=>{
+          setDescriptionText(text)
+        }}/>
 
           <Button color={'lightBlueBtn'} css={{'width':'30%','margin':'15px auto'}}>Submit</Button>
         <br />
