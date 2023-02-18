@@ -13,7 +13,7 @@ import api from '../service/axios'
 import { useQuery  } from 'react-query'
 import { get_jobs_api, JobType } from '../service/api/job.api'
 import Preloader from '../shared/Preloader/Preloder'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import JobDetail from '../shared/JobDetail/JobDetail'
 import { useMediaQuery } from 'react-responsive'
 import OffCanvas from '../shared/OffCanvas/OffCanvas'
@@ -25,6 +25,8 @@ import { getUser } from '../utils/extra_function'
 import JobAppliedFor from '../shared/JobAppliedFor/JobAppliedFor'
 import { styled } from "../stitches.config";
 import { useTheme } from "next-themes";
+import useToast from '../hooks/useToastify'
+import { useRouter } from 'next/router'
 export const JOBGRIDSTYLE= {
   '@bp1':{
     'display':'flex',
@@ -42,7 +44,21 @@ export const JOBGRIDSTYLE= {
   }
 }
 const Home:NextPage = ()=>{ 
- const {status,error,data,isError} = useQuery('jobs',get_jobs_api)
+  const {notify} = useToast()
+  const route = useRouter()
+ const {status,error,data,isError} = useQuery('jobs',get_jobs_api,{
+  retry:1,
+  'onError':(err:any)=>{
+    if(err.response.data?.error){
+      let error:any = err.response.data.error
+      if(error.cv){
+        notify('You Need to upload your Cv','error')
+        // notify('Please Hold we would take you to upload your cv','success')
+        route.push('/profile')
+      }
+    }
+  }
+ })
   const [currentJob,setCurrentJob] = useState<null|JobType>(null)
   const [isOpen, setIsOpen] = useState(false)
   const logged_in_user = getUser()
@@ -61,6 +77,7 @@ const Home:NextPage = ()=>{
 
     }
 
+  
 
  return (
     <GeneralLayout>
