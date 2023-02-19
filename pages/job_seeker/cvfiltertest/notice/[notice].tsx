@@ -15,7 +15,7 @@ const NoticePage:NextPage =()=>{
         <GeneralLayout>
           <Box css={{'display':'flex','flexDirection':'column','justifyContent':'center','alignItems':'center','height':'80vh'}}>
           <Box css={{'maxWidth':'500px','margin':'0 auto','textAlign':'center'}}>
-                <h1>You <strong>Application</strong> Has Been Saved</h1>
+                <h1>Your <strong>Application</strong> Has Been Saved</h1>
 
             <br />
             <p>

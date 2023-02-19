@@ -48,7 +48,7 @@ const JobSeekerProfile = ({defualtValue}:Prop)=>{
         setValue('full_name',defualtValue.full_name)
         setValue('phone_number',defualtValue.phone_number)
 
-        if(defualtValue.user_extra.job_seakers){
+        if(defualtValue.user_extra?.job_seakers){
             setHasCv(true)
             // setValue('cv',defualtValue.user_extra.job_seakers.cv)
         }

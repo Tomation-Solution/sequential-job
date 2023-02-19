@@ -92,3 +92,15 @@ export const updateJobseekerApi = async (data:UpateJobSeekerPropType):Promise<Up
     const resp = await api.patch('/auth/jobseeker-profile/',form)
     return resp.data
 }
+export type updatePanelistProfileProp = {
+    full_name:string;
+    phone_number:string;
+}
+export const updatePanelistProfileApi = async (data:updatePanelistProfileProp)=>{
+    const form = new FormData()
+    
+    form.append('full_name',data.full_name)
+    form.append('phone_number',data.phone_number)
+    const resp = await api.patch('/auth/panelist-profile/',form)
+    return resp.data
+}

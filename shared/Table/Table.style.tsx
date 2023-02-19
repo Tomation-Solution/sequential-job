@@ -6,6 +6,8 @@ export const TableStyle = styled('table',{
 
   'fontFamily':'Arial, Helvetica, sans-serif',
   'borderCollapse': 'collapse',
+  color: '$lightText !important',
+
   width: '100%',
   'td, th': {
    border: '1px solid #ddd',
@@ -22,7 +24,8 @@ export const TableStyle = styled('table',{
    paddingBottom: '12px',
    textAlign: 'left',
    backgroundColor:'$thickBlue',
-   color: 'white',
+   color: '$lightText !important',
+
   },
 })
   

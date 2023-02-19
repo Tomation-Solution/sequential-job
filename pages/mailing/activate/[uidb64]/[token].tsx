@@ -27,6 +27,7 @@ const ActivateAccount:NextPage = ()=>{
 
   const handleValidate = async( )=>{
     //
+    setStatus('loading')
     try{
       const resp =await  axios.get(`${url}/mailing/activate/${uidb64}/${token}/`)
       setStatus('okay')
@@ -44,6 +45,8 @@ const ActivateAccount:NextPage = ()=>{
   },[route.isReady])
   return (
     <LandingPageLayout>
+     <Preloader loading={ status=='loading'}/>
+
      <Box css={{'color':'$thickBlue'}}>
 
        {/* <Preloader loading={status=='loading'}/> */}
@@ -74,12 +77,6 @@ const ActivateAccount:NextPage = ()=>{
       }
       </div>
      
-      {
-        status=='loading'?
-        <Box>
-          <h1>Verifying</h1>
-        </Box>:''
-      }
      </Box>
     </LandingPageLayout>
   )

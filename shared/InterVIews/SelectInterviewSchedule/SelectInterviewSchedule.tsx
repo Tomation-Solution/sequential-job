@@ -14,6 +14,7 @@ import { useForm, useFieldArray, useWatch, Control } from "react-hook-form";
 import {AiFillCloseCircle} from 'react-icons/ai'
 import Preloader from '../../Preloader/Preloder';
 import useToast from '../../../hooks/useToastify';
+import { useRouter } from 'next/router';
 
 
 
@@ -46,12 +47,14 @@ const SelectInterviewSchedule = ():React.ReactElement => {
 
   const [step,setStep] = useState(1)
   const {notify} = useToast()
+  const route = useRouter()
 
   const {isLoading,error,data,isError} = useQuery('jobs',get_jobs_api)
   const {isLoading:submitting,mutate} = useMutation(InterViewSetUpApi,{
     'onSuccess':(data)=>{
       console.log({'resp':data})
       notify('Created Successfully','success')
+      route.push('/dashboard_index')
     },
     'onError':(error)=>{
       console.log({error})
@@ -112,6 +115,7 @@ const SelectInterviewSchedule = ():React.ReactElement => {
         if(errors.list_of_email?.message){
           notify('Panelist email is required','error')
         }
+ 
         
       },[errors])
 
