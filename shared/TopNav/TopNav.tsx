@@ -44,8 +44,8 @@ export const TopNav = () => {
       isTab?
       <NavToolBox>
       <div>
-        <img src={UserLogo.src} alt="" />
-        <p>Tomiwa Prom</p>
+        <img src={user?.profile_image?user.profile_image:UserLogo.src} alt="" />
+        <p>{user?.full_name.slice(0,10)}</p>
       </div>
     
       <div>

@@ -1,10 +1,11 @@
-import { styled } from '@stitches/react';
+
 import * as Checkbox from '@radix-ui/react-checkbox';
 import { CheckIcon } from '@radix-ui/react-icons';
+import { styled } from '../../stitches.config';
 
 export const CheckboxRoot = styled(Checkbox.Root, {
     all: 'unset',
-    backgroundColor: 'white',
+    backgroundColor: '$lightText',
     width: 25,
     height: 25,
     borderRadius: 4,

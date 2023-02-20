@@ -9,6 +9,8 @@ export type UserType = {
   "user_id": string,
   "email": string,
   "user_type": 'company'|'job_seakers'|'hr'|'admin'|'panelist';
+  'full_name':string;
+  'profile_image':string
 }
 
 export const signUpApi  = (data:SignUpFormType)=> api.post('/auth/create-company/',data).then(res=>res.data)

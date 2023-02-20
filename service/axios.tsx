@@ -42,9 +42,7 @@ api.interceptors.response.use(function (response) {
   try{
     const code:any = error.response.data.messages[0]
   if(code.token_class === 'AccessToken') {
-    if (!window.location.pathname.includes('/expired_token_page' )|| !window.location.pathname.includes('/')|| !window.location.pathname.includes('/signin')
-    || !window.location.pathname.includes('/signup')
-    || !window.location.pathname.includes('/job_seeker_signup'))
+    if (!window.location.pathname.includes('/expired_token_page' ))
     {
 
       window.location.reload()
