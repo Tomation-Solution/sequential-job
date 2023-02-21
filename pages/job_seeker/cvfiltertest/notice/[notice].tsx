@@ -15,13 +15,13 @@ const NoticePage:NextPage =()=>{
         <GeneralLayout>
           <Box css={{'display':'flex','flexDirection':'column','justifyContent':'center','alignItems':'center','height':'80vh'}}>
           <Box css={{'maxWidth':'500px','margin':'0 auto','textAlign':'center'}}>
-                <h1>Your <strong>Application</strong> Has Been Saved</h1>
+                <h1>Your <strong>Submission</strong> Has Been Saved</h1>
 
             <br />
             <p>
                 {
                 notice != 'no'?
-            'Thank you for your application, this job requires you to take the test below'
+            'Thank you for your taking this test, this job requires you to take the pre-qualification test below'
             :
             'Thank you for your interest in this job, we are currently processing your application' 
             }
@@ -31,7 +31,7 @@ const NoticePage:NextPage =()=>{
             {
                 notice!='no'?
             <Button css={{'margin':'0 auto'}} onClick={(e)=>route.push(`/job_seeker/test_quetion/${notice}/`)}>
-                Take Test
+                Take pre-qualification 
             </Button>:''
             }
             </Box>

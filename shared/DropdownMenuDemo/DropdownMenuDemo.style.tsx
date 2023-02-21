@@ -33,12 +33,13 @@ export  const slideRightAndFade = keyframes({
   
 export  const contentStyles = {
     minWidth: 220,
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
+    backgroundColor:'$thickBlue',
+
     borderRadius: 6,
     padding: 5,
-    boxShadow:
-      '0px 10px 38px -10px rgba(22, 23, 24, 0.35), 0px 10px 20px -15px rgba(22, 23, 24, 0.2)',
-    animationDuration: '400ms',
+    'boxShadow':'rgba(149, 157, 165, 0.2) 0px 8px 24px',
+      animationDuration: '400ms',
     animationTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
     willChange: 'transform, opacity',
     '&[data-state="open"]': {
@@ -58,7 +59,7 @@ export const DropdownMenuArrow = styled(DropdownMenu.Arrow, { fill: 'white' });
     all: 'unset',
     fontSize: 13,
     lineHeight: 1,
-    color: '$thickText',
+    'color':'$white',
     borderRadius: 3,
     display: 'flex',
     alignItems: 'center',

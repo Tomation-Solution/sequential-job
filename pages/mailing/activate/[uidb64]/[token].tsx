@@ -47,7 +47,7 @@ const ActivateAccount:NextPage = ()=>{
     <LandingPageLayout>
      <Preloader loading={ status=='loading'}/>
 
-     <Box css={{'color':'$thickBlue'}}>
+     <Box css={{'color':'$lightText'}}>
 
        {/* <Preloader loading={status=='loading'}/> */}
        <div style={{'display':'flex','alignItems':'center','justifyContent':'center','height':'100vh','textAlign':'center'}}>

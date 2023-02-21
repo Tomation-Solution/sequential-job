@@ -16,11 +16,11 @@ const NoticePage:NextPage =()=>{
         <GeneralLayout>
           <Box css={{'display':'flex','flexDirection':'column','justifyContent':'center','alignItems':'center','height':'80vh'}}>
           <Box css={{'maxWidth':'500px','margin':'0 auto','textAlign':'center'}}>
-                <h1>You <strong>Application</strong> Has Been Saved</h1>
+                <h1>You <strong>Submission</strong> Has Been Saved</h1>
 
             <br />
             <p>
-            Thank you for your interest in this job, we are currently processing your application
+            Thank you for your taking the pre-qualification
               
 
             </p>

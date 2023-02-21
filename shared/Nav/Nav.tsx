@@ -39,13 +39,13 @@ const Nav = ():React.ReactElement => {
     icon:<FaStickyNote/>
   },
   {
-    label:'Set Sorting Quetion',
+    label:'Set CV Sorting Questions',
     route:'/jobs/CvFilteringQuetion/',
     icon:<FaStickyNote/>
 
   },
   {
-    label:'Set Test',
+    label:'Set Test Questions',
     route:'/jobs/JobTest/',
     icon:<FaStickyNote/>
 
@@ -57,12 +57,12 @@ const Nav = ():React.ReactElement => {
   },
   {
     label:'Change Password',
-    route:'#',
+    route:'/change_password',
     icon:<FaUserLock/>
   },
   {
     label:'Delete Account',
-    route:'#',
+    route:'/delete_account/',
     icon:<AiTwotoneDelete/>
   },
   {
