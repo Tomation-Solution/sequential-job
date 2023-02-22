@@ -166,9 +166,13 @@ const CvFilterTest = ()=>{
                    onSubmit={handleSubmit(onSubmit)}
 
              >
-            <h2><strong>Fill In THe Gap</strong></h2>
 
             <Box css={{'maxWidth':'600px','margin':'0 auto'}}>
+                {fields.length!=0?
+                <h2><strong>Fill In THe Gap</strong></h2>
+                :''
+            }
+             <br />
            {
                 fields.map((data,index)=>(
                     <Box key={index} >
@@ -186,7 +190,11 @@ const CvFilterTest = ()=>{
             <br />
             <br />
             <br />
-            <h2><strong>Pick One Option</strong></h2>
+            {
+                filter_quetion_options.length!=0?
+                <h2><strong>Pick One Option</strong></h2>
+                :''
+            }
             <br />
             <br />
             {
@@ -205,7 +213,7 @@ const CvFilterTest = ()=>{
                                     setValue(`filter_quetion_option.${findex}.answer`,option)
                                     }}
                                     /> */}
-                                    <input type="radio" name="filter_quetion_options" onChange={(e)=>{
+                                    <input type="radio" name={"filter_quetion_options"+findex} onChange={(e)=>{
                                         console.log(e.target.value)
                                         setValue(`filter_quetion_option.${findex}.answer`,option)
 
@@ -220,7 +228,7 @@ const CvFilterTest = ()=>{
             <br />
             <br />
             <br />
-            <h2><strong>Multi CHoice Quetion</strong></h2>
+            {/* <h2><strong>Multi CHoice Quetion</strong></h2>
             <br />
             <br />
             {
@@ -254,7 +262,7 @@ const CvFilterTest = ()=>{
                     </Box>
                 ))
             }
-            <br />
+            <br /> */}
            <Button >Submit</Button>
            <br />
             <br />

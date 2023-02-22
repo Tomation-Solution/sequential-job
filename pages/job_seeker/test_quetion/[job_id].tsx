@@ -162,9 +162,13 @@ const CvFilterTest = ()=>{
                    onSubmit={handleSubmit(onSubmit)}
 
              >
-            <h2><strong>Fill In THe Gap</strong></h2>
 
             <Box css={{'maxWidth':'600px','margin':'0 auto'}}>
+            {fields.length!=0?
+                <h2><strong>Fill In THe Gap</strong></h2>
+                :''
+            }
+            <br />
            {
                 fields.map((data,index)=>(
                     <Box key={index} >
@@ -182,7 +186,11 @@ const CvFilterTest = ()=>{
             <br />
             <br />
             <br />
-            <h2><strong>Pick One Option</strong></h2>
+             {
+                filter_quetion_options.length!=0?
+                <h2><strong>Pick One Option</strong></h2>
+                :''
+            }
             <br />
             <br />
             {
@@ -201,7 +209,7 @@ const CvFilterTest = ()=>{
                                     setValue(`filter_quetion_option.${findex}.answer`,option)
                                     }}
                                     /> */}
-                                    <input type="radio" name="filter_quetion_options" onChange={(e)=>{
+                                    <input type="radio" name={"filter_quetion_options"+findex} onChange={(e)=>{
                                         console.log(e.target.value)
                                         setValue(`filter_quetion_option.${findex}.answer`,option)
 
@@ -216,41 +224,7 @@ const CvFilterTest = ()=>{
             <br />
             <br />
             <br />
-            <h2><strong>Multi CHoice Quetion</strong></h2>
-            <br />
-            <br />
-            {
-                filter_quetion_multi_choice_quetion.map((data,index)=>(
-                    <Box key={index}>
-                         <h2>{data.quetion}?</h2>
-
-                       
-                         {
-                            data.option_to_choose_from.map((option:string,option_index)=>(
-                                <Box key={index} css={{'display':'flex','maxWidth':'400px','padding':'1rem 0'}}>
-                                    <CheckBox
-
-                                    onCheck={(checked)=>{
-                                        if(checked){
-                                            console.log({'dont remove':option})
-                                            setValue(`filter_quetion_multi_choice_quetion.${index}.answer`,[...data.answer,option])
-                                        }else{
-                                            console.log({'remove':option})
-                                    // setValue(`filter_quetion_multi_choice_quetion.${option_index}.answer`,[...data.answer.filter((info)=>info!==option)])
-
-                                        }
-                                        
-                                    }}
-                                    />
-                                    <p style={{'margin':'0 10px'}}>{option}</p>
-                                </Box>
-                            ))
-                        }
-
-                    </Box>
-                ))
-            }
-            <br />
+           
            <Button >Submit</Button>
            <br />
             <br />

@@ -30,7 +30,7 @@ const EditorVersion2= ({ onChangeFunc}:Prop):React.ReactElement=>{
         <Editor  
         //  buttons: ['bold', 'italic', 'underline', 'anchor', 'h2', 'h3', 'quote'],
         options={{
-          toolbar:{'buttons': ['bold', 'italic', 'underline', 'h2', 'h3','h1', 'quote','ul','li']}
+          toolbar:{'buttons': ['bold', 'italic', 'underline', 'h2', 'h3','h1', 'quote',]}
         }}
         style={{'outline':'none','width':'100%'}} text={text} onChange={handleChange} />
 

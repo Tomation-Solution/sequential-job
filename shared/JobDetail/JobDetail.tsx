@@ -13,6 +13,9 @@ import { useMutation } from "react-query"
 import { applyForJobs } from "../../service/api/jobJobSeeker.api"
 import Preloader from "../Preloader/Preloder"
 import Switch from "../Switch/Switch"
+import EditorVersion2 from "../EditorVersion2/EditorVersion2"
+/* @ts-ignore */
+import Editor from 'react-medium-editor';
 
 type Prop = {
     currentJob:JobType;
@@ -149,12 +152,19 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
             <h2 style={{'color':'#24CDE2','padding':'1rem 0','fontWeight':'lighter'}}>Job Description</h2>
             <br /><br />
             <Box css={{'textAlign':'left','overflow':'scroll','padding':'0 1rem'}}>
-            <ReactMarkdown 
+            {/* <ReactMarkdown 
             rehypePlugins={[rehypeRaw]}
-            remarkRehypeOptions={{'allowDangerousHtml':true}}
             >
                 {data}
-            </ReactMarkdown>
+            </ReactMarkdown> */}
+            <Editor
+            // disableEditing={true}
+          text={data}
+          options={{
+            'disableEditing':false
+          }}
+        //   onChange={this.handleChange}
+        />
             </Box>
             <br /><br />
             {

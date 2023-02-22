@@ -84,7 +84,7 @@ const JobTestCreation:NextPage = ()=>{
     return(
         <GeneralLayout>
           <Preloader loading={isLoading} />
-        <h2>Set Test Quetions</h2>
+        <h2>Set Test Question</h2>
           <InputWithLabel register={register('title')}
           label="Title" css={{'width':'60%','margin':'0 auto'}} />
             {
@@ -93,20 +93,20 @@ const JobTestCreation:NextPage = ()=>{
               
         <SelectComponent
           showLabel={true}
-          label='Pick Quetion Type'
+          label='Pick Question Type'
           options={[
             {
-              'name':'fill In The Gap Quetion',
+              'name':'fill In The Gap Question',
               'value':'fill_in_gap_quetion'
             },
             {
-              'name':'Option Quetion',
+              'name':'Option Question',
               'value':'option_quetion'
             },
-            {
-              'name':'Multi Choice Quetion',
-              'value':'multi_choice_quetion'
-            },
+            // {
+            //   'name':'Multi Choice Quetion',
+            //   'value':'multi_choice_quetion'
+            // },
           ]}
           setVaue={(name:string,value:ViewType)=>{
            setView(value)
@@ -135,26 +135,15 @@ const JobTestCreation:NextPage = ()=>{
                   <Box key={index}><OptionQuetionDisplay data={option_quetion}/> <br /> </Box>
                 ))
             },
-            {
-              'key':'multi_choice_quetion',
-              'label':'Multi Choice Quetion',
-              'template':state.multi_choice_quetion.map((multi,index)=>(<Box>
-                <MultiChoiceQuetionDisplay data={multi} key={index}/><br /></Box>))
-          },
+          //   {
+          //     'key':'multi_choice_quetion',
+          //     'label':'Multi Choice Quetion',
+          //     'template':state.multi_choice_quetion.map((multi,index)=>(<Box>
+          //       <MultiChoiceQuetionDisplay data={multi} key={index}/><br /></Box>))
+          // },
           
           ]}
           />:''
-        }
-
-
-
-
-
-        {
-          (state.fill_in_gap_quetion.length!==0||
-          state.option_quetion.length!==0||
-          state.multi_choice_quetion.length!==0)?
-          <Button onClick={handleSubmit}>Create Quetion</Button>:''
         }
 
 
@@ -181,6 +170,23 @@ const JobTestCreation:NextPage = ()=>{
                 view=='multi_choice_quetion'?
                 <MultiChoiceQuetion  setView={setView} state={state} setState={setState}/>:''
             }
+
+
+            
+<br />
+
+{
+  (state.fill_in_gap_quetion.length!==0||
+  state.option_quetion.length!==0||
+  state.multi_choice_quetion.length!==0)?
+  <Button  shape={'usual_btn_shap'} css={{'margin':'0 auto','padding':'1rem .8rem','width':'300px'}}  onClick={handleSubmit}>
+    Set Test Question
+    </Button>:''
+}
+
+
+
+
         </GeneralLayout>
     )
 }
