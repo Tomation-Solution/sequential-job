@@ -30,7 +30,7 @@ type Prop ={
             {job.job_type.replace('_',' ').toUpperCase()}
         </span>
         <span>
-           <FaMoneyBillWave/>{' '}${job.salary}/year
+           <FaMoneyBillWave/>{' '}{job.currency}{job.salary}/year
         </span>
       </Box>
         <p><IoSend/>{' '} Apply from your phone</p>

@@ -140,10 +140,10 @@ const Nav = ():React.ReactElement => {
                 if(value.label==='Set Interview'){
                   return false
                 }
-                if(value.label==='Set Sorting Quetion'){
+                if(value.label==='Set CV Sorting Questions'){
                   return false
                 }
-                if(value.label==='Set Test'){
+                if(value.label==='Set Test Questions'){
                   return false
                 }
               }
