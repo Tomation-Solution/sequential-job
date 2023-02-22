@@ -54,9 +54,11 @@ const ActivateAccount:NextPage = ()=>{
         {
           status==='okay'?
             <div style={{'maxWidth':'700px',}}>
-              <h1 style={{'fontSize':'2.5rem','textAlign':'center'}}>Your Account Has Been<span style={{'color':'#24CDE2'}}> Verified</span></h1>
+              <h1 style={{'fontSize':'2.5rem','textAlign':'center','color':'#1c1e21'}}
+
+              >Your Account Has Been<span style={{'color':'#24CDE2'}}> Verified</span></h1>
               <br />
-              <p>Let The Job Hunt Begin!!</p> 
+              <p style={{'color':'#1c1e21'}}>Let The Job Hunt Begin!!</p> 
               <br />
               <Button css={{'padding':'1rem','width':'150px','borderRadius':'10px','margin':'0 auto'}}
                 onClick={()=>handleRoute('/signin')}
@@ -68,7 +70,7 @@ const ActivateAccount:NextPage = ()=>{
          {
         status==='error'?
         <div style={{'maxWidth':'700px',}}>
-        <h1>Invalid Token Or You Have Been activated</h1>
+        <h1 style={{'color':'#1c1e21'}}>Invalid Token Or You Have Been activated</h1>
         <br />
         <Button css={{'padding':'1rem','width':'150px','borderRadius':'10px','margin':'0 auto'}}
           onClick={()=>handleRoute('/signin')}
