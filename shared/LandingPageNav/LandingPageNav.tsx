@@ -52,11 +52,17 @@ const LandingPageNav = ():ReactElement=>{
           <Box css={{ 'backgroundColor':'#fbfefe',}}>
           <SubMenue>
             <ul className="first_sub">
-              <li><a href="">Find Job</a></li>
-              <li><a href="">Upload CV</a></li>
+              <li><a onClick={(e)=>{
+                handleRoute(e,'/searchpage')
+              }}>Find Job</a></li>
+              <li><a onClick={(e)=>{
+                handleRoute(e,'/upload-cv')
+              }}>Upload CV</a></li>
             </ul>
             <ul className="sec_sub">
-              <li><a href="">For Employers <BsArrowRight style={{'transform':'translateY(3px)'}}/></a></li>
+              <li><a onClick={(e)=>{
+                handleRoute(e,'/signup')
+              }}>For Employers <BsArrowRight style={{'transform':'translateY(3px)'}}/></a></li>
             </ul>
           </SubMenue>
           </Box>

@@ -25,6 +25,7 @@ export const SubMenue = styled('div',{
     'a':{
         'color':'$thickBlue',
         'textDecoration':'none',
+        'cursor':'pointer',
         padding:'0 .8rem',
         "@bp2":{
             fontSize:'1.1rem'

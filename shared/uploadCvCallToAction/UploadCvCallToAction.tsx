@@ -3,9 +3,11 @@ import Box from "../Box/Box";
 import Button from "../Button/Button";
 import { CVCallImageContainer, UploadCvCallToActionContainer, UploadCvCallToActionContainerContent } from "./UploadCvCallToAction.style";
 import callingLadyImg from '../../asset/callingLady.png'
+import {BsCheck} from 'react-icons/bs'
 
 
 
+const CheckedStyle = {'backgroundColor':' #24CDE2','color':'white','borderRadius':'50%','transform':'translateY(1px)','marginRight':'10px'}
 
 const UploadCvCallToAction:NextPage = ()=>{
 
@@ -31,11 +33,14 @@ const UploadCvCallToAction:NextPage = ()=>{
 
                 <br />
                 <br />
-                <p>Receive recommended jobs in your inbox</p>
+                <Box>
+                    <p style={{'color':'#424242'}}><BsCheck style={CheckedStyle}/>Receive recommended jobs in your inbox</p>
+                    <p style={{'color':'#424242'}}> <BsCheck style={CheckedStyle}/>Be able to easily apply for thousands of jobs</p>
+                    <p style={{'color':'#424242'}}> <BsCheck style={CheckedStyle}/>Easily save and apply for jobs when you are ready</p>
+                </Box>
                 <br />
                 <Button shape={'usual_btn_shap'} css={{'fontSize':'.9rem'}}>Upload your CV</Button>
                <br />
-                <p>Borem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.</p>
             </UploadCvCallToActionContainerContent>
         </UploadCvCallToActionContainer>
     )

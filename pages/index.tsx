@@ -16,7 +16,7 @@ import SelectBarV2 from "../shared/SelectBarV2/SelectBarV2";
 import WhiteInput from "../shared/WhiteInput/WhiteInput";
 import {BsSearch} from 'react-icons/bs'
 import VisionAndMission from "../shared/VisionAndMission/VisionAndMission";
-
+import african_womanjobImg from '../asset/african_womanjob.png'
 const LineCss ={'height':'60px','width':'1px','backgroundColor':'#e6e7e8d1'}
 
 const dummyJobs:JobType[] =[]
@@ -62,8 +62,8 @@ const LandingPageIndex:NextPage = ()=>{
         'display':'flex','justifyContent':'space-between', 'flexDirection':'row',
 
       }}}>
-      <InfoPaneWithPics/>
-      <InfoPaneWithPics/>
+      <InfoPaneWithPics name="Upload a CV " content="Our top priority at Sequential Jobs is to make sure the best candidate gets the best job, upload and register your CV with us today to enjoy this great benefit at no extra cost."/>
+      <InfoPaneWithPics name="Post a Job " img={african_womanjobImg.src} content="Sequential Jobs is here to help you find the best candidate that matches your job requirements. Post your job on our portal to get the right fit."/>
       </Box>
       <br />
 <br />

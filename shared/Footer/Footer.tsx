@@ -5,11 +5,14 @@ import YoutubeImg from '../../asset/youtube.png'
 import facebookImg from '../../asset/facebook.png'
 import instagramImg from '../../asset/instagram.png'
 import twitterImg from '../../asset/twitter.png'
-
+import GoogleImg from '../../asset/google.svg'
+import AppleImg from '../../asset/apple.svg'
+import { useRouter } from "next/router"
 
 
 
 const Footer = ():React.ReactElement=>{
+    const route = useRouter()
     return (
         <FooterContainer>
             <Box
@@ -38,7 +41,7 @@ const Footer = ():React.ReactElement=>{
                 <p>For Employers</p>
                 <li>Search CV</li>
                 <li>Post Job</li>
-                <li>Pricing</li>
+                <li onClick={(e)=>route.push('/pricing')}>Pricing</li>
             </FooterNavLinks>
             <FooterNavLinks>
                 <p>Helpful Resources</p>
@@ -75,6 +78,24 @@ const Footer = ():React.ReactElement=>{
                 </Box>
                 <Box>
                     <p>Get the  App</p>
+                    <Box 
+                    css={{
+                        'display':'flex',
+                        'flexDirection':'column',
+                        'gap':'10px',
+                        'margin':'5px 0',
+                        '@bp3':{
+                            'flexDirection':'row',
+                        }
+                    }}
+                    >
+                    <Box>
+                        <img src={GoogleImg.src} alt="" />
+                    </Box>
+                    <Box>
+                        <img src={AppleImg.src} alt="" />
+                    </Box>
+                    </Box>
                 </Box>
             </Box>
 
