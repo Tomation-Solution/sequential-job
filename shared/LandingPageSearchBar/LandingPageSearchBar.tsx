@@ -5,6 +5,7 @@ import {BsSearch} from 'react-icons/bs'
 import { useMediaQuery } from 'react-responsive'
 import SpeakerSVG from '../../asset/speaker.svg'
 import Searchbarsmall from '../../asset/searchbarsmall.svg'
+import { useRouter } from "next/router"
 
 
 const SearchSuggestion = ({name}:{name:string}):React.ReactElement=>{
@@ -22,6 +23,7 @@ const SearchSuggestion = ({name}:{name:string}):React.ReactElement=>{
 }
 
 const LandingPageSearchBar = ():React.ReactElement=>{
+    const route = useRouter()
     const search_suggestion = ['Part-Time','Work from Home','Logistics','Driver','Sales','IT','Engineering',]
     const isTab = useMediaQuery({
         query: '(min-width: 500px)'
@@ -65,7 +67,7 @@ const LandingPageSearchBar = ():React.ReactElement=>{
                 }
             }}>
             <img src={SpeakerSVG.src} />
-            <small><p style={{'padding':'0 .6rem'}}><span>Upload Your CV</span> - Get noticed by top employers!</p></small>
+            <small><p style={{'padding':'0 .6rem'}}><span onClick={e=>route.push('upload-cv/')}>Upload Your CV</span> - Get noticed by top employers!</p></small>
             </Box>
 
             <Box css={{'color':'#FFFFFF'}}>
