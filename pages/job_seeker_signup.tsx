@@ -18,23 +18,25 @@ import { useRouter } from "next/router";
 import cookieCutter from 'cookie-cutter'
 import jwt_decode from "jwt-decode";
 import { LoginContainer, LoginContainerImg, LoginContentContainer, LoginNav } from "../shared/LoginContainerImg/LoginContainerImg.style";
-import loginImage from '../asset/login.jpg'
+import loginImage from '../asset/wavy.svg'
 import { useTheme } from "next-themes";
 import { useEffect } from "react";
+import LandingPageLayout from "../layout/LandingPageLayout/LandingPageLayout";
 const cssStyleForInput = {
     'input':{
         // 'border':'1px solid '
-        // 'backgroundColor':' rgba(242, 238, 252, 0.685);',
-        'color':'$lightText',
-        'border':'1px solid  #f2eefc0',
+        'backgroundColor':' rgba(242, 238, 252, 0.685);',
+        'color':'#1c1e21',
+        'border':'1px solid  #1c1e21',
         '&:focus':{
             'border':'1px solid $lightBlue'
         }
     },
     'label':{
-        color:'$lightText'
+        color:'#1c1e21'
     }
 }
+
 
 
 const schema = yup.object({
@@ -85,23 +87,31 @@ const JobSeekerSignup:NextPage =()=>{
 
       useEffect(()=>{
         
-        setTheme('dark')
+        // setTheme('dark')
     },[])
     return (
-            <Box css={{'backgroundColor':'$thickBlue','color':'$lightText '}}>
+        <LandingPageLayout>
+
+            <Box css={{'backgroundColor':'white'}}>
                 <Preloader loading={isLoading}/>
             <LoginContainer>
-                <LoginContainerImg  
+                {/* <LoginContainerImg  
                 css={{'backgroundImage':`linear-gradient(to bottom, #24cce22d,black),url(${loginImage.src})`}}
-                />
+            /> */}
+                <Box css={{
 
+                'img':{
+                    'width':'100%',
+                    'height':'100%',
+                }
+                }}>
+                <img src={loginImage.src} alt="" />
+                </Box>
                 <LoginContentContainer>
 
-    <br /><br />
-        <br /><br />
-        <br /><br />
+  
         <LoginNav>
-          <h2>
+          <h2  style={{'color':'#1c1e21'}}>
           Create JobSeeker Account
           </h2>
           <div>
@@ -150,6 +160,8 @@ const JobSeekerSignup:NextPage =()=>{
 
             </LoginContainer>
             </Box>
+        </LandingPageLayout>
+        
     )
 }
 

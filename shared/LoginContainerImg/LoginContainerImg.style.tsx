@@ -21,7 +21,7 @@ export const LoginContainer= styled('div',{
         '@bp900':{
             display: 'flex',
             alignItems: 'center',
-            height: '114vh',
+            // height: '114vh',
             '&>div:nth-child(1)':{
               width: '45%',
             },

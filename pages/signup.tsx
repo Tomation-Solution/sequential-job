@@ -15,19 +15,20 @@ import useToast from "../hooks/useToastify";
 import { useRouter } from "next/router";
 import { useTheme } from "next-themes";
 import { useEffect } from "react";
+import LandingPageLayout from "../layout/LandingPageLayout/LandingPageLayout";
 
 const cssStyleForInput = {
     'input':{
         // 'border':'1px solid '
-        // 'backgroundColor':' rgba(242, 238, 252, 0.685);',
-        'color':'$lightText',
-        'border':'1px solid  #f2eefc0',
+        'backgroundColor':' rgba(242, 238, 252, 0.685);',
+        'color':'#1c1e21',
+        'border':'1px solid  #1c1e21',
         '&:focus':{
             'border':'1px solid $lightBlue'
         }
     },
     'label':{
-        color:'$lightText'
+        color:'#1c1e21'
     }
 }
 
@@ -94,13 +95,13 @@ const Signup:NextPage =()=>{
       }
       useEffect(()=>{
         
-        setTheme('dark')
+        // setTheme('dark')
     },[])
     return (
-        <GeneralLayout remove_nav={true}>
+        <LandingPageLayout >
             <Preloader loading={isLoading}/>
             {/* <InputWithLabel label="Organization Name"/> */}
-              <Box css={{'maxWidth':'600px','margin':'0 auto','height':'100vh'}}>
+              <Box css={{'maxWidth':'600px','margin':'0 auto',}}>
                {/* <img src={Signupsvg.src} alt="" style={{'width':'90%'}} /> */}
 
 
@@ -111,8 +112,8 @@ const Signup:NextPage =()=>{
                         },
                             'textAlign':'center'
                     }}>
-                        <h1>Sign Up</h1>
-                        <p>Organization</p>
+                        <h1  style={{'color':'#1c1e21'}}>Sign Up</h1>
+                        <p  style={{'color':'#1c1e21'}}>Organization</p>
                     </Box>
                 <br />
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -177,11 +178,16 @@ const Signup:NextPage =()=>{
         </Box>
                     </Pane>
                     <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
                 </form>
                   
 
               </Box>
-        </GeneralLayout>
+        </LandingPageLayout>
     )
 }
 

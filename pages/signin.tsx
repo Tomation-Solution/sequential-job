@@ -18,23 +18,24 @@ import { useRouter } from "next/router";
 import cookieCutter from 'cookie-cutter'
 import jwt_decode from "jwt-decode";
 import { LoginContainer, LoginContainerImg, LoginContentContainer, LoginNav } from "../shared/LoginContainerImg/LoginContainerImg.style";
-import loginImage from '../asset/login.jpg'
+import loginImage from '../asset/octorber.svg'
 import { useTheme } from "next-themes";
 import { useEffect } from "react";
+import LandingPageLayout from "../layout/LandingPageLayout/LandingPageLayout";
 
 
 export const cssStyleForInput = {
     'input':{
         // 'border':'1px solid '
-        // 'backgroundColor':' rgba(242, 238, 252, 0.685);',
-        'color':'$lightText',
-        'border':'1px solid  #f2eefc0',
+        'backgroundColor':' rgba(242, 238, 252, 0.685);',
+        'color':'#1c1e21',
+        'border':'1px solid  #1c1e21',
         '&:focus':{
             'border':'1px solid $lightBlue'
         }
     },
     'label':{
-        color:'$lightText'
+        color:'#1c1e21'
     }
 }
 
@@ -85,23 +86,30 @@ const Signin:NextPage =()=>{
 
       useEffect(()=>{
         
-        setTheme('dark')
+        // setTheme('dark')
     },[])
     return (
-            <Box css={{'backgroundColor':'$thickBlue','color':'$lightText '}}>
+        <LandingPageLayout>
+
+            <Box css={{'backgroundColor':'white',}}>
                 <Preloader loading={isLoading}/>
             <LoginContainer>
-                <LoginContainerImg  
-                css={{'backgroundImage':`linear-gradient(to bottom, #24cce22d,black),url(${loginImage.src})`}}
-                />
-
+                {/* <LoginContainerImg  
+                css={{'backgroundImage':`url(${loginImage.src})`}}
+                /> */}
+            <Box css={{
+                
+                'img':{
+                    'width':'100%',
+                    'height':'100%',
+                }
+            }}>
+            <img src={loginImage.src} alt="" />
+            </Box>
             <LoginContentContainer>
 
-            <br /><br />
-            <br /><br />
-            <br /><br />
             <LoginNav>
-            <h2>Sign In</h2>
+            <h2 style={{'color':'#1c1e21'}}>Sign In</h2>
             <div>
             <a onClick={()=>route.push('/')}>Go Home</a>
             <a onClick={()=>route.push('/job_seeker_signup')}>Sign Up</a>
@@ -112,6 +120,7 @@ const Signin:NextPage =()=>{
             <InputWithLabel 
             register={register('email')}
             errors={errors.email?.message}
+            
             label="Email" css={cssStyleForInput}/>
             <br />
             <InputWithLabel 
@@ -128,6 +137,8 @@ const Signin:NextPage =()=>{
 
             </LoginContainer>
             </Box>
+        </LandingPageLayout>
+
     )
 }
 
