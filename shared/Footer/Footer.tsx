@@ -1,6 +1,6 @@
 import Box from "../Box/Box"
 import { FooterContainer, FooterNavLinks, FooterNavLinksContainer } from "./Footer.style"
-import WhiteLogo from '../../asset/logo.png'
+import WhiteLogo from '../../asset/logo.svg'
 import YoutubeImg from '../../asset/youtube.png'
 import facebookImg from '../../asset/facebook.png'
 import instagramImg from '../../asset/instagram.png'

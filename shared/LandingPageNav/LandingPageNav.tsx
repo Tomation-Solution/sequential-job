@@ -1,6 +1,6 @@
 import { ReactElement } from "react-markdown/lib/react-markdown"
 import Box from "../Box/Box"
-import Logo from '../../asset/darklogo.png'
+import Logo from '../../asset/logo.svg'
 import { useMediaQuery } from 'react-responsive'
 import { LandingPageNavContainer,SubMenue } from "./LandingPageNav.style"
 import {GiHamburgerMenu} from 'react-icons/gi'
