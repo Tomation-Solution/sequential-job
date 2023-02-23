@@ -163,8 +163,7 @@ const JobDetailV2 = ({currentJob}:Prop):React.ReactElement=>{
         />
             </Box>
             <br /><br />
-            {
-                loggedInUser?.user_type=='job_seakers'?
+          
                 <Box>
                     <Button color={'lightBlueBtn'} 
                     onClick={handleJobSubbmission}
@@ -172,9 +171,6 @@ const JobDetailV2 = ({currentJob}:Prop):React.ReactElement=>{
                     
                     >Apply</Button>
                 </Box>
-                :
-                ''
-            }
             <br /><br />
                 {
             loggedInUser?.user_type=='company'?
