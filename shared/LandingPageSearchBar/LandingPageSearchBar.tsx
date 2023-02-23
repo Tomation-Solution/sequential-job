@@ -53,7 +53,9 @@ const LandingPageSearchBar = ():React.ReactElement=>{
                 <LandingPageInputField placeholder="Enter location or “remote”"/>
                 </LandingPageInputFieldContainer>
 
-                <Button>
+                <Button onClick={(e)=>{
+                    route.push('/searchpage')
+                }}>
                     {
                         isTab?'':'Search '
                     }

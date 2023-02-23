@@ -21,7 +21,7 @@ api.interceptors.request.use(function (config) {
   let user = cookieCutter.get('user') 
 
   if(!path.includes('/signin')&&!path.includes('/signup')
-  &&!path.includes('/job_seeker_signup')
+  &&!path.includes('/job_seeker_signup')&&!path.includes('/searchpage')
   ){
     user = JSON.parse(user)
     config['headers']={ 'Authorization':`Bearer ${user?.access}`}

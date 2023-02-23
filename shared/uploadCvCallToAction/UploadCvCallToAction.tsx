@@ -4,13 +4,28 @@ import Button from "../Button/Button";
 import { CVCallImageContainer, UploadCvCallToActionContainer, UploadCvCallToActionContainerContent } from "./UploadCvCallToAction.style";
 import callingLadyImg from '../../asset/callingLady.png'
 import {BsCheck} from 'react-icons/bs'
+import useToast from "../../hooks/useToastify";
+import { useRouter } from "next/router";
+import { getUser } from "../../utils/extra_function";
 
 
 
 const CheckedStyle = {'backgroundColor':' #24CDE2','color':'white','borderRadius':'50%','transform':'translateY(1px)','marginRight':'10px'}
 
 const UploadCvCallToAction:NextPage = ()=>{
+    const {notify} = useToast()
+    const route = useRouter()
 
+    const handleCvAuth = ()=>{
+        const user = getUser()
+
+                    if(!user){
+                        notify('Your need to create an account for this','error')
+                        route.push('/job_seeker_signup')
+                    }else{
+                        route.push('/profile')
+                    }
+    }
     return (
         <UploadCvCallToActionContainer>
             <CVCallImageContainer>
@@ -26,8 +41,7 @@ const UploadCvCallToAction:NextPage = ()=>{
                 <Box css={{'backgroundColor':' #24CDE2','padding':'2px','borderRadius':'10px','width':'60%'}}></Box>
                 </Box>
                 <br />
-                <br />
-                <p>Jorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.</p>
+                {/* <p>Jorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.</p> */}
                 <br />
                 <p>By uploading your CV, you'll also:</p>
 
@@ -39,7 +53,11 @@ const UploadCvCallToAction:NextPage = ()=>{
                     <p style={{'color':'#424242'}}> <BsCheck style={CheckedStyle}/>Easily save and apply for jobs when you are ready</p>
                 </Box>
                 <br />
-                <Button shape={'usual_btn_shap'} css={{'fontSize':'.9rem'}}>Upload your CV</Button>
+                <Button shape={'usual_btn_shap'}
+                onClick={e=>{
+                    handleCvAuth()
+                }} 
+                css={{'fontSize':'.9rem'}}>Upload your CV</Button>
                <br />
             </UploadCvCallToActionContainerContent>
         </UploadCvCallToActionContainer>

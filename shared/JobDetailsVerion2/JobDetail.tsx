@@ -20,7 +20,7 @@ import Editor from 'react-medium-editor';
 type Prop = {
     currentJob:JobType;
 }
-const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
+const JobDetailV2 = ({currentJob}:Prop):React.ReactElement=>{
     const {notify} = useToast()
     const loggedInUser = getUser()
   const user=getUser()
@@ -47,11 +47,14 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
     })
 
     const handleJobSubbmission = ()=>{
-        mutate(currentJob.id)
+        notify('You Need to login to apply','success')
+        route.push('/signin')
     }
     return (
-        <Box css={{'color':'$white','padding':'0 .5rem','@bp2':{
-            'textAlign':'center','maxWidth':'600px','margin':'0 auto'
+        <Box css={{'color':'black','padding':'0 .5rem', 'backgroundColor':'white','@bp2':{
+            'textAlign':'center','maxWidth':'600px','margin':'0 auto',
+
+           
         }}}>
             <Preloader loading={applying||isLoading}/>
             <p style={{'fontWeight':'lighter',}}><small>{currentJob.org_name}</small></p>
@@ -68,7 +71,7 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
                     },
                     
                 }}>
-                <h2 >{currentJob.job_title}</h2>
+                <h2 style={{'color':'black'}} >{currentJob.job_title}</h2>
                 
                 <Box>
                     <AiOutlineHeart/>
@@ -89,13 +92,13 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
                 }}
             >
 
-                <Box className="job_details">
+                <Box className="job_details" css={{'color':'black'}}>
                     <p>Salary</p>
                     
                     <p>{': '} {currentJob.currency}{currentJob.salary}/yr</p>
                 </Box>
                 <br />
-                <Box className="job_details">
+                <Box className="job_details" css={{'color':'black'}}>
                     <p>JobType</p>
                     <p>{': '}{currentJob.job_type}</p>
                 </Box>
@@ -151,19 +154,12 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
 
             <h2 style={{'color':'#24CDE2','padding':'1rem 0','fontWeight':'lighter'}}>Job Description</h2>
             <br /><br />
-            <Box css={{'textAlign':'left','overflow':'scroll','padding':'0 1rem'}}>
-            {/* <ReactMarkdown 
-            rehypePlugins={[rehypeRaw]}
-            >
-                {data}
-            </ReactMarkdown> */}
+            <Box css={{'textAlign':'left','overflow':'scroll','padding':'0 1rem','color':'black'}}>
             <Editor
-            // disableEditing={true}
-          text={data}
+          text={data.replaceAll('"',' ')}
           options={{
             'disableEditing':false
           }}
-        //   onChange={this.handleChange}
         />
             </Box>
             <br /><br />
@@ -172,7 +168,9 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
                 <Box>
                     <Button color={'lightBlueBtn'} 
                     onClick={handleJobSubbmission}
-                    css={{'margin':'0 auto','width':'200px'}}>Apply</Button>
+                    css={{'margin':'0 auto','width':'200px'}}
+                    
+                    >Apply</Button>
                 </Box>
                 :
                 ''
@@ -188,10 +186,10 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
 }}>
 
 <Button   css={{'margin':'0 auto'}} color={'lightBlueOutline'} 
-                onClick={(e)=>route.push(`/jobs/CvFilteringQuetion/application-sorting-create/${currentJob.job_filter}/`)}
+                onClick={(e:any)=>route.push(`/jobs/CvFilteringQuetion/application-sorting-create/${currentJob.job_filter}/`)}
                 > Sorting Cut Off Mark</Button>
                 <Button color={'whiteBtn'}
-                   onClick={(e)=>route.push(`/jobs/CvFilteringQuetion/${currentJob.id}/view-filter-candidate/`)}
+                   onClick={(e:any)=>route.push(`/jobs/CvFilteringQuetion/${currentJob.id}/view-filter-candidate/`)}
                 > 
                     View Sorted Candidate
                 </Button>
@@ -241,4 +239,4 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
         </Box>
     )
 }
-export default JobDetail
+export default JobDetailV2

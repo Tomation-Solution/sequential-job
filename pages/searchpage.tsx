@@ -6,16 +6,42 @@ import {GoSettings} from 'react-icons/go'
 import JobCard from "../shared/JobCard/JobCard";
 import JobCardV2 from "../shared/JobCardV2/JobCardV2";
 import bluearrow from '../asset/bluearrow.png'
+import { useQuery } from "react-query";
+import { JobType, unathGetJobsApi } from "../service/api/job.api";
+import Preloader from "../shared/Preloader/Preloder";
+import { useState } from "react";
+import { useRouter } from "next/router";
+import useToast from "../hooks/useToastify";
+import OffCanvas from "../shared/OffCanvas/OffCanvas";
+import { useMediaQuery } from "react-responsive";
+import JobDetail from "../shared/JobDetail/JobDetail";
+import JobDetailV2 from "../shared/JobDetailsVerion2/JobDetail";
 
 
 const Searchpage:NextPage =()=>{
+    const {data,isLoading,error} = useQuery('unathGetJobsApi',unathGetJobsApi,)
+    const isDesktopOrLaptop = useMediaQuery({
+        query: '(min-width: 1250px)'
+      })
+    const {notify} = useToast()
+    const route = useRouter()
+    const [currentJob,setCurrentJob] = useState<null|JobType>(null)
+    const [isOpen, setIsOpen] = useState(false)
+    const handleJobDetail = (job:JobType)=>{
+        setIsOpen(true)
+        setCurrentJob(job)
+  
+      }
     return (
         <LandingPageLayout>
+            <Preloader loading={isLoading} />
             <Box css={{'color':'#212121','span':{'color':'#0F565F'},'backgroundColor':'white','padding':'2rem .8rem'}}>
-                <h2 style={{'maxWidth':'1280px','margin':'0 auto'}}>Search results for <span>Designer Jobs</span></h2>
+                <h2 style={{'maxWidth':'1280px','margin':'0 auto'}}>Search results 
+                {/* <span>Designer Jobs</span> */}
+                </h2>
             </Box>
             <Box  css={{'backgroundColor':'#f2f2f2',}}>
-                
+
 
                 <Box css={{'maxWidth':'1200px','margin':'0 auto'}}>
                     <Box css={{'display':'flex','justifyContent':'space-between','alignItems':'center','margin':'10px auto','padding':'1rem'}}>
@@ -24,31 +50,72 @@ const Searchpage:NextPage =()=>{
                     </Box>
 
                     <Box css={{'display':'flex','justifyContent':'space-between'}}>
-                    <Box>
-                    <JobCardV2 title="Mid-Senior Designer - Publishing"/>
-                    <br />
-                    <JobCardV2 title="Senior Designer"/>
-                    <br />
-                    <JobCardV2 title="Trainee Designer"/>
-                    <br />
-                    <JobCardV2 title="Infographics Designer"/>
+                    <Box css={!isDesktopOrLaptop?{'display':'grid','justifyContent':'center','alignItems':'center',
+                    '@bp2':{
+                        'gridTemplateColumns':'1fr 1fr','gap':'15px'
+                    },
+                    '@bp3':{
+                        'gridTemplateColumns':'1fr 1fr 1fr'
+
+                    }
+                }:{}}>
+                        {
+                            data?.map((job,index)=>(
+                                <Box key={index} onClick={()=>handleJobDetail(job)}>
+                                    <JobCardV2 job={job} title={job.job_title}/>
+                                    <br />
+                                </Box>
+                            ))
+                        }
+                    
                     </Box>
+                    {
+                        isDesktopOrLaptop?
                         <Box css={{'padding':'2rem .8rem' ,'boxShadow':'0px 4px 9px rgba(33, 33, 33, 0.1)','width':'60%','backgroundColor':'white',
                         'textAlign':'center','h1,p':{'color':'#212121'}}}>
+
+     {currentJob?<JobDetailV2 currentJob={currentJob}/>
+     :
                             <Box css={{'maxWidth':'600px','margin':'0 auto','padding':'1rem 2rem'}}>
                                 <h1>Get noticed by top employers!</h1><br />
                                 <p>Do you want to speed up your job search? Post your CV on Sequential Jobs and let employers know you are open to opportunities. Plus, receive relevant job recommendations in your inbox.</p>
-                                <Button css={{'borderRadius':'5px','padding':'.8rem 1rem','fontSize':'.9rem','margin':'10px auto'}} >Send Us Your CV</Button>
+                                <Button
+                                onClick={(e)=>{
+                                    notify('You Need to create an account','success')
+                                    route.push('/job_seeker_signup')
+                                }} css={{'borderRadius':'5px','padding':'.8rem 1rem','fontSize':'.9rem','margin':'10px auto'}} >Send Us Your CV</Button>
                                 <br />
-                                <p style={{'color':'#24CDE2'}}>Send Us Your CV
+                                <p 
+                                onClick={(e)=>{
+                                    notify('You Need to create an account','success')
+                                    route.push('/job_seeker_signup')
+                                }}
+                                style={{'color':'#24CDE2'}}>Send Us Your CV
                                 <img src={bluearrow.src}  style={{marginLeft:'10px'}} alt="" />
                                 </p>
                             </Box>
-                        </Box>
+    }
+
+                        </Box>:''
+                    }
                     </Box>
                 </Box>
             </Box>
 
+{
+   !isDesktopOrLaptop?
+
+            <OffCanvas
+      setIsOpen={setIsOpen}
+      isOpen={isOpen}
+      direction={isDesktopOrLaptop?'right':'bottom'}
+      size={80}
+     >
+     {currentJob&&<JobDetailV2 currentJob={currentJob}/>}
+
+     </OffCanvas>
+     :''
+}
         </LandingPageLayout>
     )
 }

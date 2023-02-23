@@ -3,7 +3,7 @@ import { AiOutlineCloseCircle } from 'react-icons/ai'
 import Drawer from 'react-modern-drawer'
 import 'react-modern-drawer/dist/index.css'
 import Box from '../Box/Box'
-
+import { useTheme } from "next-themes";
 
 type Prop =React.PropsWithChildren<
 {
@@ -16,6 +16,7 @@ type Prop =React.PropsWithChildren<
 }>
 
 const OffCanvas = ({children,isOpen,setIsOpen,size=40,direction='left',btnClick=()=>null}:Prop):React.ReactElement=>{
+  const { theme, setTheme } = useTheme();
 
 //   const [isOpen, setIsOpen] = React.useState(false)
   const toggleDrawer = () => {
@@ -43,7 +44,7 @@ const OffCanvas = ({children,isOpen,setIsOpen,size=40,direction='left',btnClick=
       >
         <Box 
         css={{
-          'backgroundColor':'$thickBlue'
+          'backgroundColor': theme==='landing_page'?'white':'$thickBlue'
         }}
         >
 
