@@ -72,7 +72,7 @@ const LandingPageSearchBar = ():React.ReactElement=>{
             <small><p style={{'padding':'0 .6rem'}}><span onClick={e=>route.push('upload-cv/')}>Upload Your CV</span> - Get noticed by top employers!</p></small>
             </Box>
 
-            <Box css={{'color':'#FFFFFF'}}>
+            {/* <Box css={{'color':'#FFFFFF'}}>
                <p style={{'padding':'.8rem 0'}}> <small>Popular Searches</small></p>
 
                 {
@@ -80,7 +80,7 @@ const LandingPageSearchBar = ():React.ReactElement=>{
                       <SearchSuggestion name={data} key={index}/> 
                   ))  
                 }
-            </Box>
+            </Box> */}
         </Box>
     )
 }

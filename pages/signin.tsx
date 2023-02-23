@@ -112,7 +112,6 @@ const Signin:NextPage =()=>{
             <h2 style={{'color':'#1c1e21'}}>Sign In</h2>
             <div>
             <a onClick={()=>route.push('/')}>Go Home</a>
-            <a onClick={()=>route.push('/job_seeker_signup')}>Sign Up</a>
             </div>
             </LoginNav>   
 
@@ -127,6 +126,9 @@ const Signin:NextPage =()=>{
             register={register('password')}
             errors={errors.password?.message}
             label="Password" css={cssStyleForInput}/>
+            <p style={{'color':'black','display':'block','textAlign':'right',}}>
+            If you don't have an account? {' '} <a style={{'color':'black','textAlign':'right','padding':'.4rem 0','textDecoration':'underline','cursor':'pointer'}} onClick={()=>route.push('/job_seeker_signup')}>{' '}<strong>sign up</strong></a>
+            </p>
             <br />
             <Button shape={'usual_btn_shap'} css={{'margin':'0 auto'}}>Submit</Button>
 

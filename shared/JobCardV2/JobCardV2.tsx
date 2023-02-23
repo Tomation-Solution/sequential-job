@@ -33,7 +33,7 @@ const JobCardV2 = ({title,job}:Prop):React.ReactElement=>{
             <Box css={{'display':'flex','alignItems':'center','justifyContent':'space-between','padding':'10px 0'}}>
                 <p className="black"><span>..</span></p>
 
-                <Button css={{'backgroundColor':'#24CDE2','padding':'.5 1rem','borderRadius':'5px'}}>Apply</Button>
+                <Button css={{'backgroundColor':'#24CDE2','padding':'.5 1rem','borderRadius':'5px'}}>View more</Button>
             </Box>
         </JobCardV2Container>
     )
