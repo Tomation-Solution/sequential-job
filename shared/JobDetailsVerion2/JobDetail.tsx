@@ -105,52 +105,8 @@ const JobDetailV2 = ({currentJob}:Prop):React.ReactElement=>{
 
             </Box>
             <br />
-                {
-                    loggedInUser?.user_type=='company'?
-            <p style={{'color':'crimson','cursor':'pointer'}} onClick={(e)=>{
-                if(currentJob.job_variant =='filter_only'){
-                    if(currentJob.job_filter == null){
-                        notify('Please Set CvFilter For this job first','error')
-                        return null
-                    }
-                }
-                if(currentJob.job_variant == 'filter_and_test'){
-                    if((currentJob.job_filter == null) || currentJob.job_test == null){
-                        notify('Please Set CvFilter and Test for this job first','error')
-                        return 
-                    }
-                 }
-                route.push(`/jobs/CvFilteringQuetion/${currentJob.id}/interview/viewInterView`)
-            }}>
-                view Interview
-            </p>:''
-                }
-            <br />
-            {
-                loggedInUser?.user_type==='company'?
-                <>
-                                    <Box css={{'display':'flex','justifyContent':'center','justifyItems':'center',
-                                
-                                }}>
-                    <Switch
-                    defaultChecked={currentJob.is_active?true:false}
-                    onChange={(value)=>{
-                        console.log({value})
-                    if(window.confirm('Are You Sure You Want To Change Job Status')){
-                        //
-                        jobSwitch({
-                            'job_id':currentJob.id,
-                            'switch':value
-                        })
-                    } 
-                    }}
-                    label='Is Active'
-                    />
-                    </Box>
-                        <br />
-                </>:''
-
-            }
+               
+            
 
             <h2 style={{'color':'#24CDE2','padding':'1rem 0','fontWeight':'lighter'}}>Job Description</h2>
             <br /><br />
