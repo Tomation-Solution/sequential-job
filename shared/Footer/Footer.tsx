@@ -29,7 +29,9 @@ const Footer = ():React.ReactElement=>{
                 }
             }}
             > 
-            <img className="footer_logo" src={WhiteLogo.src} alt="" />
+            <img className="footer_logo" src={WhiteLogo.src} alt=""  style={{'cursor':'pointer',}} onClick={e=>{
+                route.push('/')
+            }}/>
             <FooterNavLinksContainer>
             <FooterNavLinks>
                 <p>For Job Seekers</p>

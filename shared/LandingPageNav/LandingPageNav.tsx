@@ -32,8 +32,8 @@ const LandingPageNav = ():ReactElement=>{
             'padding':'.5rem','max-width':'1300px','margin':'0 auto'
           }}}>
             <Box css={{'width':'100px','@bp2':{
-              'width':'150px'
-            }}}>
+              'width':'150px','cursor':'pointer'
+            }}} onClick={e=>route.push('/')}>
               <img src={Logo.src} alt=""  style={{'width':'100%','height':'100%'}}/>
             </Box>
 
