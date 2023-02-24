@@ -42,7 +42,7 @@ const Footer = ():React.ReactElement=>{
             <FooterNavLinks>
                 <p>For Employers</p>
                 <li>Search CV</li>
-                <li>Post Job</li>
+                <li onClick={e=>route.push('/jobs/add-jobs/')}>Post Job</li>
                 <li onClick={(e)=>route.push('/pricing')}>Pricing</li>
             </FooterNavLinks>
             <FooterNavLinks>

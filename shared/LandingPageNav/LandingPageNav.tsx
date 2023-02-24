@@ -4,17 +4,18 @@ import Logo from '../../asset/logo.svg'
 import { useMediaQuery } from 'react-responsive'
 import { LandingPageNavContainer,SubMenue } from "./LandingPageNav.style"
 import {GiHamburgerMenu} from 'react-icons/gi'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {AiFillCloseCircle} from  'react-icons/ai'
 import { useRouter } from "next/router"
 import { useTheme } from "next-themes";
 import Button from "../Button/Button"
 import {BsArrowRight} from 'react-icons/bs'
+import Image from "next/image"
 
 const SigninSigUoBtnCss = {'padding':'.8rem 1.2rem','borderRadius':'5px','fontWeight':'bold'}
 const LandingPageNav = ():ReactElement=>{
     const route = useRouter()
-
+  const [hasfully_loaded,setHasfully_loaded] =useState(false)
     const isTab = useMediaQuery({
         query: '(min-width: 500px)'
       })
@@ -26,6 +27,9 @@ const LandingPageNav = ():ReactElement=>{
       e.preventDefault()
         route.push(path)
     }
+    useEffect(()=>{
+      setHasfully_loaded(true)
+    },[])
     return (
         <LandingPageNavContainer>
           <Box css={{'display':'flex','justifyContent':'space-between','alignItems':'center','padding':'1rem .3rem','@bp2':{
@@ -34,7 +38,9 @@ const LandingPageNav = ():ReactElement=>{
             <Box css={{'width':'100px','@bp2':{
               'width':'150px','cursor':'pointer'
             }}} onClick={e=>route.push('/')}>
-              <img src={Logo.src} alt=""  style={{'width':'100%','height':'100%'}}/>
+              {hasfully_loaded&&<Image alt='sequential'  style={{'width':'100%','height':'100%'}} src={Logo} />}
+              {/* <img src={Logo.src} alt=""  style={{'width':'100%','height':'100%'}}/> */}
+            
             </Box>
 
             <Box css={{'display':'flex','width':'200px','justifyContent':'space-between',}}>

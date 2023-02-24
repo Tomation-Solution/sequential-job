@@ -10,6 +10,9 @@ export const FooterContainer = styled('div',{
         'margin':'0 auto',
         'display':'block',
     },
+    'li':{
+        'cursor':'pointer'
+    },
     '@bp2':{
         'padding':'1rem 2rem',
         'img':{
