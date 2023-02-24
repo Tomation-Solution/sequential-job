@@ -128,61 +128,7 @@ const JobDetailV2 = ({currentJob}:Prop):React.ReactElement=>{
                     >Apply</Button>
                 </Box>
             <br /><br />
-                {
-            loggedInUser?.user_type=='company'?
-            <Box>
-                {
-                currentJob.job_filter?
-<Box css={{
-    'display':'flex','justifyContent':'space-between','width':'400px','margin':'0 auto'
-}}>
-
-<Button   css={{'margin':'0 auto'}} color={'lightBlueOutline'} 
-                onClick={(e:any)=>route.push(`/jobs/CvFilteringQuetion/application-sorting-create/${currentJob.job_filter}/`)}
-                > Sorting Cut Off Mark</Button>
-                <Button color={'whiteBtn'}
-                   onClick={(e:any)=>route.push(`/jobs/CvFilteringQuetion/${currentJob.id}/view-filter-candidate/`)}
-                > 
-                    View Sorted Candidate
-                </Button>
-</Box> 
-                :
-                <Button  onClick={(e)=>route.push(`/jobs/CvFilteringQuetion/${currentJob.id}/`)}>Add Cv Filtering</Button>
-            }
-<br />
-            {
-                (currentJob.job_variant==='filter_and_test'&&currentJob.job_test==null)?
-                <Button 
-                onClick={(e)=>route.push(`/jobs/JobTest/${currentJob.id}/`)}
-                color={'lightBlueOutline'}
-                >
-                    Add Test
-                </Button>:''
-            }
-            <br />
-            {
-                (currentJob.job_variant==='filter_and_test'&&currentJob.job_test!=null)?
-               <Box 
-               css={{
-                'display':'flex','justifyContent':'space-between','width':'400px','margin':'0 auto'
-                     }}
-               >
-                    <Button   css={{'margin':'0 auto'}} color={'lightBlueOutline'} 
-                    onClick={(e)=>route.push(`/jobs/JobTest/application-sorting-create/${currentJob.job_test}/`)}
-                    >Test Cut Off Mark</Button>
-
-                    <Button color={'whiteBtn'}
-                    onClick={(e)=>route.push(`/jobs/JobTest/${currentJob.id}/view-filter-candidate/`)}
-                    > 
-                    View Sorted Candidate
-                    </Button>
-               </Box>
-                :''
-            }
-<br />
-            <Button css={{'margin':'0 auto'}}  onClick={(e)=>route.push(`/job/${currentJob.id}/`)}>Job Dashboard</Button>
-                </Box>:''
-                }
+              
 
 
 
