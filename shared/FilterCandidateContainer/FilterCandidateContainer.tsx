@@ -31,6 +31,7 @@ const FilterCandidateContainer = ({applicants}:Prop) => {
     },
     'onError':(err)=>{
       console.log({'server Error':err})
+      notify('Please Create Interview Before Inviting User','error')
     }
   })
   const [list_of_ids ,setListOfId] = useState<number[]>([])

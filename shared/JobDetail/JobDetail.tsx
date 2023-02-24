@@ -5,7 +5,7 @@ import Button from "../Button/Button"
 import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
 import remarkRehype from 'remark-rehype'
-import { JobType, switchJobOnApi } from "../../service/api/job.api"
+import { deleteJobsApi, JobType, switchJobOnApi } from "../../service/api/job.api"
 import { useRouter } from "next/router"
 import useToast from "../../hooks/useToastify"
 import { getUser } from "../../utils/extra_function"
@@ -22,9 +22,14 @@ type Prop = {
 }
 const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
     const {notify} = useToast()
+    const {mutate:deleteJob,isLoading:deleteing} = useMutation(deleteJobsApi,{
+        'onSuccess':(data)=>{
+            notify('Deleted Successfully','error')
+        }
+    })
+
     const loggedInUser = getUser()
   const user=getUser()
-
     // const data:string= currentJob.description_content?JSON.parse( currentJob.description_content):''
     const data:string= currentJob.description_content?currentJob.description_content:''
     const { mutate:jobSwitch , isLoading} = useMutation(switchJobOnApi,{
@@ -53,7 +58,7 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
         <Box css={{'color':'$white','padding':'0 .5rem','@bp2':{
             'textAlign':'center','maxWidth':'600px','margin':'0 auto'
         }}}>
-            <Preloader loading={applying||isLoading}/>
+            <Preloader loading={applying||isLoading||deleteing}/>
             <p style={{'fontWeight':'lighter',}}><small>{currentJob.org_name}</small></p>
 
             <Box css={{'padding':'.5rem 0','display':'flex','alignItems':'center','justifyContent':'space-between',
@@ -235,6 +240,18 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
                 }
 
 
+
+                {
+                loggedInUser?.user_type==='company'?
+                <Button shape={'usual_btn_shap'} color='danger'
+                onClick={(e)=>{
+                    if(window.confirm('Are you sure you want to delete')){
+                        deleteJob(currentJob.id)
+                    }
+                }}
+                >Delete</Button>
+                :''
+                }
 
             <br /><br />
             <br /><br />

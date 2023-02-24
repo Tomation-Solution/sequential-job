@@ -49,6 +49,20 @@ export const create_job_api = (job:JobCreateForm)=>{
     form.append('country',job.country)
     return  api.post('/jobs/company-job-handler/',form).then(res=>res.data)
 }
+
+
+type deleteJobsApiResponseType ={
+    "message": string,
+    "status_code": number,
+    "data": any,
+    "success": boolean
+}
+export const deleteJobsApi =async (jobID:number):Promise<deleteJobsApiResponseType>=>{
+    const form = new FormData()
+    form.append('pk',jobID.toString())
+    const resp = await api.post('/jobs/company-job-handler/delete/',form)
+    return resp.data
+}
 // 
 export const get_jobs_api =async ():Promise<JobType[]>=> {
     // console.log
@@ -80,7 +94,7 @@ export const unathGetJobsApi =async ({job_title,job_type}:unathGetJobsApiProp):P
     return  resp.data.data
 }
 
-export const get_job_detail = async (id:number)=>{
+export const get_job_detail = async (id:number):Promise<any>=>{
     const resp = await api.get(`/jobs/company-job-handler/${id}/`);
     return  resp.data.data
 }
