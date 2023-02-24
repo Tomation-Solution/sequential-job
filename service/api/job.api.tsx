@@ -72,7 +72,10 @@ type unathGetJobsApiProp = {
 export const unathGetJobsApi =async ({job_title,job_type}:unathGetJobsApiProp):Promise<JobType[]>=> {
     // console.log
     let url =`/jobs/job-seeker-view/unauth_get_job_route/?job_title=${job_title}&job_type=${job_type}`
-
+    console.log({job_type,job_title,'from api':'..'})
+    if(job_type =='undefined' && job_title =='undefined'){
+        url=`/jobs/job-seeker-view/unauth_get_job_route/`
+    }
     const resp = await api.get(url);
     return  resp.data.data
 }

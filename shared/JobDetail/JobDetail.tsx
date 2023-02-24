@@ -97,7 +97,7 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
                 <br />
                 <Box className="job_details">
                     <p>JobType</p>
-                    <p>{': '}{currentJob.job_type}</p>
+                    <p>{': '}{currentJob.job_type.replaceAll('_',' ')}</p>
                 </Box>
 
             </Box>

@@ -100,7 +100,7 @@ const JobDetailV2 = ({currentJob}:Prop):React.ReactElement=>{
                 <br />
                 <Box className="job_details" css={{'color':'black'}}>
                     <p>JobType</p>
-                    <p>{': '}{currentJob.job_type}</p>
+                    <p>{': '}{currentJob.job_type.replaceAll('_',' ')}</p>
                 </Box>
 
             </Box>

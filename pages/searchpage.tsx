@@ -29,7 +29,7 @@ const Searchpage:NextPage =()=>{
     const SearchType =()=>`${searchState.job_type?searchState.job_type:job_type+''}` 
     const [getData,setGetData]=useState(false)
     const {data,isLoading,error,refetch} = useQuery('unathGetJobsApi',()=>unathGetJobsApi({ 'job_title':SearchTitle(),'job_type':SearchType()}),{
-        'enabled':getData,
+        // 'enabled':getData,
         
     })
     const isDesktopOrLaptop = useMediaQuery({
@@ -44,11 +44,14 @@ const Searchpage:NextPage =()=>{
   
       }
 
-      useEffect(()=>{
-        if(job_title || job_type){
-            setGetData(true)
-        }
-      },[route.isReady])
+    //   useEffect(()=>{
+    //     if(job_title || job_type){
+    //         setGetData(true)
+    //     }
+    //   },[route.isReady])
+    //   useEffect(()=>{
+    //     setGetData(true)
+    //   },[])
 
       useEffect(()=>{
         // refetch
