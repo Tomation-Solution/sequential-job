@@ -27,6 +27,7 @@ const ActivateAccount:NextPage = ()=>{
 
   const handleValidate = async( )=>{
     //
+    window.localStorage.clear() // clear any info that we have on the site so it wont conflit with theEmail Verirfaction
     setStatus('loading')
     try{
       const resp =await  axios.get(`${url}/mailing/activate/${uidb64}/${token}/`)
