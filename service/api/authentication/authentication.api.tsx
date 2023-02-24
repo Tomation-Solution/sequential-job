@@ -19,7 +19,7 @@ export const signUpApi  = (data:SignUpFormType)=> api.post('/auth/create-company
 
 
 
-export const signInApi =(data:{'email':string,'password':string})=>api.post('/auth/login/',{'email':data.email.toLowerCase(),'password':data.password}).then(res=>res.data)
+export const signInApi =(data:{'email':string,'password':string})=>api.post('/auth/login/',{'email':data.email.toLowerCase().trim(),'password':data.password}).then(res=>res.data)
 
 
 export type signUpAsJobSeeker = {
