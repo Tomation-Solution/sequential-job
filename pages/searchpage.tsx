@@ -9,22 +9,33 @@ import bluearrow from '../asset/bluearrow.png'
 import { useQuery } from "react-query";
 import { JobType, unathGetJobsApi } from "../service/api/job.api";
 import Preloader from "../shared/Preloader/Preloder";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import useToast from "../hooks/useToastify";
 import OffCanvas from "../shared/OffCanvas/OffCanvas";
 import { useMediaQuery } from "react-responsive";
 import JobDetail from "../shared/JobDetail/JobDetail";
 import JobDetailV2 from "../shared/JobDetailsVerion2/JobDetail";
+import LandingPageSearchBar from "../shared/LandingPageSearchBar/LandingPageSearchBar";
+import { useSelector } from "react-redux";
+import { selectSearch } from "../redux/Search/SearchSlice";
 
 
 const Searchpage:NextPage =()=>{
-    const {data,isLoading,error} = useQuery('unathGetJobsApi',unathGetJobsApi,)
+    const route = useRouter()
+    const { job_title,job_type } = route.query
+    const searchState = useSelector(selectSearch)
+    const SearchTitle = ()=>searchState.job_title?searchState.job_title:job_title+''
+    const SearchType =()=>`${searchState.job_type?searchState.job_type:job_type+''}` 
+    const [getData,setGetData]=useState(false)
+    const {data,isLoading,error,refetch} = useQuery('unathGetJobsApi',()=>unathGetJobsApi({ 'job_title':SearchTitle(),'job_type':SearchType()}),{
+        'enabled':getData,
+        
+    })
     const isDesktopOrLaptop = useMediaQuery({
         query: '(min-width: 1250px)'
       })
     const {notify} = useToast()
-    const route = useRouter()
     const [currentJob,setCurrentJob] = useState<null|JobType>(null)
     const [isOpen, setIsOpen] = useState(false)
     const handleJobDetail = (job:JobType)=>{
@@ -32,12 +43,35 @@ const Searchpage:NextPage =()=>{
         setCurrentJob(job)
   
       }
+
+      useEffect(()=>{
+        if(job_title || job_type){
+            setGetData(true)
+        }
+      },[route.isReady])
+
+      useEffect(()=>{
+        // refetch
+        console.log(searchState)
+        if(searchState.job_title){
+            refetch()
+        }
+        if(searchState.job_type){
+            refetch()
+        }
+      },[searchState.job_title,searchState.job_type])
     return (
         <LandingPageLayout>
+         <Box css={{'backgroundColor':'$thickBlue','padding':'1rem',}}>
+      <Box css={{'maxWidth':'1000px','margin':'0 auto'}}>
+        <LandingPageSearchBar/>
+      </Box>
+      </Box>
+      <br />
             <Preloader loading={isLoading} />
             <Box css={{'color':'#212121','span':{'color':'#0F565F'},'backgroundColor':'white','padding':'2rem .8rem'}}>
                 <h2 style={{'maxWidth':'1280px','margin':'0 auto'}}>Search results 
-                {/* <span>Designer Jobs</span> */}
+                <span>{' '}{SearchTitle()} , {SearchType()}</span>
                 </h2>
             </Box>
             <Box  css={{'backgroundColor':'#f2f2f2',}}>

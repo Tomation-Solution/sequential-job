@@ -6,6 +6,9 @@ import { useMediaQuery } from 'react-responsive'
 import SpeakerSVG from '../../asset/speaker.svg'
 import Searchbarsmall from '../../asset/searchbarsmall.svg'
 import { useRouter } from "next/router"
+import { useState } from "react"
+import { useAppDispatch } from "../../redux/hook"
+import { updateAllSearchState } from "../../redux/Search/SearchSlice"
 
 
 const SearchSuggestion = ({name}:{name:string}):React.ReactElement=>{
@@ -24,10 +27,24 @@ const SearchSuggestion = ({name}:{name:string}):React.ReactElement=>{
 
 const LandingPageSearchBar = ():React.ReactElement=>{
     const route = useRouter()
+    const dispatch = useAppDispatch()
     const search_suggestion = ['Part-Time','Work from Home','Logistics','Driver','Sales','IT','Engineering',]
     const isTab = useMediaQuery({
         query: '(min-width: 500px)'
       })
+    const [job_title,setJobTitle] = useState<string>();
+    const [job_type,setJobType] = useState<string>();
+
+    const handleRouteSearch = ()=>{
+        if(route.pathname.includes('/searchpage')){
+
+            dispatch(updateAllSearchState({ 'job_title':`${job_title?job_title:''}`,'job_type':`${job_type?job_type:''}` }))
+        }else{
+            dispatch(updateAllSearchState({'job_title':'',job_type:''}))
+            route.push({pathname:'/searchpage',query:{'job_title':job_title,'job_type':job_type}})
+        }
+
+    }
     return (
         <Box
             css={{
@@ -41,20 +58,30 @@ const LandingPageSearchBar = ():React.ReactElement=>{
                 }
             }}
         >
+
             <h2> <span className="blue">Find the</span> right 
             <span className="blue">{' '}fit.</span></h2>
             <br />
             <LandingPageInputMainContainer>
                 <LandingPageInputFieldContainer>
-                <LandingPageInputField placeholder="Search jobs, keywords, companies"/>
+                <LandingPageInputField 
+                onChange={(e:any)=>{
+                    setJobTitle(e.target.value)
+                }}
+                placeholder="Search jobs"/>
                 </LandingPageInputFieldContainer>
 
                 <LandingPageInputFieldContainer>
-                <LandingPageInputField placeholder="Enter location or “remote”"/>
+                <LandingPageInputField 
+                onChange={(e:any)=>{
+                    //we modified the data by triming the space and replace it with underscore
+                    setJobType(e.target.value.trim().replace(' ','_'))
+                }} 
+                placeholder={`Enter job type 'remote' 'hybrid' 'on site' `}/>
                 </LandingPageInputFieldContainer>
 
-                <Button onClick={(e)=>{
-                    route.push('/searchpage')
+                <Button onClick={(e:any)=>{
+                 handleRouteSearch()
                 }}>
                     {
                         isTab?'':'Search '

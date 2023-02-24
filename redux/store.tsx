@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
 import jobSeekerInvitesSlice from './JobSeekerInterviewNotifcation/JobSeekerInterviewNotifcationSlice'
-
+import SearchSlice from './Search/SearchSlice'
 const store = configureStore({
     reducer: {
-        jobSeekerInvites: jobSeekerInvitesSlice
+        jobSeekerInvites: jobSeekerInvitesSlice,
+        search:SearchSlice,
     },
   })
 
