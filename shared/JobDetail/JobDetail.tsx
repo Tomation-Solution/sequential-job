@@ -239,10 +239,22 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
                 </Box>:''
                 }
 
-
+<br />
 
                 {
                 loggedInUser?.user_type==='company'?
+                <Box
+                css={{
+                    // 'border':'1px solid red',
+                    'display':'flex','justifyContent':'space-between','alignItems':'center','maxWidth':'300px','margin':'0 auto',
+                }}
+                > 
+                <Button shape={'usual_btn_shap'} color='lightBlueOutline'
+                onClick={(e)=>{
+                    route.push('/jobs/jobupdate/'+currentJob.id)
+                }}
+                >Update</Button>
+
                 <Button shape={'usual_btn_shap'} color='danger'
                 onClick={(e)=>{
                     if(window.confirm('Are you sure you want to delete')){
@@ -250,6 +262,8 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
                     }
                 }}
                 >Delete</Button>
+               
+                </Box>
                 :''
                 }
 

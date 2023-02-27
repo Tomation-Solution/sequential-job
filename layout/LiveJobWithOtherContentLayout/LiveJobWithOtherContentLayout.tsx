@@ -11,7 +11,9 @@ type Prop = React.PropsWithChildren<{
  const LiveJobWithOtherContentLayout = ({header,children}:Prop):React.ReactElement => {
   return (
     <GeneralLayout>
-    <h2 style={{'color':'white','textAlign':'center'}}>{header}</h2>
+        <Box css={{'color':'$lightText','textAlign':'center'}}>
+            <h2 >{header}</h2>
+        </Box>
     <Box
         css={{'@bp3':{
             'display':'flex','justifyContent':'space-between',

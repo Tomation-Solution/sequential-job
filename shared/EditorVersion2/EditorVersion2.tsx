@@ -1,7 +1,7 @@
 require('medium-editor/dist/css/medium-editor.css');
 require('medium-editor/dist/css/themes/default.css');
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 /* @ts-ignore */
 import Editor from 'react-medium-editor';
 import Box from '../Box/Box';
@@ -10,13 +10,17 @@ import Box from '../Box/Box';
 
 type Prop = {
   onChangeFunc:(text:string)=>void
+  defualttext?:string
 }
-const EditorVersion2= ({ onChangeFunc}:Prop):React.ReactElement=>{
+const EditorVersion2= ({defualttext='', onChangeFunc}:Prop):React.ReactElement=>{
     const [text,setText] = useState('')
   const  handleChange = (text:string, medium:any) =>{
     setText(text);
     onChangeFunc(text)
       }
+      useEffect(()=>{
+        setText(defualttext)
+      },[])
     return (
         <div>
       <div className="app" >

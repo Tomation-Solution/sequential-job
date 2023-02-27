@@ -11,6 +11,8 @@ type Props = {
     css?:Stitches.CSS
     register?:any;
     errors?:string|null
+    disabled?:boolean,
+    value?:string,
 }
 type InputWithLabelType = Props &InputWithLabelStyleType
 

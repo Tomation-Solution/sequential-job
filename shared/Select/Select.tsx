@@ -23,7 +23,7 @@ const SelectItem = React.forwardRef(({ children, ...props }:any, forwardedRef) =
   });
   SelectItem.displayName='SelectItem'
   
-type Prop = {
+export type SelectProp = {
     label:string,
     options:{
         'name':string,
@@ -34,7 +34,7 @@ type Prop = {
     setVaue?:any;
     name?:string;
 }
-const SelectComponent = ({name='',setVaue=null,label,options,showLabel=true,control_border}:Prop):React.ReactElement => (
+const SelectComponent = ({name='',setVaue=null,label,options,showLabel=true,control_border}:SelectProp):React.ReactElement => (
   <Box css={showLabel?{'display':'flex','flexDirection':'column',
   'label':{
     'color':'$thickText'

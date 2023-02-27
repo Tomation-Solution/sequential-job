@@ -22,7 +22,8 @@ export type JobType = {
     "description_content":string,
     interview?:number|null;
     job_test:null|number;
-    job_variant:'filter_only'|'filter_and_test'
+    job_variant:'filter_only'|'filter_and_test',
+    'job_categories':string;
 }
 
 type get_all_quetionResponse = {
@@ -47,9 +48,9 @@ export const create_job_api = (job:JobCreateForm)=>{
     form.append('description_content',JSON.stringify(job.description_content))
     form.append('job_variant',job.job_variant)
     form.append('country',job.country)
+    form.append('job_categories',job.job_categories.toString())
     return  api.post('/jobs/company-job-handler/',form).then(res=>res.data)
 }
-
 
 type deleteJobsApiResponseType ={
     "message": string,
@@ -94,7 +95,7 @@ export const unathGetJobsApi =async ({job_title,job_type}:unathGetJobsApiProp):P
     return  resp.data.data
 }
 
-export const get_job_detail = async (id:number):Promise<any>=>{
+export const get_job_detailApi = async (id:number):Promise<JobType>=>{
     const resp = await api.get(`/jobs/company-job-handler/${id}/`);
     return  resp.data.data
 }
