@@ -127,32 +127,38 @@ const CvFilterTest = ()=>{
 
     useEffect(()=>{
         if(status==='success'){
-            setValue('fill_in_the_gap',data.fill_in_the_gap.map((data)=>{
-                        return {
-                            'answer':'',
-                            'id':data.id,
-                            'quetion':data.quetion
-                        }
-                    }))
-            setValue('filter_quetion_option',data.filter_quetion_option.map((data)=>{
-                return {
-                    'id':data.id,
-                    'quetion':data.quetion,
-                    'option_to_choose_from':data.option_to_choose_from,
-                    'answer':''
-                }
-            }))
-            setValue('filter_quetion_multi_choice_quetion',data.filter_quetion_multi_choice_quetion.map((data)=>{
-                return {
-                    'id':data.id,
-                    'quetion':data.quetion,
-                    'option_to_choose_from':data.option_to_choose_from,
-                    'answer':[]
-                }
-            }))
+            if(data.fill_in_the_gap){
+                setValue('fill_in_the_gap',data.fill_in_the_gap.map((data)=>{
+                            return {
+                                'answer':'',
+                                'id':data.id,
+                                'quetion':data.quetion
+                            }
+                        }))
+            }
+            if(data.filter_quetion_option){
+                setValue('filter_quetion_option',data.filter_quetion_option.map((data)=>{
+                    return {
+                        'id':data.id,
+                        'quetion':data.quetion,
+                        'option_to_choose_from':data.option_to_choose_from,
+                        'answer':''
+                    }
+                }))
+            }
+            if(data.filter_quetion_multi_choice_quetion){
+                setValue('filter_quetion_multi_choice_quetion',data.filter_quetion_multi_choice_quetion.map((data)=>{
+                    return {
+                        'id':data.id,
+                        'quetion':data.quetion,
+                        'option_to_choose_from':data.option_to_choose_from,
+                        'answer':[]
+                    }
+                }))
+            }
         }
     },[status])
-    console.log({data})
+
     return (
         <GeneralLayout>
             <Preloader loading={isLoading||submitting}/>

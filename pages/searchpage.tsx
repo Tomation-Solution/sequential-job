@@ -86,16 +86,17 @@ const Searchpage:NextPage =()=>{
                         <Button css={{'borderRadius':'5px','padding':'.9rem .6rem',}}><GoSettings style={{'marginRight':'5px'}}/>Filter</Button>
                     </Box>
 
-                    <Box css={{'display':'flex','justifyContent':'space-between'}}>
-                    <Box css={!isDesktopOrLaptop?{'display':'grid','justifyContent':'center','alignItems':'center',
-                    '@bp2':{
-                        'gridTemplateColumns':'1fr 1fr','gap':'15px'
+                    <Box css={{'display':'flex','justifyContent':'space-between','maxHeight':'100vh','overflow':'hidden',}}>
+                    <Box css={!isDesktopOrLaptop?{
+                        'display':'grid','justifyContent':'center','alignItems':'center','@bp2':{
+                        'gridTemplateColumns':'1fr 1fr','gap':'15px',
+                    
                     },
                     '@bp3':{
-                        'gridTemplateColumns':'1fr 1fr 1fr'
+                        'gridTemplateColumns':'1fr 1fr 1fr',
+                        
 
-                    }
-                }:{}}>
+                    },}:{'overflow':'scroll'}}>
                         {
                             data?.map((job,index)=>(
                                 <Box key={index} onClick={()=>handleJobDetail(job)}>
@@ -109,7 +110,7 @@ const Searchpage:NextPage =()=>{
                     {
                         isDesktopOrLaptop?
                         <Box css={{'padding':'2rem .8rem' ,'boxShadow':'0px 4px 9px rgba(33, 33, 33, 0.1)','width':'60%','backgroundColor':'white',
-                        'textAlign':'center','h1,p':{'color':'#212121'}}}>
+                        'textAlign':'center','overflow':'scroll','h1,p':{'color':'#212121'}}}>
 
      {currentJob?<JobDetailV2 currentJob={currentJob}/>
      :

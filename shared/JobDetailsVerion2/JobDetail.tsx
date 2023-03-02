@@ -114,7 +114,7 @@ const JobDetailV2 = ({currentJob}:Prop):React.ReactElement=>{
             <Editor
           text={data.replaceAll('"',' ')}
           options={{
-            'disableEditing':false
+            'disableEditing':true
           }}
         />
             </Box>
