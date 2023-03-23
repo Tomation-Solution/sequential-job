@@ -47,6 +47,12 @@ const JobUpdate:NextPage = ()=>{
     const {mutate,isLoading:updating} = useMutation(updateJobApi,{
       'onSuccess':(data)=>{
         notify('Update Successfully','success')
+      },
+      'onError':(error:any)=>{
+        console.log({error})
+        if(error.response.data.error.error){
+          notify(error.response.data.error.error,'error')
+        }
       }
     })
     // const {} = useMutation()
