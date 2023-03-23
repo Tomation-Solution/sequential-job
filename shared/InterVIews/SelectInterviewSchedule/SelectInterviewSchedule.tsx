@@ -49,7 +49,9 @@ const SelectInterviewSchedule = ():React.ReactElement => {
   const {notify} = useToast()
   const route = useRouter()
 
-  const {isLoading,error,data,isError} = useQuery('jobs',get_jobs_api)
+  const {isLoading,error,data,isError} = useQuery('jobs',()=>get_jobs_api({'is_active':true}),{
+    refetchOnWindowFocus: false,
+  })
   const {isLoading:submitting,mutate} = useMutation(InterViewSetUpApi,{
     'onSuccess':(data)=>{
       console.log({'resp':data})

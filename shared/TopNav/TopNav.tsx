@@ -45,7 +45,7 @@ export const TopNav = () => {
       <NavToolBox>
       <div>
         <img src={user?.profile_image?user.profile_image:UserLogo.src} alt="" />
-        <p>{user?.full_name.slice(0,10)}</p>
+        <p>{user?.full_name}</p>
       </div>
     
       <div>
