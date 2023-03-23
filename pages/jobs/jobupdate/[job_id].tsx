@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import LiveJobWithOtherContentLayout from "../../../layout/LiveJobWithOtherContentLayout/LiveJobWithOtherContentLayout";
-import { get_job_detailApi } from "../../../service/api/job.api";
+import { get_job_detailApi, updateJobApi } from "../../../service/api/job.api";
 import Preloader from "../../../shared/Preloader/Preloder";
 import { useForm, useFieldArray, useWatch, Control } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -18,6 +18,8 @@ import EditorVersion2 from "../../../shared/EditorVersion2/EditorVersion2";
 import money_countrySymbol from "../../../utils/money_countrySymbol";
 import ControlEditSelect from "../../../shared/ControlEditSelect/ControlEditSelect";
 import countries_and_state from "../../../utils/countries_and_state";
+import useToast from "../../../hooks/useToastify";
+import Switch from "../../../shared/Switch/Switch";
 
 
 const schema = yup.object({
@@ -33,14 +35,20 @@ const schema = yup.object({
     'description_content':yup.string().required(),
     job_variant:yup.string().required(),
     'country':yup.string().required(),
-    'job_categories':yup.array().of(yup.string())
+    'job_categories':yup.array().of(yup.string()),
   })
 const JobUpdate:NextPage = ()=>{
     const route = useRouter();
     const { job_id } = route.query;
     const [enabled,setEnabled] = useState(false)
+    const {notify} = useToast()
     const {data:jobdetail,isLoading} = useQuery(['job_detail',job_id],()=>get_job_detailApi(typeof job_id==='string'?parseInt(job_id):0),{
         enabled})
+    const {mutate,isLoading:updating} = useMutation(updateJobApi,{
+      'onSuccess':(data)=>{
+        notify('Update Successfully','success')
+      }
+    })
     // const {} = useMutation()
     // const [editCountry,se]
     const { register,watch,getValues,control,setValue,handleSubmit, formState: { errors } } = useForm<JobCreateForm>({
@@ -53,6 +61,7 @@ const JobUpdate:NextPage = ()=>{
         mode: "onBlur"
         });
         const watchCoutry = watch('country')
+        const watchIsLive = watch('is_active')
         const { fields, append, remove} = useFieldArray({
             'name':'job_required_document',control
           })
@@ -63,7 +72,7 @@ const JobUpdate:NextPage = ()=>{
             setValue('location',jobdetail.location)
             /* @ts-ignore*/
             setValue('job_type',jobdetail.job_type)
-
+            setValue('country',jobdetail.country)
 
             setValue('country',jobdetail.country)
             setValue('job_variant',jobdetail.job_variant)
@@ -87,7 +96,12 @@ const JobUpdate:NextPage = ()=>{
     },[route.isReady])
 
     const onSubmit = (job:JobCreateForm) =>{
-        console.log({job})
+      if(typeof job_id ==='string'){
+        mutate({
+          'job_id':parseInt(job_id),
+          ...job
+        })
+      }
     }
     const getState =()=>{
       let data;
@@ -104,11 +118,12 @@ const JobUpdate:NextPage = ()=>{
       return data
        
     }
+    console.log({errors})
     return (
         <LiveJobWithOtherContentLayout
         header="Update Job"
         >
-            <Preloader loading={isLoading} />
+            <Preloader loading={isLoading ||updating} />
 
             <form onSubmit={handleSubmit(onSubmit)}>
 
@@ -216,9 +231,16 @@ const JobUpdate:NextPage = ()=>{
 
 
         
-<br />
+<Switch  
+                    defaultChecked={jobdetail?.is_active?true:false}
+                    onChange={(value)=>{
+                      setValue('is_active',value)
+                    }}
+                    label={jobdetail?.is_active?'Deactivate job':'Activate job'}
+                    />
 
-
+                    <br />
+                    <br />
     {
       jobdetail?.description_content?
       <EditorVersion2 
@@ -228,8 +250,8 @@ const JobUpdate:NextPage = ()=>{
         setValue('description_content',text)
       }}/>:''
     }
-
-
+  <br />
+            
 <Button shape={'usual_btn_shap'} color={'lightBlueBtn'} css={{'width':'30%','margin':'15px auto'}}>Update</Button>
         <br />
         <br />
@@ -242,3 +264,4 @@ const JobUpdate:NextPage = ()=>{
 }
 
 export default JobUpdate
+

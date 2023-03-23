@@ -25,10 +25,13 @@ import Box from '../Box/Box'
 
 
 const Nav = ():React.ReactElement => {
-  const {isLoading,data,status} = useQuery('get_interviews_for_jobseekers',get_interviews)
+  const user = getUser()
+
+  const {isLoading,data,status} = useQuery('get_interviews_for_jobseekers',get_interviews,{
+    enabled:user?.user_type==='job_seakers'?true:false
+  })
   const { invites_count } = useAppSelector(selectjobSeekerInvites)
   const dispatch = useAppDispatch()
-  const user = getUser()
 
 
   const route = useRouter()

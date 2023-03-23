@@ -7,6 +7,7 @@ import { get_interviews } from "../../../service/api/jobSeekerInterview.api";
 import Box from "../../../shared/Box/Box";
 import Button from "../../../shared/Button/Button";
 import Preloader from "../../../shared/Preloader/Preloder";
+import { getUser } from "../../../utils/extra_function";
 
 
 
@@ -15,7 +16,10 @@ import Preloader from "../../../shared/Preloader/Preloder";
 
 
 const ViewAllInterviews:NextPage = ()=>{
-    const {isLoading,data} = useQuery('get_interviews_for_jobseekers',get_interviews)
+    const user = getUser()
+    const {isLoading,data} = useQuery('get_interviews_for_jobseekers',get_interviews,{
+        enabled:user?.user_type==='job_seakers'?true:false
+    })
     const route = useRouter()
     return (
         <LiveJobWithOtherContentLayout

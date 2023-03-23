@@ -194,3 +194,24 @@ export const switchJobOnApi = async (data:switchJobOnProp ):Promise<switchJobRes
     const resp = await api.post('/jobs/company-job-handler/switch_job_on/',form)
     return resp.data 
 }
+type updateJobApiProp = {job_id:number}&JobCreateForm
+export const updateJobApi = async (job:updateJobApiProp)=>{
+    const form = new FormData()
+    form.append('job_title',job.job_title)
+    form.append('is_active',JSON.stringify(false))
+    form.append('location',job.location)
+    form.append('job_type',job.job_type)
+    form.append('salary',JSON.stringify(job.salary))
+    form.append('currency',job.currency)
+    form.append('job_required_document',job.job_required_document.map((data,index)=>data.name).toString())
+    form.append('description_content',JSON.stringify(job.description_content))
+    form.append('job_variant',job.job_variant)
+    form.append('is_active',JSON.stringify(job.is_active))
+    form.append('country',job.country)
+    form.append('job_categories',job.job_categories.toString())
+    // job.id
+    const resp = await api.patch(`/jobs/company-job-handler/${job.job_id}/`,form)
+
+    return resp.data
+    
+}
