@@ -5,6 +5,7 @@ import api from "../axios";
 import cookieCutter from 'cookie-cutter'
 import jwt_decode from "jwt-decode";
 import { UserType } from "./authentication/authentication.api";
+import { boolean } from "yup";
 
 export type JobType = {
     id:number;
@@ -65,10 +66,10 @@ export const deleteJobsApi =async (jobID:number):Promise<deleteJobsApiResponseTy
     return resp.data
 }
 // 
-export const get_jobs_api =async ():Promise<JobType[]>=> {
+export const get_jobs_api =async ({is_active=true}:{is_active?:boolean}):Promise<JobType[]>=> {
     // console.log
     let user = cookieCutter.get('user') 
-    let url ='/jobs/company-job-handler/'
+    let url =`/jobs/company-job-handler/?is_active=${is_active}`
     if(user){
         const user:UserType = jwt_decode(JSON.parse( cookieCutter.get('user')).access)
         if(user.user_type==='job_seakers'){

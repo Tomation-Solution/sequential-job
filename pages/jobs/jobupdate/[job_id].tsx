@@ -118,7 +118,7 @@ const JobUpdate:NextPage = ()=>{
       return data
        
     }
-    console.log({errors})
+    console.log({watchIsLive})
     return (
         <LiveJobWithOtherContentLayout
         header="Update Job"
@@ -230,14 +230,16 @@ const JobUpdate:NextPage = ()=>{
         <br />
 
 
-        
+        {
+          jobdetail?
 <Switch  
-                    defaultChecked={jobdetail?.is_active?true:false}
-                    onChange={(value)=>{
-                      setValue('is_active',value)
-                    }}
-                    label={jobdetail?.is_active?'Deactivate job':'Activate job'}
-                    />
+  value={watchIsLive}
+  onChange={(value)=>{
+    setValue('is_active',!watchIsLive)
+  }}
+  label={watchIsLive?'Deactivate job':'Activate job'}
+  />:''
+        }
 
                     <br />
                     <br />
