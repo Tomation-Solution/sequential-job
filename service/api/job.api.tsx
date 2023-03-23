@@ -5,6 +5,7 @@ import api from "../axios";
 import cookieCutter from 'cookie-cutter'
 import jwt_decode from "jwt-decode";
 import { UserType } from "./authentication/authentication.api";
+import { boolean } from "yup";
 
 export type JobType = {
     id:number;
@@ -22,7 +23,8 @@ export type JobType = {
     "description_content":string,
     interview?:number|null;
     job_test:null|number;
-    job_variant:'filter_only'|'filter_and_test'
+    job_variant:'filter_only'|'filter_and_test',
+    'job_categories':string;
 }
 
 type get_all_quetionResponse = {
@@ -47,9 +49,9 @@ export const create_job_api = (job:JobCreateForm)=>{
     form.append('description_content',JSON.stringify(job.description_content))
     form.append('job_variant',job.job_variant)
     form.append('country',job.country)
+    form.append('job_categories',job.job_categories.toString())
     return  api.post('/jobs/company-job-handler/',form).then(res=>res.data)
 }
-
 
 type deleteJobsApiResponseType ={
     "message": string,
@@ -64,10 +66,10 @@ export const deleteJobsApi =async (jobID:number):Promise<deleteJobsApiResponseTy
     return resp.data
 }
 // 
-export const get_jobs_api =async ():Promise<JobType[]>=> {
+export const get_jobs_api =async ({is_active=true}:{is_active?:boolean}):Promise<JobType[]>=> {
     // console.log
     let user = cookieCutter.get('user') 
-    let url ='/jobs/company-job-handler/'
+    let url =`/jobs/company-job-handler/?is_active=${is_active}`
     if(user){
         const user:UserType = jwt_decode(JSON.parse( cookieCutter.get('user')).access)
         if(user.user_type==='job_seakers'){
@@ -94,7 +96,7 @@ export const unathGetJobsApi =async ({job_title,job_type}:unathGetJobsApiProp):P
     return  resp.data.data
 }
 
-export const get_job_detail = async (id:number):Promise<any>=>{
+export const get_job_detailApi = async (id:number):Promise<JobType>=>{
     const resp = await api.get(`/jobs/company-job-handler/${id}/`);
     return  resp.data.data
 }
@@ -192,4 +194,25 @@ export const switchJobOnApi = async (data:switchJobOnProp ):Promise<switchJobRes
     form.append('switch',data.switch?'True':'False')
     const resp = await api.post('/jobs/company-job-handler/switch_job_on/',form)
     return resp.data 
+}
+type updateJobApiProp = {job_id:number}&JobCreateForm
+export const updateJobApi = async (job:updateJobApiProp)=>{
+    const form = new FormData()
+    form.append('job_title',job.job_title)
+    form.append('is_active',JSON.stringify(false))
+    form.append('location',job.location)
+    form.append('job_type',job.job_type)
+    form.append('salary',JSON.stringify(job.salary))
+    form.append('currency',job.currency)
+    form.append('job_required_document',job.job_required_document.map((data,index)=>data.name).toString())
+    form.append('description_content',JSON.stringify(job.description_content))
+    form.append('job_variant',job.job_variant)
+    form.append('is_active',JSON.stringify(job.is_active))
+    form.append('country',job.country)
+    form.append('job_categories',job.job_categories.toString())
+    // job.id
+    const resp = await api.patch(`/jobs/company-job-handler/${job.job_id}/`,form)
+
+    return resp.data
+    
 }

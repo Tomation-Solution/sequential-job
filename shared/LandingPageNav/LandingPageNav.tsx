@@ -11,10 +11,16 @@ import { useTheme } from "next-themes";
 import Button from "../Button/Button"
 import {BsArrowRight} from 'react-icons/bs'
 import Image from "next/image"
+import { getUser } from "../../utils/extra_function"
+/* @ts-ignore */
+import cookieCutter from 'cookie-cutter'
+
+
 
 const SigninSigUoBtnCss = {'padding':'.8rem 1.2rem','borderRadius':'5px','fontWeight':'bold'}
 const LandingPageNav = ():ReactElement=>{
     const route = useRouter()
+    const user = getUser()
   const [hasfully_loaded,setHasfully_loaded] =useState(false)
     const isTab = useMediaQuery({
         query: '(min-width: 500px)'
@@ -43,15 +49,32 @@ const LandingPageNav = ():ReactElement=>{
             
             </Box>
 
-            <Box css={{'display':'flex','width':'200px','justifyContent':'space-between',}}>
-              <Button css={SigninSigUoBtnCss} onClick={e=>{
-                handleRoute(e,'/job_seeker_signup/')
-              }}>Sign up</Button>
-              <Button color={'lightBlueShadow'} 
-               onClick={e=>{
-                handleRoute(e,'/signin/')
-              }}
-              css={SigninSigUoBtnCss}>Log in</Button>
+            <Box css={{'display':'flex','width':'250px','justifyContent':'space-between',}}>
+              
+              {
+                user?
+                <Button color={'lightBlueShadow'}  css={SigninSigUoBtnCss} onClick={e=>{
+                  cookieCutter.set('user',null)
+                  handleRoute(e,'/')
+                
+                }}>Log out</Button>:
+                <Button css={SigninSigUoBtnCss} onClick={e=>{
+                  handleRoute(e,'/job_seeker_signup/')
+                }}>Sign up</Button>
+              }
+              {
+                !user?
+                <Button color={'lightBlueShadow'} 
+                 onClick={e=>{
+                  handleRoute(e,'/signin/')
+                }}
+                css={SigninSigUoBtnCss}>Log in</Button>:
+                <Button 
+                 onClick={e=>{
+                  handleRoute(e,'/dashboard_index/')
+                }}
+                css={SigninSigUoBtnCss}>Dasboard</Button>
+              }
             </Box>
           </Box>
             

@@ -46,7 +46,20 @@ export const JOBGRIDSTYLE= {
 const Home:NextPage = ()=>{ 
   const {notify} = useToast()
   const route = useRouter()
- const {status,error,data,isError} = useQuery('jobs',get_jobs_api,{
+ const {status,error,data,isError} = useQuery('jobs',()=>get_jobs_api({'is_active':true}),{
+  retry:1,
+  'onError':(err:any)=>{
+    if(err.response.data?.error){
+      let error:any = err.response.data.error
+      if(error.cv){
+        notify('You Need to upload your Cv','error')
+        // notify('Please Hold we would take you to upload your cv','success')
+        route.push('/profile')
+      }
+    }
+  }
+ })
+ const {status:inactivejob_status,error:inactivejob_error,data:inactivejob_data,isError:inactivejob_isError} = useQuery('inactive_jobs',()=>get_jobs_api({'is_active':false}),{
   retry:1,
   'onError':(err:any)=>{
     if(err.response.data?.error){
@@ -111,7 +124,11 @@ const Home:NextPage = ()=>{
             <>
               {logged_in_user?.user_type ==='job_seakers'?
               <JobAppliedFor/>
-              :''    
+              :inactivejob_data?.map((job,index)=>(
+                <Box onClick={()=>handleJobDetail(job)}>
+                  <JobCard job={job} key={index}/>
+                </Box>
+              )) 
             }
             </>
             

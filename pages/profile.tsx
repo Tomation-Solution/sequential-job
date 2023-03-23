@@ -52,6 +52,8 @@ const Profile:NextPage = ()=>{
     console.log(e.target.files)
     if(e.target.files){
         mutate(e.target.files[0])
+        const form = new FormData
+        form.append('attach_membership_certificate',JSON.stringify(e.target.files[0]))
     }
 }} />
                 {

@@ -25,6 +25,9 @@ import {AiFillCloseCircle} from 'react-icons/ai'
 import countries_and_state  from '../../utils/countries_and_state'
 import money_countrySymbol from '../../utils/money_countrySymbol'
 import EditorVersion2 from '../../shared/EditorVersion2/EditorVersion2'
+import job_categories from '../../utils/job_categories'
+import { useTheme } from "next-themes";
+import ControlEditSelect from '../../shared/ControlEditSelect/ControlEditSelect'
 
 
 export type JobCreateForm = {
@@ -37,7 +40,8 @@ export type JobCreateForm = {
   'job_required_document':{'name':string}[];
   'description_content':string;
   job_variant:'filter_only'|'filter_and_test',
-  country:string
+  country:string;
+  job_categories:string[];
 
 }
 
@@ -53,9 +57,11 @@ const schema = yup.object({
   })),
   'description_content':yup.string().required(),
   job_variant:yup.string().required(),
-  'country':yup.string().required()
+  'country':yup.string().required(),
+  'job_categories':yup.array().of(yup.string())
 })
 const AddJobs = () => {
+  const { theme, setTheme } = useTheme();
   const [componentHasMounted,setComponentHasMounted] = useState(false)
   const route = useRouter() 
   const {notify} = useToast();
@@ -75,7 +81,7 @@ const AddJobs = () => {
   const [simpleMdeInstance,setSimpleMdeInstance] =  useState<SimpleMDE | null>(null);
   const [descriptionText,setDescriptionText] = useState('')
 
-  const { register,control,setValue,handleSubmit, formState: { errors } } = useForm<JobCreateForm>({
+  const { register,watch,control,setValue,handleSubmit, formState: { errors } } = useForm<JobCreateForm>({
     resolver: yupResolver(schema),
     defaultValues:{
       'job_required_document':[{'name':''}],
@@ -88,17 +94,12 @@ const AddJobs = () => {
   const { fields, append, remove} = useFieldArray({
     'name':'job_required_document',control
   })
-
+  const watchJobCategories = watch('job_categories')
   const onSubmit = (job:JobCreateForm)=>{
     let new_job:any = {...job}
     new_job['description_content']=descriptionText
-    // console.log({new_job})
     mutate(new_job)
-    // if(simpleMdeInstance){1
-    //   // we get the data and put it in the json so we can send to the backemnd
-    //   const description_content =  simpleMdeInstance.value().replace(/\n/g,'<br/>')
-    //   // console.log({new_job})
-    // }
+
    
   }
 
@@ -107,8 +108,17 @@ const AddJobs = () => {
     setValue('description_content','...')
     setComponentHasMounted(true)
     setValue('is_active',false)
-
+    setValue('job_categories',[])
   },[])
+
+  useEffect(()=>{
+    if(errors.job_categories?.message){
+      notify('Please pick at least one category','error')
+    }
+    if(errors.currency?.message){
+      notify('Please pick at least one currency type','error')
+    }
+  },[errors])
   return (
     <LiveJobWithOtherContentLayout
     header='Create Job'
@@ -171,7 +181,6 @@ const AddJobs = () => {
 
 
 <br />
-          <label htmlFor="">Salary</label>
           <CombineSelectAndInput
           select_name='currency'
           select_setValue={setValue}
@@ -239,7 +248,37 @@ const AddJobs = () => {
           </Box>
             :''
         } */}
+        <br />
+        <br />
+          <label htmlFor="job_categories">Pick at least one category</label>
 
+        <Box  css={{
+          //  border:'1px solid $white',
+           'display':'flex','flexWrap':'wrap','minWidth':'500px',
+           '@bp2':{
+            // 'width':'700px'
+           },
+           'p':{
+            'padding':'.5rem','cursor':'pointer',
+            'border':'1px solid $white',
+            // 'backgroundColor':'white','color':'black'
+            // 'backgroundColor':'black','color':'white'
+           }
+        }}>
+          {job_categories.map((category,index)=>(
+            <p
+            style={watchJobCategories?.includes(category)?{'backgroundColor':theme=='dark'?'black':'white','color':theme==='dark'?'white':'black'}:{}}
+            onClick={(e)=>{
+              if(watchJobCategories.includes(category)){
+                setValue('job_categories',watchJobCategories.filter(d=>d!==category))
+              }else{
+                setValue('job_categories',[...watchJobCategories,category])
+              }
+            }}
+             key={index}>{category}</p>
+          ))}
+        </Box>
+<br />
         <EditorVersion2 onChangeFunc={(text)=>{
           setDescriptionText(text)
         }}/>

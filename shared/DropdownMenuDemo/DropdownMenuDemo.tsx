@@ -13,7 +13,8 @@ type Prop = {
     links?:{
       label:string,
       route:string,
-      icon?:React.ReactNode
+      icon?:React.ReactNode,
+      show:boolean,
     }[]
 }
 const DropdownMenuDemo = ({trigger_btn,links=[]}:Prop) => {
@@ -29,11 +30,12 @@ const DropdownMenuDemo = ({trigger_btn,links=[]}:Prop) => {
       <DropdownMenu.Portal>
         <DropdownMenuContent sideOffset={5}>
           {
-            links.map((data,index:number)=>(
-            <DropdownMenuItem key={index} onClick={()=>{
+            links.filter((d)=>d.show==true).map((data,index:number)=>(
+              
+            <DropdownMenuItem key={index } onClick={()=>{
               if(data.label==='Logout'){
                 cookieCutter.set('user',null)
-
+                
                 route.push('/signin')
               }else{
                 route.push(data.route)

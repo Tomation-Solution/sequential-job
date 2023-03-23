@@ -9,22 +9,27 @@ import { deleteJobsApi, JobType, switchJobOnApi } from "../../service/api/job.ap
 import { useRouter } from "next/router"
 import useToast from "../../hooks/useToastify"
 import { getUser } from "../../utils/extra_function"
-import { useMutation } from "react-query"
+import { useMutation , useQueryClient} from "react-query"
 import { applyForJobs } from "../../service/api/jobJobSeeker.api"
 import Preloader from "../Preloader/Preloder"
 import Switch from "../Switch/Switch"
 import EditorVersion2 from "../EditorVersion2/EditorVersion2"
 /* @ts-ignore */
 import Editor from 'react-medium-editor';
-
+import {TiInputChecked} from 'react-icons/ti'
+import {ImCross} from 'react-icons/im'
 type Prop = {
     currentJob:JobType;
 }
 const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
+  const queryClient = useQueryClient();
+
     const {notify} = useToast()
     const {mutate:deleteJob,isLoading:deleteing} = useMutation(deleteJobsApi,{
         'onSuccess':(data)=>{
             notify('Deleted Successfully','error')
+            queryClient.invalidateQueries("jobs");
+
         }
     })
 
@@ -134,20 +139,11 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
                                     <Box css={{'display':'flex','justifyContent':'center','justifyItems':'center',
                                 
                                 }}>
-                    <Switch
-                    defaultChecked={currentJob.is_active?true:false}
-                    onChange={(value)=>{
-                        console.log({value})
-                    if(window.confirm('Are You Sure You Want To Change Job Status')){
-                        //
-                        jobSwitch({
-                            'job_id':currentJob.id,
-                            'switch':value
-                        })
-                    } 
-                    }}
-                    label='Is Active'
-                    />
+                    <p><strong>Is job active {'  '}</strong> 
+                    {currentJob.is_active?<TiInputChecked style={{'color':'green','fontSize':'1rem'}}/>
+                    :<ImCross style={{'color':'red'}}/>
+                    }
+                    </p>
                     </Box>
                         <br />
                 </>:''
@@ -239,10 +235,22 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
                 </Box>:''
                 }
 
-
+<br />
 
                 {
                 loggedInUser?.user_type==='company'?
+                <Box
+                css={{
+                    // 'border':'1px solid red',
+                    'display':'flex','justifyContent':'space-between','alignItems':'center','maxWidth':'300px','margin':'0 auto',
+                }}
+                > 
+                <Button shape={'usual_btn_shap'} color='lightBlueOutline'
+                onClick={(e)=>{
+                    route.push('/jobs/jobupdate/'+currentJob.id)
+                }}
+                >Update</Button>
+
                 <Button shape={'usual_btn_shap'} color='danger'
                 onClick={(e)=>{
                     if(window.confirm('Are you sure you want to delete')){
@@ -250,6 +258,8 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
                     }
                 }}
                 >Delete</Button>
+               
+                </Box>
                 :''
                 }
 
