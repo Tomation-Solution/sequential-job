@@ -50,7 +50,7 @@ const schema = yup.object({
   'is_active':yup.boolean() ,
   'location':yup.string().required(),
   'job_type':yup.string().required(),
-  'salary':yup.number().required(),
+  'salary':yup.number(),
   'currency':yup.string().required(),
   'job_required_document':yup.array().of(yup.object({
     'name':yup.string().required(),
