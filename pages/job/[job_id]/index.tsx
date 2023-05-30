@@ -252,7 +252,7 @@ const JobDashboard:NextPage =()=>{
             <Button
             color={'lightBlueOutline'} 
             onClick={()=>mutate()}
-            >Generate</Button>
+            >Latest Breakdown</Button>
             </Box>
                     </Box>
                 }

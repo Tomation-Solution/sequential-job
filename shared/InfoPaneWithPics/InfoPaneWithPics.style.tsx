@@ -13,14 +13,14 @@ export const InfoPaneWithPicsContainer =styled('div',{
         'padding':'1rem'
     },
     'img':{
-        display:'none',
+        // display:'none',
     },
     'svg':{
-        'fontSize':'2rem',
-        'color':'$thickBlue',
-        'margin':'0 auto',
-        'display':'block',
-        'transform':'translateY(10px)'
+        // 'fontSize':'2rem',
+        // 'color':'$thickBlue',
+        // 'margin':'0 auto',
+        // 'display':'block',
+        // 'transform':'translateY(10px)'
     },
     '@bp2':{
 
@@ -32,7 +32,8 @@ export const InfoPaneWithPicsContainer =styled('div',{
         },
         'img':{
             'display':'block'
-        },'svg':{'display':'none'},
+        },
+        // 'svg':{'display':'none'},
        
         'h3,p':{
             'textAlign':'left',

@@ -123,7 +123,7 @@ const Signup:NextPage =()=>{
                         register={register('full_name')}
                         css={cssStyleForInput}/>
                         <br />
-                        <InputWithLabel label="Addresse" 
+                        <InputWithLabel label="Address" 
                         errors={errors.addresses?.message}
                         register={register('addresses')}
                         css={cssStyleForInput}/>

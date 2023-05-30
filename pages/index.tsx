@@ -17,6 +17,8 @@ import WhiteInput from "../shared/WhiteInput/WhiteInput";
 import {BsSearch} from 'react-icons/bs'
 import VisionAndMission from "../shared/VisionAndMission/VisionAndMission";
 import african_womanjobImg from '../asset/african_womanjob.png'
+import metricImg from '../asset/metric.jpg'
+import ArrowBtn from "../shared/ArrowBtn";
 const LineCss ={'height':'60px','width':'1px','backgroundColor':'#e6e7e8d1'}
 
 const dummyJobs:JobType[] =[]
@@ -62,8 +64,12 @@ const LandingPageIndex:NextPage = ()=>{
         'display':'flex','justifyContent':'space-between', 'flexDirection':'row',
 
       }}}>
-      <InfoPaneWithPics name="Upload a CV " content="Our top priority at Sequential Jobs is to make sure the best candidate gets the best job, upload and register your CV with us today to enjoy this great benefit at no extra cost."/>
-      <InfoPaneWithPics name="Post a Job " img={african_womanjobImg.src} content="Sequential Jobs is here to help you find the best candidate that matches your job requirements. Post your job on our portal to get the right fit."/>
+      <InfoPaneWithPics name="Upload a CV " 
+      to="/upload-cv"
+      content="Our top priority at Sequential Jobs is to make sure the best candidate gets the best job, upload and register your CV with us today to enjoy this great benefit at no extra cost."/>
+      <InfoPaneWithPics 
+      to={'/signup'}
+      name="Post a Job " img={african_womanjobImg.src} content="Sequential Jobs is here to help you find the best candidate that matches your job requirements. Post your job on our portal to get the right fit."/>
       </Box>
       <br />
 <br />
@@ -117,8 +123,63 @@ const LandingPageIndex:NextPage = ()=>{
 </Box>
 <br />
 <br />
-<br />
 <VisionAndMission/>
+<br />
+<br />
+<Box
+css={{
+  
+  'img':{
+    'width':'80%',
+    'display':'block',
+    'margin':'0 auto'
+  },
+  '@bp2':{
+    'display':'flex',
+    'alignItems':'center',
+    'justifyContent':'space-between',
+    'maxWidth':'1000px',
+    // 'border':'1px solid red',
+    'margin':'0 auto',
+    '& > div':{
+      'textAlign':'left',
+      'padding':'0  1.4rem ',
+      'width':'45%',
+    },
+    'img':{
+      'width':'40%',
+    }
+  }
+}}
+>
+  <img src={metricImg.src} alt="" />
+  <Box
+  css={{
+    'textAlign':'center',
+    'color':'#212121',
+  'h2':{
+    fontFamily:'Ubuntu',
+    padding:'.4rem 0'
+  },
+  '@bp2':{
+    'h2':{
+      'fontSize':'2.3rem',
+      'fontWeight':'200'
+    }
+  }
+  }}
+  >
+    <h2>E-metrics Suite</h2>
+    <p>Sorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+<br />
+<ArrowBtn
+to="https://www.emetricsuite.com/"
+/>
+
+  </Box>
+</Box>
+<br />
+<br />
     </LandingPageLayout>
   )
 }
