@@ -19,6 +19,7 @@ import VisionAndMission from "../shared/VisionAndMission/VisionAndMission";
 import african_womanjobImg from '../asset/african_womanjob.png'
 import metricImg from '../asset/metric.jpg'
 import ArrowBtn from "../shared/ArrowBtn";
+import { CVCallImageContainer } from "../shared/uploadCvCallToAction/UploadCvCallToAction.style";
 const LineCss ={'height':'60px','width':'1px','backgroundColor':'#e6e7e8d1'}
 
 const dummyJobs:JobType[] =[]
@@ -148,11 +149,17 @@ css={{
     },
     'img':{
       'width':'40%',
+      borderRadius:'10px'
     }
   }
 }}
 >
-  <img src={metricImg.src} alt="" />
+
+
+{/* <CVCallImageContainer> */}
+                <img src={metricImg.src} alt="" />
+            {/* </CVCallImageContainer> */}
+              {/* <img src={metricImg.src} alt="" /> */}
   <Box
   css={{
     'textAlign':'center',
