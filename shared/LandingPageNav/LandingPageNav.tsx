@@ -87,11 +87,16 @@ const LandingPageNav = ():ReactElement=>{
               <li><a onClick={(e)=>{
                 handleRoute(e,'/upload-cv')
               }}>Upload CV</a></li>
+              <li><a onClick={(e)=>{
+                handleRoute(e,'/blog')
+              }}>Blog</a></li>
+           
             </ul>
             <ul className="sec_sub">
               <li><a onClick={(e)=>{
                 handleRoute(e,'/signup')
               }}>For Employers <BsArrowRight style={{'transform':'translateY(3px)'}}/></a></li>
+              
             </ul>
           </SubMenue>
           </Box>

@@ -1,15 +1,11 @@
 import { useRouter } from "next/router"
 import { PostPreviewContainer, PostPreviewContentContainer, PostPreviewImageContainer } from "./PostPreview.style"
 import Button from "../Button/Button";
+import { BlogType } from "../../pages/blog";
 
 
 type Prop ={
-    blog:{
-        main_image:string,
-        title:string,
-        get_paragraph_intro:string;
-        id:string,
-    },
+    blog:BlogType,
     'moveTo'?:'right'|'left'
 }
 const PostPreview = ({ blog,moveTo='left' }:Prop):React.ReactElement=>{

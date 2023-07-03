@@ -1,25 +1,38 @@
+import { useQuery } from "react-query";
 import LandingPageLayout from "../../layout/LandingPageLayout/LandingPageLayout"
+import api from "../../service/axios";
 import Box from "../../shared/Box/Box"
 import PostPreview from "../../shared/PostPreview/PostPreview"
 
 
+export type BlogType={
+  id:number;
+  comments:any[],
+  blog_paragraphs:{input_text:string,image:string}[],
+  title:string;
+  main_image:string;
+  author:string;
+  category:string;
+  date_created:string;
+  get_paragraph_intro:string;
+}
 
+const getBlogs=async ():Promise<BlogType[]>=>{
+
+    const resp = await api.get('blog/blog-view/')
+    return resp.data.results
+}
 
 const Blog = ()=>{
-    const blog ={
-        main_image:'https://res.cloudinary.com/haqszgzma/image/upload/v1/media/blogpost/main_image/11/09/LINKING_YOUR_OBJECTIVES_TO_YOUR_KPIS_AND_TASKS_lonaxt',
-        title:'LINKING YOUR OBJECTIVES TO YOUR KPIS AND TASKS.',
-        get_paragraph_intro:'Often times, when appraisals are carried out by HRs, the focus is on tasks or if you like say, activ........',
-        id:'2',
-    }
-
+    const {isLoading,data} = useQuery('getBlogs',getBlogs)
+    console.log({data})
     return (
         <LandingPageLayout>
             {
-                [...new Array(10)].map((d,index)=>(
+                data?.map((d,index)=>(
                     <PostPreview
                     key={index}
-                    blog={blog}
+                    blog={d}
                     moveTo={index%2==0?'right':'left'}
                     />
                 ))
