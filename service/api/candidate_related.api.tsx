@@ -8,9 +8,10 @@ export type getSortedJobCandidateResponse =    {
         "jobseekers_id":number,
         "email": string,
         'full_name':string
+        user_id:number
     },
     "filter_quetions_score": 20,
-    "job": 1
+    "job": 1,
 }
 export type getSortedJobCandidate = {
     job_id:number;

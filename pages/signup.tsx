@@ -16,6 +16,7 @@ import { useRouter } from "next/router";
 import { useTheme } from "next-themes";
 import { useEffect } from "react";
 import LandingPageLayout from "../layout/LandingPageLayout/LandingPageLayout";
+import { companyEmailSchema } from "../utils/extraValidationOptions";
 
 const cssStyleForInput = {
     'input':{
@@ -47,7 +48,9 @@ export type SignUpFormType = {
 
 
 const schema = yup.object({
-    'email':yup.string().required(),
+    
+    // 'email':yup.string().required(),
+    'email':companyEmailSchema.required('Email is required'),
     'full_name':yup.string().required(),
     'phone_number':yup.string().required(),
     'organisation_name':yup.string().required(),
@@ -92,11 +95,12 @@ const Signup:NextPage =()=>{
       });
       const onSubmit = (data: SignUpFormType) => {
         mutate(data)
-      }
+    }
       useEffect(()=>{
         
         // setTheme('dark')
     },[])
+    console.log(errors)
     return (
         <LandingPageLayout >
             <Preloader loading={isLoading}/>
@@ -168,13 +172,18 @@ const Signup:NextPage =()=>{
                         register={register('passwordConfirmation')} css={cssStyleForInput}/>
                                <br />
                                <br />
-        <Box css={{'display':'flex','alignItems':'center','justifyContent':'space-between','button':{
-            'width':'35%'
+        <Box css={{'button':{
+            'margin':'0 auto',
+            'width':'100%',
+            '@bp2':{
+
+                'width':'45%',
+            },
         }}}>
         <Button >Submit</Button>
-        <Button type='button' color={'lightBlueOutline'} onClick={()=>{
+        {/* <Button type='button' color={'lightBlueOutline'} onClick={()=>{
             route.push('/job_seeker_signup')
-        }}>Sign up as JobSeeker</Button>
+        }}>Sign up as JobSeeker</Button> */}
         </Box>
                     </Pane>
                     <br />

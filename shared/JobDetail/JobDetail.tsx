@@ -8,7 +8,7 @@ import remarkRehype from 'remark-rehype'
 import { deleteJobsApi, JobType, switchJobOnApi } from "../../service/api/job.api"
 import { useRouter } from "next/router"
 import useToast from "../../hooks/useToastify"
-import { getUser } from "../../utils/extra_function"
+import { getUser, toCurrency } from "../../utils/extra_function"
 import { useMutation , useQueryClient} from "react-query"
 import { applyForJobs } from "../../service/api/jobJobSeeker.api"
 import Preloader from "../Preloader/Preloder"
@@ -102,7 +102,7 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
                 <Box className="job_details">
                     <p>Salary</p>
                     
-                    <p>{': '} {currentJob.currency}{currentJob.salary}/yr</p>
+                    <p>{': '}{toCurrency(currentJob.salary,currentJob.currency) }/yr</p>
                 </Box>
                 <br />
                 <Box className="job_details">
@@ -153,19 +153,10 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
             <h2 style={{'color':'#24CDE2','padding':'1rem 0','fontWeight':'lighter'}}>Job Description</h2>
             <br /><br />
             <Box css={{'textAlign':'left','overflow':'scroll','padding':'0 1rem'}}>
-            {/* <ReactMarkdown 
-            rehypePlugins={[rehypeRaw]}
-            >
-                {data}
-            </ReactMarkdown> */}
-            <Editor
-            // disableEditing={true}
-          text={data}
-          options={{
-            'disableEditing':false
-          }}
-        //   onChange={this.handleChange}
-        />
+            {
+            data?
+            <p dangerouslySetInnerHTML={{__html: `${data?.replaceAll('"',' ')  }`.replaceAll('\\',' ')}}/>:''
+        }
             </Box>
             <br /><br />
             {

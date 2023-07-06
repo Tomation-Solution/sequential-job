@@ -28,6 +28,8 @@ import EditorVersion2 from '../../shared/EditorVersion2/EditorVersion2'
 import job_categories from '../../utils/job_categories'
 import { useTheme } from "next-themes";
 import ControlEditSelect from '../../shared/ControlEditSelect/ControlEditSelect'
+import numbro from "numbro";
+import WysiwygEditor from '../../shared/WysiwygEditor'
 
 
 export type JobCreateForm = {
@@ -50,12 +52,12 @@ const schema = yup.object({
   'is_active':yup.boolean() ,
   'location':yup.string().required(),
   'job_type':yup.string().required(),
-  'salary':yup.number(),
+  'salary':yup.string(),
   'currency':yup.string().required(),
   'job_required_document':yup.array().of(yup.object({
     'name':yup.string().required(),
   })),
-  'description_content':yup.string().required(),
+  // 'description_content':yup.string(),
   job_variant:yup.string().required(),
   'country':yup.string().required(),
   'job_categories':yup.array().of(yup.string())
@@ -66,6 +68,9 @@ const AddJobs = () => {
   const route = useRouter() 
   const {notify} = useToast();
   const [ListOfStates,setListOfStates] = useState<string[]>([]);
+  const [jobdetail, setJobdetail] = useState('')
+  const [showPreview, setShowPreview] = useState(false);
+      
   const  {isLoading,mutate} = useMutation(create_job_api,{
     onError:(error:any)=>{
       console.log({'endpoint Error':error})
@@ -73,12 +78,11 @@ const AddJobs = () => {
     onSuccess:(data, variables, context)=>{
         console.log({'success':data})
         if(data.status==201){
-          route.push('/dashboard_index')
           notify(`"${data.data.job_title}" Successful`,'success')
+          route.push('/dashboard_index')
         }
     },
   })
-  const [simpleMdeInstance,setSimpleMdeInstance] =  useState<SimpleMDE | null>(null);
   const [descriptionText,setDescriptionText] = useState('')
 
   const { register,watch,control,setValue,handleSubmit, formState: { errors } } = useForm<JobCreateForm>({
@@ -96,8 +100,11 @@ const AddJobs = () => {
   })
   const watchJobCategories = watch('job_categories')
   const onSubmit = (job:JobCreateForm)=>{
-    let new_job:any = {...job}
-    new_job['description_content']=descriptionText
+    let new_job:any = {...job,'salary':parseInt(
+      numbro(job.salary).format({thousandSeparated: false}))//converted it to the number figure the backend needs
+    }
+    new_job['description_content']=jobdetail
+    // console.log(new_job)
     mutate(new_job)
 
    
@@ -109,6 +116,7 @@ const AddJobs = () => {
     setComponentHasMounted(true)
     setValue('is_active',false)
     setValue('job_categories',[])
+
   },[])
 
   useEffect(()=>{
@@ -197,7 +205,22 @@ const AddJobs = () => {
         }
           // for the input field
           inputLabel={'salary'}
-          inputRegister={register('salary')}
+          inputRegister={register('salary',{
+            'onChange':(e)=>{
+              console.log(e.target.value)
+              if(e.target.value){
+                let value = e.target.value
+                try{
+                    numbro(value??0).format({thousandSeparated: true})
+                    // @ts-ignore
+                    setValue('salary', numbro(value??0).format({thousandSeparated: true}))
+                }catch(err:any){
+                    // toast.error('invalid number')
+                }
+            }
+              
+            }
+          })}
 
           />
           <br />
@@ -248,7 +271,7 @@ const AddJobs = () => {
           </Box>
             :''
         } */}
-        <br />
+        {/* <br />
         <br />
           <label htmlFor="job_categories">Pick at least one category</label>
 
@@ -277,11 +300,14 @@ const AddJobs = () => {
             }}
              key={index}>{category}</p>
           ))}
-        </Box>
+        </Box> */}
 <br />
-        <EditorVersion2 onChangeFunc={(text)=>{
-          setDescriptionText(text)
-        }}/>
+
+              <WysiwygEditor
+                    content={jobdetail}
+                    setContent={setJobdetail}
+                    showPreview={showPreview}
+                />
 
           <Button color={'lightBlueBtn'} css={{'width':'30%','margin':'15px auto'}}>Submit</Button>
         <br />

@@ -79,7 +79,7 @@ const CvFilteringQuetion:NextPage = ()=>{
     return(
         <GeneralLayout>
           <Preloader loading={isLoading} />
-          <h2>Set Sorting Quetions</h2>
+          <h2>Set Sorting Question</h2>
 
           <InputWithLabel register={register('title')}
           label="Title" css={{'width':'60%','margin':'0 auto'}} />
@@ -92,11 +92,11 @@ const CvFilteringQuetion:NextPage = ()=>{
           label='Pick Question Type'
           options={[
             {
-              'name':'fill In The Gap Quetion',
+              'name':'fill In The Gap Question',
               'value':'fill_in_gap_quetion'
             },
             {
-              'name':'Option Quetion',
+              'name':'Option Question',
               'value':'option_quetion'
             },
             // {

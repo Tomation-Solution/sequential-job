@@ -48,3 +48,65 @@ export const send_applicationLetterApi = async (data:send_applicationLetterApiPr
     const resp = await api.post('/jobs/company-generate-job-final-result/send_final_letters/',{'list_of_applicant_and_action':data})
     return resp.data 
 }
+
+
+
+
+
+
+
+type CvServerTypeRepsonse = {
+    full_name: string;
+    profile_image: string;
+    phone_number: string;
+    user_extra: {
+      job_categories: string[];
+      job_seakers: {
+        cv: string;
+        notify_me_on: string;
+        cvStucture: {
+          first_name: string;
+          middle_name: string;
+          last_name: string;
+          phone_number: string;
+          email: string;
+          addresse: string;
+          state: string;
+          country_of_residence: string;
+          linkdin: string;
+          twitter: string;
+          personal_statement: string;
+          education: {
+            end_year: string;
+            start_year: string;
+            degree_type: string;
+            school_name: string;
+            course_of_study: string;
+          }[];
+          experience: {
+            role: string;
+            company: string;
+            end_year: string;
+            start_year: string;
+            responsibilities: string;
+          }[];
+          certificaton: {
+            issuer: string;
+            start_year: string;
+            certification: string;
+          }[];
+          refrences: {
+            email: string;
+            full_name: string;
+            phone_number: string;
+            relationship: string;
+          }[];
+        };
+      };
+    };
+  };
+  export const get_jobseerker_profile =
+    async (user_id:string): Promise<CvServerTypeRepsonse> => {
+      const resp = await api.get(`/auth/jobseeker-profile/?user_id=${user_id}`);
+      return resp.data.data;
+    };

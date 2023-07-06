@@ -7,7 +7,7 @@ import {FaMoneyBillWave} from 'react-icons/fa'
 import {IoBagSharp,IoSend} from 'react-icons/io5'
 import {FaUserAlt} from 'react-icons/fa'
 import { JobType } from '../../service/api/job.api'
-import { getUser } from '../../utils/extra_function'
+import { getUser, toCurrency } from '../../utils/extra_function'
 
 type Prop ={
   job:JobType
@@ -29,8 +29,10 @@ type Prop ={
         {' '}
             {job.job_type.replace('_',' ').toUpperCase()}
         </span>
-        <span>
-           <FaMoneyBillWave/>{' '}{job.currency}{job.salary}/year
+        <span >
+           <FaMoneyBillWave/>
+           {' '}
+            {toCurrency(job.salary,job.currency)}/year
         </span>
       </Box>
         <p><IoSend/>{' '} Apply from your phone</p>

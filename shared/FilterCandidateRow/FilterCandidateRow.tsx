@@ -51,8 +51,9 @@ const FilterCandidateRow = ({applicant,list_of_ids,setListOfId}:Prop) => {
         <p>{applicant.jobseekers.email}</p>
         <p>{applicant.filter_quetions_score}</p>
         <Button css={{'padding':'.4rem 1rem','width':'100px'}} onClick={(e)=>{
-          window.open(applicant.jobseekers.cv_url, '_blank')
-        }}>View Cv</Button>
+          // console.log('Hello worldd')
+          route.push(`/jobs/CvFilteringQuetion/cv/${applicant.jobseekers.user_id}/`)
+  }}>View Cv</Button>
         {
           logged_in_user.user_type=='panelist'?
           <Button color={'lightBlueOutline'} css={{'padding':'.4rem 1rem','width':'100px'}}
@@ -61,8 +62,8 @@ const FilterCandidateRow = ({applicant,list_of_ids,setListOfId}:Prop) => {
             }}
           >Grade</Button>
           :
-          // ''
-          <Button color={'lightBlueOutline'} css={{'padding':'.4rem 1rem','width':'100px'}}>Aggre</Button>
+          ''
+          // <Button color={'lightBlueOutline'} css={{'padding':'.4rem 1rem','width':'100px'}}>Aggre</Button>
         }
     </Box>
   )
