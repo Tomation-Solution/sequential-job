@@ -29,11 +29,16 @@ type Prop ={
         {' '}
             {job.job_type.replace('_',' ').toUpperCase()}
         </span>
-        <span >
-           <FaMoneyBillWave/>
-           {' '}
-            {toCurrency(job.salary,job.currency)}/year
-        </span>
+        {
+          job.salary==='0.00'?'':
+          <span >
+          <FaMoneyBillWave/>
+          {' '}
+
+           {toCurrency(job.salary,job.currency)}/year
+       </span>
+        }
+
       </Box>
         <p><IoSend/>{' '} Apply from your phone</p>
         <p><IoSend/>{' '} Hiring Multiple candidates</p>

@@ -56,8 +56,8 @@ const OptionQuetion = ({state,setState,setView}:PropForQuetionComonents):React.R
       }
     return (
         <Box>
-            <h2>Option Quetion</h2>
-            <InputWithLabel label={`Quetion`} register={register('quetion')} />
+            <h2>Option Question</h2>
+            <InputWithLabel label={`Question`} register={register('quetion')} />
         <form onSubmit={handleSubmit(onSubmit)}>
 
             <Box css={{'maxWidth':'400px'}}>

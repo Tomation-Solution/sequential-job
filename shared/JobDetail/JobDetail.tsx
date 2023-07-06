@@ -100,9 +100,14 @@ const JobDetail = ({currentJob}:Prop):React.ReactElement=>{
             >
 
                 <Box className="job_details">
-                    <p>Salary</p>
-                    
-                    <p>{': '}{toCurrency(currentJob.salary,currentJob.currency) }/yr</p>
+                    {
+                        currentJob.salary==='0.00'?'':
+<>
+<p>Salary</p>
+
+<p>{': '}{toCurrency(currentJob.salary,currentJob.currency) }/yr</p>
+
+</>                    }
                 </Box>
                 <br />
                 <Box className="job_details">

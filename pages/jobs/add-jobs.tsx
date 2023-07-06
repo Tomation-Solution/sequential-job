@@ -53,7 +53,7 @@ const schema = yup.object({
   'location':yup.string().required(),
   'job_type':yup.string().required(),
   'salary':yup.string(),
-  'currency':yup.string().required(),
+  'currency':yup.string(),
   'job_required_document':yup.array().of(yup.object({
     'name':yup.string().required(),
   })),
@@ -100,8 +100,8 @@ const AddJobs = () => {
   })
   const watchJobCategories = watch('job_categories')
   const onSubmit = (job:JobCreateForm)=>{
-    let new_job:any = {...job,'salary':parseInt(
-      numbro(job.salary).format({thousandSeparated: false}))//converted it to the number figure the backend needs
+    let new_job:any = {...job,'salary':job.salary?parseInt(
+      numbro(job.salary).format({thousandSeparated: false})):0.00//converted it to the number figure the backend needs
     }
     new_job['description_content']=jobdetail
     // console.log(new_job)
