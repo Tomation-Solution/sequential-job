@@ -49,7 +49,7 @@ const LandingPageNav = ():ReactElement=>{
             
             </Box>
 
-            <Box css={{'display':'flex','width':'250px','justifyContent':'space-between',}}>
+            <Box css={{'display':'flex','justifyContent':'space-between',gap:'20px','flexWrap':'wrap'}}>
               
               {
                 user?
@@ -64,11 +64,20 @@ const LandingPageNav = ():ReactElement=>{
               }
               {
                 !user?
+                <>
                 <Button color={'lightBlueShadow'} 
                  onClick={e=>{
                   handleRoute(e,'/signin/')
                 }}
-                css={SigninSigUoBtnCss}>Log in</Button>:
+                css={SigninSigUoBtnCss}>Employer Sign in</Button>
+                <Button color={'lightBlueShadow'} 
+                 onClick={e=>{
+                  window.location.href='https://app.sequentialjobs.com/login'
+                  // handleRoute(e,'/signin/')
+                }}
+                css={SigninSigUoBtnCss}>Job Seeker Sign in</Button>
+                </>
+                :
                 <Button 
                  onClick={e=>{
                   handleRoute(e,'/dashboard_index/')
