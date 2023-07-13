@@ -5,7 +5,7 @@ import cookieCutter from 'cookie-cutter'
 
 
 // export const url = 'https://recruitment-api-production.up.railway.app'
-export const url = 'https://6928-154-118-26-238.ngrok-free.app'
+export const url = 'https://sequential-api-test.up.railway.app'
 // export const url = 'http://localhost:8000'
 
 const api =axios.create({
