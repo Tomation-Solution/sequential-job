@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+import Head from 'next/head'
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import LandingPageLayout from "../layout/LandingPageLayout/LandingPageLayout";
@@ -39,6 +40,16 @@ const LandingPageIndex:NextPage = ()=>{
 
   return (
     <LandingPageLayout>
+              <Head>
+      <title>Sequentialjobs</title>
+      <meta name='viewport' content='width=device-width, initial-scale=1'/>
+      <meta property='og:title' content="      
+Sequentialjobs Your Gateway to Exciting Career Opportunities - Find Jobs Online
+      " />
+      <meta name='description' content="
+  Sequential jobs  your dream job and kick-start your career. Browse thousands of job postings, connect with top employers, and apply online. Start your journey with our comprehensive job search platform.
+  "  />
+    </Head>
       <Box css={{'backgroundColor':'$thickBlue','padding':'1rem',}}>
       <Box css={{'maxWidth':'1000px','margin':'0 auto'}}>
         <LandingPageSearchBar/>
