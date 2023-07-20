@@ -51,7 +51,18 @@ const LandingPageNav = ():ReactElement=>{
 
             <Box css={{'display':'flex','justifyContent':'space-between',gap:'20px','flexWrap':'wrap'}}>
               
-              {
+            <Button css={SigninSigUoBtnCss} onClick={e=>{
+              // window.open('/sign-up')
+              window.open('https://app.sequentialjobs.com/sign-up')
+                }}>Sign up</Button>
+
+                <Button 
+              color={'lightBlueShadow'} 
+                css={SigninSigUoBtnCss} onClick={e=>{
+                window.open('https://app.sequentialjobs.com/login')
+                  // handleRoute(e,'/job_seeker_signup/')
+                }}>Sign in</Button>
+              {/* {
                 user?
                 <Button color={'lightBlueShadow'}  css={SigninSigUoBtnCss} onClick={e=>{
                   cookieCutter.set('user',null)
@@ -61,8 +72,8 @@ const LandingPageNav = ():ReactElement=>{
                 <Button css={SigninSigUoBtnCss} onClick={e=>{
                   handleRoute(e,'/job_seeker_signup/')
                 }}>Sign up</Button>
-              }
-              {
+              } */}
+              {/* {
                 !user?
                 <>
                 <Button color={'lightBlueShadow'} 
@@ -83,7 +94,7 @@ const LandingPageNav = ():ReactElement=>{
                   handleRoute(e,'/dashboard_index/')
                 }}
                 css={SigninSigUoBtnCss}>Dasboard</Button>
-              }
+              } */}
             </Box>
           </Box>
             
@@ -93,9 +104,9 @@ const LandingPageNav = ():ReactElement=>{
               <li><a onClick={(e)=>{
                 handleRoute(e,'/searchpage')
               }}>Find Job</a></li>
-              <li><a onClick={(e)=>{
+              {/* <li><a onClick={(e)=>{
                 handleRoute(e,'/upload-cv')
-              }}>Upload CV</a></li>
+              }}>Upload CV</a></li> */}
               <li><a onClick={(e)=>{
                 handleRoute(e,'/blog')
               }}>Blog</a></li>
@@ -103,7 +114,8 @@ const LandingPageNav = ():ReactElement=>{
             </ul>
             <ul className="sec_sub">
               <li><a onClick={(e)=>{
-                handleRoute(e,'/signup')
+                window.open('https://app.sequentialjobs.com/sign-up-company/')
+                // handleRoute(e,'/signup')
               }}>For Employers <BsArrowRight style={{'transform':'translateY(3px)'}}/></a></li>
               
             </ul>
