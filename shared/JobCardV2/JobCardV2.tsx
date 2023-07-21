@@ -34,9 +34,8 @@ const JobCardV2 = ({title,job}:Prop):React.ReactElement=>{
                 <p className="black"><span>..</span></p>
 
                 <Button 
-                onClick={e=>{
-                    window.open('https://app.sequentialjobs.com/','_blank')
-                }}
+                // onClick={e=>{
+                // }}
                 css={{'backgroundColor':'#24CDE2','padding':'.5 1rem','borderRadius':'5px'}}>View more</Button>
             </Box>
         </JobCardV2Container>

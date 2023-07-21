@@ -48,7 +48,8 @@ const JobDetailV2 = ({currentJob}:Prop):React.ReactElement=>{
 
     const handleJobSubbmission = ()=>{
         notify('You Need to login to apply','success')
-        route.push('/signin')
+        window.open('https://app.sequentialjobs.com/','_blank')
+
     }
     return (
         <Box css={{'color':'black','padding':'0 .5rem', 'backgroundColor':'white','@bp2':{
