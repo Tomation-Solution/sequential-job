@@ -120,13 +120,13 @@ const Searchpage:NextPage =()=>{
                                 <Button
                                 onClick={(e)=>{
                                     notify('You Need to create an account','success')
-                                    route.push('/job_seeker_signup')
+                                    window.open('https://app.sequentialjobs.com/','_blank')
                                 }} css={{'borderRadius':'5px','padding':'.8rem 1rem','fontSize':'.9rem','margin':'10px auto'}} >Send Us Your CV</Button>
                                 <br />
                                 <p 
                                 onClick={(e)=>{
                                     notify('You Need to create an account','success')
-                                    route.push('/job_seeker_signup')
+                                    window.open('https://app.sequentialjobs.com/','_blank')
                                 }}
                                 style={{'color':'#24CDE2'}}>Send Us Your CV
                                 <img src={bluearrow.src}  style={{marginLeft:'10px'}} alt="" />
