@@ -62,7 +62,10 @@ const ActivateAccount:NextPage = ()=>{
               <p style={{'color':'#1c1e21'}}>Let The Job Hunt Begin!!</p> 
               <br />
               <Button css={{'padding':'1rem','width':'150px','borderRadius':'10px','margin':'0 auto'}}
-                onClick={()=>handleRoute('/signin')}
+                onClick={()=>{
+                  window.location.href='https://app.sequentialjobs.com/login'
+                  // handleRoute('/signin')
+                }}
               >Explore</Button>
             </div>:
             ''
@@ -74,7 +77,10 @@ const ActivateAccount:NextPage = ()=>{
         <h1 style={{'color':'#1c1e21'}}>Invalid Token Or You Have Been activated</h1>
         <br />
         <Button css={{'padding':'1rem','width':'150px','borderRadius':'10px','margin':'0 auto'}}
-          onClick={()=>handleRoute('/signin')}
+          onClick={()=>{
+            window.location.href='https://app.sequentialjobs.com/sign-up'
+            // handleRoute('/signin')
+          }}
         >Try to Sign In</Button>
       </div>:''
       }
