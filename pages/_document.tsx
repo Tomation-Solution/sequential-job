@@ -1,5 +1,6 @@
 import NextDocument,{ Html, Head, Main, NextScript } from 'next/document'
 import {getCssText} from '../stitches.config'
+import Script from 'next/script'
 
 
 
@@ -21,6 +22,11 @@ Sequentialjobs Your Gateway to Exciting Career Opportunities - Find Jobs Online
         <body>
           <Main />
           <NextScript />
+          <script
+      // strategy="lazyOnload"
+      src={`https://embed.tawk.to/${process.env.NEXT_PUBLIC_PROPERTY_ID}/${process.env.NEXT_PUBLIC_WIDTH_ID}`}
+    async 
+    />
         </body>
       </Html>
     );
