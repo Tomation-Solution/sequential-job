@@ -6,27 +6,23 @@ import { styled } from '../../stitches.config';
 export const CheckboxRoot = styled(Checkbox.Root, {
     all: 'unset',
     backgroundColor: '$lightText',
-    width: 25,
-    height: 25,
+    width: '18px',
+    height: '18px',
     borderRadius: 4,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     boxShadow: `0 2px 5px white`,
-    '&:hover': { 
-        backgroundColor:'$thickBlue' ,
-        color:'white'
+    border:'1px solid #6d6d6d',
+    // '&:hover': { 
+    //     backgroundColor:'$thickBlue' ,
+    //     color:'white'
 
-    },
-    '&:focus': { 
-        boxShadow: `0 0 0 2px black`
-      },
-  });
+    // },
+
+
+});
   
  export  const CheckboxIndicator = styled(Checkbox.Indicator, {
-    color: '$thickBlue' ,
-
-    '&:hover':{
-        color:'white'
-    }
+    color:'white',
   });

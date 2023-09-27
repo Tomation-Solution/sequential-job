@@ -2,8 +2,6 @@ import { NextPage } from "next";
 import LandingPageLayout from "../layout/LandingPageLayout/LandingPageLayout";
 import Box from "../shared/Box/Box";
 import Button from "../shared/Button/Button";
-import {GoSettings} from 'react-icons/go'
-import JobCard from "../shared/JobCard/JobCard";
 import JobCardV2 from "../shared/JobCardV2/JobCardV2";
 import bluearrow from '../asset/bluearrow.png'
 import { useQuery } from "react-query";
@@ -19,6 +17,9 @@ import JobDetailV2 from "../shared/JobDetailsVerion2/JobDetail";
 import LandingPageSearchBar from "../shared/LandingPageSearchBar/LandingPageSearchBar";
 import { useSelector } from "react-redux";
 import { selectSearch } from "../redux/Search/SearchSlice";
+import Pane from "../shared/Pane";
+import SearchPageJobPane from "../shared/SearchPageJobPane/SearchPageJobPane";
+import CheckBox from "../shared/Checkbox/Checkbox";
 
 
 const Searchpage:NextPage =()=>{
@@ -28,7 +29,7 @@ const Searchpage:NextPage =()=>{
     const SearchTitle = ()=>searchState.job_title?searchState.job_title:job_title+''
     const SearchType =()=>`${searchState.job_type?searchState.job_type:job_type+''}` 
     const [getData,setGetData]=useState(false)
-    const {data,isLoading,error,refetch} = useQuery('unathGetJobsApi',()=>unathGetJobsApi({ 'job_title':SearchTitle(),'job_type':SearchType()}),{
+    const {data:jobs,isLoading,error,refetch} = useQuery('unathGetJobsApi',()=>unathGetJobsApi({ 'job_title':SearchTitle(),'job_type':SearchType()}),{
         // 'enabled':getData,
         
     })
@@ -44,14 +45,7 @@ const Searchpage:NextPage =()=>{
   
       }
 
-    //   useEffect(()=>{
-    //     if(job_title || job_type){
-    //         setGetData(true)
-    //     }
-    //   },[route.isReady])
-    //   useEffect(()=>{
-    //     setGetData(true)
-    //   },[])
+    
 
       useEffect(()=>{
         // refetch
@@ -70,91 +64,138 @@ const Searchpage:NextPage =()=>{
         <LandingPageSearchBar/>
       </Box>
       </Box>
-      <br />
             <Preloader loading={isLoading} />
-            <Box css={{'color':'#212121','span':{'color':'#0F565F'},'backgroundColor':'white','padding':'2rem .8rem'}}>
-                <h2 style={{'maxWidth':'1280px','margin':'0 auto'}}>Search results 
-                <span>{' '}{SearchTitle()} , {SearchType()}</span>
-                </h2>
-            </Box>
-            <Box  css={{'backgroundColor':'#f2f2f2',}}>
-
-
-                <Box css={{'maxWidth':'1200px','margin':'0 auto'}}>
-                    <Box css={{'display':'flex','justifyContent':'space-between','alignItems':'center','margin':'10px auto','padding':'1rem'}}>
-                        <p style={{'color':'#212121'}}>All results</p>
-                        <Button css={{'borderRadius':'5px','padding':'.9rem .6rem',}}><GoSettings style={{'marginRight':'5px'}}/>Filter</Button>
-                    </Box>
-
-                    <Box css={{'display':'flex','justifyContent':'space-between','maxHeight':'100vh','overflow':'hidden',}}>
-                    <Box css={!isDesktopOrLaptop?{
-                        'display':'grid','justifyContent':'center','alignItems':'center','@bp2':{
-                        'gridTemplateColumns':'1fr 1fr','gap':'15px',
-                    
+        <Box css={{'backgroundColor':'#f2f2f2'}}>
+            <Box css={{"padding":'2rem .3rem',
+            'position':'relative',
+            '& > div:nth-child(1)':{
+                display:'none',
+            },
+            '@bp900':{
+                'display':'flex','gap':'30px',
+                padding:'2rem 1rem',
+                'maxWidth':'1500px','margin':'0 auto',
+                '& > div:nth-child(1)':{
+                    display:'block',
+                    width:'25%',
+                    'height':'100vh',
+                    'position':'sticky',
+                    'top':'0',
+                    overflowY:'scroll'
+                
+                },
+                '& > div:nth-child(2)':{
+                    width:'75%'
+                },  
+            }}}>
+                
+                <Pane css={{
+                padding:'2rem'}}>
+                <PaneFilterBox  
+                head="Job Type"
+                data={[
+                    {name:'Full Time',number:'0'},
+                    {name:'Part Time',number:'0'},
+                    {name:'Freelance',number:'0'},
+                    {name:'Training',number:'0'},
+                ]}
+                />
+                 <PaneFilterBox  
+                head="Experience"
+                data={[
+                    {name:'Expert',number:'0'},
+                    {name:'Intermediate',number:'0'},
+                    {name:'Entry',number:'0'},
+                ]}
+                />
+                <PaneFilterBox  
+                head="Salary"
+                data={[
+                    {name:'Ngn 500,000-above',number:'0'},
+                    {name:'Ngn 200,000-500,000',number:'0'},
+                    {name:'Ngn 50,000-200,000',number:'0'},
+                ]}
+                />
+                </Pane>
+                <Box css={{
+                }}>
+                    <Box css={{'display':'flex','flexWrap':'wrap','justifyContent':'space-between',
+                    'gap':'10px','color':'#797979','alignItems':'center',
+                    'p':{
+                        'fontSize':'1.1rem'
                     },
-                    '@bp3':{
-                        'gridTemplateColumns':'1fr 1fr 1fr',
-                        
-
-                    },}:{'overflow':'scroll'}}>
-                        {
-                            data?.map((job,index)=>(
-                                <Box key={index} onClick={()=>handleJobDetail(job)}>
-                                    <JobCardV2 job={job} title={job.job_title}/>
-                                    <br />
-                                </Box>
-                            ))
-                        }
-                    
-                    </Box>
-                    {
-                        isDesktopOrLaptop?
-                        <Box css={{'padding':'2rem .8rem' ,'boxShadow':'0px 4px 9px rgba(33, 33, 33, 0.1)','width':'60%','backgroundColor':'white',
-                        'textAlign':'center','overflow':'scroll','h1,p':{'color':'#212121'}}}>
-
-     {currentJob?<JobDetailV2 currentJob={currentJob}/>
-     :
-                            <Box css={{'maxWidth':'600px','margin':'0 auto','padding':'1rem 2rem'}}>
-                                <h1>Get noticed by top employers!</h1><br />
-                                <p>Do you want to speed up your job search? Post your CV on Sequential Jobs and let employers know you are open to opportunities. Plus, receive relevant job recommendations in your inbox.</p>
-                                <Button
-                                onClick={(e)=>{
-                                    notify('You Need to create an account','success')
-                                    window.open('https://app.sequentialjobs.com/','_blank')
-                                }} css={{'borderRadius':'5px','padding':'.8rem 1rem','fontSize':'.9rem','margin':'10px auto'}} >Send Us Your CV</Button>
-                                <br />
-                                <p 
-                                onClick={(e)=>{
-                                    notify('You Need to create an account','success')
-                                    window.open('https://app.sequentialjobs.com/','_blank')
-                                }}
-                                style={{'color':'#24CDE2'}}>Send Us Your CV
-                                <img src={bluearrow.src}  style={{marginLeft:'10px'}} alt="" />
-                                </p>
-                            </Box>
-    }
-
-                        </Box>:''
+                    '.sortby':{
+                        'color':'#797979'
+                    },
+                    '.sortbyValue':{
+                        'color':'black'
+                    },
+                    'h1':{
+                        'fontWeight':'lighter'
                     }
+                    }}>
+                        <h1>40 jobs match</h1>
+                        <Box>
+                            <Box css={{'display':'flex','gap':'10px'}}>
+                            <p className="sortby">sort by</p>
+                            <p className="sortbyValue">Newest</p>
+                            </Box>
+                            {/*  */}
+                        </Box>
                     </Box>
+
+                    {
+                            jobs?.map((d,i)=>(
+                                <>
+                             <br />
+                    <SearchPageJobPane 
+                    {...d}
+                    />
+                                </>
+                                ))
+                        }
                 </Box>
-            </Box>
 
-{
-   !isDesktopOrLaptop?
+            
+            </Box>       
 
-            <OffCanvas
-      setIsOpen={setIsOpen}
-      isOpen={isOpen}
-      direction={isDesktopOrLaptop?'right':'bottom'}
-      size={80}
-     >
-     {currentJob&&<JobDetailV2 currentJob={currentJob}/>}
-
-     </OffCanvas>
-     :''
-}
+        </Box>
         </LandingPageLayout>
     )
 }
 export default Searchpage
+
+type PaneFilterBoxI = {
+    head:string,
+    data:{name:string,number:string|number}[]
+}
+const PaneFilterBox =({head,data}:PaneFilterBoxI)=>{
+    return (
+        <Box css={{'marginBottom':'25px'}}>
+            <Box css={{
+            'display':'flex',
+            alignItems:'center',
+            'justifyContent':'space-between',
+            'h2':{'color':'black'},
+            'p':{'color':'$lightBlue'},
+        }}>
+        <h2>{head}</h2>
+        <p>Clear</p>
+    </Box>
+    <br />
+    {
+        data?.map(({name,number},index)=>(
+            <Box
+            key={index}
+            css={{'color':'#6d6d6d !important','display':'flex','justifyContent':'space-between','alignItems':'center'}}>
+            <Box css={{'display':'flex','gap':'5px','padding':'1rem 0'}}>
+                <CheckBox onCheck={value=>{}}/> 
+            <p style={{'color':"#6d6d6d"}}>{name}</p>
+            </Box>
+            <p>{number}</p>
+        </Box>
+        ))
+    }
+        </Box>
+    )
+}

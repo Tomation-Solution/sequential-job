@@ -21,14 +21,14 @@ api.interceptors.request.use(function (config) {
   const path = window.location.pathname
   let user = cookieCutter.get('user') 
 
-  if(!path.includes('/signin')&&!path.includes('/signup')
-  &&!path.includes('/job_seeker_signup')&&!path.includes('/searchpage')
-  &&!path.includes('/blog')
-  ){
-    user = JSON.parse(user)
-    config['headers']={ 'Authorization':`Bearer ${user?.access}`}
+  // if(!path.includes('/signin')&&!path.includes('/signup')
+  // &&!path.includes('/job_seeker_signup')&&!path.includes('/searchpage')
+  // &&!path.includes('/blog')
+  // ){
+  //   user = JSON.parse(user)
+  //   config['headers']={ 'Authorization':`Bearer ${user?.access}`}
 
-  }
+  // }
   return config;
 }, function (error) {
   // Do something with request error
