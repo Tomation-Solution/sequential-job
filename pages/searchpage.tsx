@@ -134,7 +134,7 @@ const Searchpage:NextPage =()=>{
                         'fontWeight':'lighter'
                     }
                     }}>
-                        <h1>40 jobs match</h1>
+                        <h1>{jobs?.length} Jobs Match</h1>
                         <Box>
                             <Box css={{'display':'flex','gap':'10px'}}>
                             <p className="sortby">sort by</p>
